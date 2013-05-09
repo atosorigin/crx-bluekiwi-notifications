@@ -1,3 +1,5 @@
+_gaq.push(['_trackPageview']);
+
 function requestNotifications(){
 	console.log("requestNotifications()");
 	$.get(NOTIF_FEED_URL, function(data){
