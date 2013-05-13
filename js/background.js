@@ -57,7 +57,7 @@ function checkUpdate(){
 						//});
 						
 						notification = webkitNotifications.createNotification(
-						  'bluekiwi.ico',  // icon url - can be relative
+						  'img/icon128.png',  // icon url - can be relative
 						  'You have ' + val.notification + ' notification' + (val.notification > 1?'s':'')+ '!',  // notification title
 						  ''  // notification body text
 						);

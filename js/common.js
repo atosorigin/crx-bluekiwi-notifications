@@ -10,7 +10,8 @@ _gaq.push(['_setAccount', 'UA-40637862-1']);
 var BASE_URL = "https://zen.myatos.net";
 var NOTIF_URL = BASE_URL + "/notification/updater"
 var NOTIF_FEED_URL = BASE_URL + "/notification/get?offset=0"
-var NOTIF_READ_URL = BASE_URL + "/notification/read";
+var NOTIF_READ_URL = BASE_URL + "/notification/read"
+var NEWS_READ_URL = BASE_URL + "/syndication/home?filterType=all";
 
 var FETCH_INTERVAL = 2 * 60 * 1000;
 var ALARM_NAME = "notification_checker";
