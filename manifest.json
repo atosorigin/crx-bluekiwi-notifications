@@ -3,7 +3,7 @@
 
   "name": "blueKiwi ZEN Notifications for myatos.net",
   "description": "This is an UNOFFICIAL extension for blueKiwi ZEN @ myatos.net.",
-  "version": "0.3.3.2",
+  "version": "0.3.3.3",
 
   "background": {
     "scripts": [
