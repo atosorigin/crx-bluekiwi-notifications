@@ -1,12 +1,27 @@
+/*
+*	author: Anthony Lau
+*	email: anthony-wh.lau@atos.net
+*/
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-40637862-1']);
 _gaq.push(['_trackPageview']);
+
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = 'https://ssl.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+
+var NOTIFICATION_URL = "https://zen.myatos.net/notification/get?offset=0"
+var NOTIF_READ_URL = "https://zen.myatos.net/notification/read";
 
 function requestNotifications(){
 	console.log("requestNotifications()");
-	$.get(NOTIF_FEED_URL, function(data){
+	$.get(NOTIFICATION_URL, function(data){
 		try{
 			var feeds = $.parseJSON(data).feeds;
 			
-			var ul = $('<ul style="list-style: none" class="notif-ul"/>');
+			var ul = $('<div class="list"/>');
 			
 			if(feeds.length == 0){
 				var li = $('<li/>');
@@ -16,7 +31,7 @@ function requestNotifications(){
 			
 			for(var i in feeds){
 				var feed = feeds[i];
-				var li = $('<li style="cursor: pointer;" class="notif-li"/>');
+				var li = $('<div class="media"/>');
 				li.appendTo(ul);
 				li.click((function(feed) {
 					return function() {
@@ -24,15 +39,16 @@ function requestNotifications(){
 					};
 				})(feed));
 				
-				var avatarContainer = $('<div class="avatar"/>');
+				var avatarContainer = $('<a class="pull-left" href="#"/>');
 				avatarContainer.appendTo(li);
 				var avatar = $('<img/>');
 				avatar.appendTo(avatarContainer);
 				avatar.attr('src',feed.picture);
-				
-				var content = $('<div class="notif-content"/>');
+				avatar.attr('class', 'media-object');
+				var content = $('<div class="media-body"/>');
 				content.appendTo(li);
 				content.html(feed.content);
+
 			}
 			
 			$('#loading').hide();
@@ -52,6 +68,20 @@ function requestNotifications(){
 	})
 	.fail(function(){console.log("failed to fetch notification data")});;
 }
+/*
+	"feeds": [{
+		"id": 2280203,
+		"picture": "https:\/\/zen.myatos.net\/cache\/zen\/user\/avatar\/8b384206042fc6e2a17d3b12dabb5d18_avatar_small.jpg",
+		"unread": false,
+		"content": "\n\tVickie Tam<\/span> alerted you on post<\/span> \n\t\t\t\t\t100 HK users joined BlueKiwi! <\/span>\n\n\t
+\"100 HK users joined BlueKiwi!\"<\/span>\n\n 
+\n \n \t<\/span>\n \t1 hour ago <\/span>\n<\/span>",
+		"objectId": "723753",
+		"private": false,
+		"rel": "https:\/\/zen.myatos.net\/user\/in\/Vickie_Tam\/post?id=723753",
+		"deleteToken": "bbf1c55eab2acffa273c2af2d2ba4ff824c0dea4|17173"
+	},
+*/
 
 document.addEventListener('DOMContentLoaded', function () {
 	console.log("DOMContentLoaded");

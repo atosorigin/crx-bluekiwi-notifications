@@ -1,51 +1,50 @@
 <!doctype html>
 <html>
   <head>
-    <title>Extension's Popup</title>
+    <title>BlueKiwi Notifier</title>
+		
     <style>
       body {
 		max-height: 380px;
 		min-width: 355px;
+		font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+		font-size: 12px;
       }
-	  .avatar{
-		border: 1px solid #d7d7d7;
-		width: 50px;
-		height: 50px;
-		margin: 0 10px;
+	  .list{
 		float: left;
-		overflow: hidden;
-		cursor: pointer;
-		text-align: center;
-		vertical-align: middle;
+		padding: 5px;
+		font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+		font-size: 12px;
 	  }
-	  .notif-li{
+	  .media {
+	  border-bottom: 1px solid #F4F4F4;
+	  }
+	  .media-object {
+	  border: 1px solid rgb(196, 196, 196);
+	  }
+	  .bold {
+	  font-weight: bold;
+	  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+		font-size: 12px;
+	  }
+	 .administrable { color: #035B99;}
+	 .administrable2 {  color: #CC6906;}
+	 h4 {
+	 	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 		float: left;
-		padding: 9px 10px;
-		cursor: pointer;
-		border-bottom: solid 1px #d7d7d7;
-		width: 355px;
-		min-width: 355px;
-		font-size: 0.9em;
-		-webkit-border-radius: 0;
-		-moz-border-radius: 0;
-		border-radius: 0;
-		position: relative;
-	  }
+		padding: 5px
+	 }
     </style>
-
-    <!--
-      - JavaScript and HTML must be in separate files: see our Content Security
-      - Policy documentation[1] for details and explanation.
-      -
-      - [1]: http://developer.chrome.com/extensions/contentSecurityPolicy.html
-     -->
-	<a href="https://zen.myatos.net/home" target="_blank">Home</a>
-	<div id="loading">Loading...</div>
 	<script src="common.js"></script>
-	<script src="jquery-2.0.0.min.js"></script>
+	<link href="bootstrap.min.css" rel="stylesheet" media="screen">
+	<script src="jquery.js"></script>
     <script src="popup.js"></script>
   </head>
+  
   <body>
+	<h4><a href="https://zen.myatos.net/home" target="_blank">BlueKiwi Home</a></h4>
+	<div id="loading">Loading...</div>
   </body>
+
 </html>
 
