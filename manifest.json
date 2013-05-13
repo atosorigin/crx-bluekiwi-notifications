@@ -7,20 +7,20 @@
 
   "background": {
     "scripts": [
-		"common.js",
-		"jquery.js",
-		"background.js"
+		"js/common.js",
+		"js/jquery.js",
+		"js/background.js"
 	]
   },
   
-  "icons": { "16": "icon16.png",
-           "48": "icon48.png",
-          "128": "icon128.png" },
+  "icons": { "16": "img/icon16.png",
+           "48": "img/icon48.png",
+          "128": "img/icon128.png" },
   
   "browser_action": {
 	  "default_icon": {                    
-      "19": "icon48.png",          
-      "38": "icon48.png"          
+      "19": "img/icon48.png",          
+      "38": "img/icon48.png"          
     },
 	"default_popup": "popup.html",
 	"default_title": "BlueKiwi Notifier"
@@ -33,6 +33,8 @@
   "web_accessible_resources": [
     "bluekiwi.ico"
   ],
+  
+  "options_page": "options.html",
   
   "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'"
 }

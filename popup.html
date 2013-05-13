@@ -1,48 +1,28 @@
 <!doctype html>
 <html>
   <head>
-    <title>BlueKiwi Notifier</title>
-		
-    <style>
-      body {
-		max-height: 380px;
-		min-width: 355px;
-		font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-		font-size: 12px;
-      }
-	  .list{
-		float: left;
-		padding: 5px;
-		font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-		font-size: 12px;
-	  }
-	  .media {
-	  border-bottom: 1px solid #F4F4F4;
-	  }
-	  .media-object {
-	  border: 1px solid rgb(196, 196, 196);
-	  }
-	  .bold {
-	  font-weight: bold;
-	  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-		font-size: 12px;
-	  }
-	 .administrable { color: #035B99;}
-	 .administrable2 {  color: #CC6906;}
-	 h4 {
-	 	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-		float: left;
-		padding: 5px
-	 }
-    </style>
-	<script src="common.js"></script>
-	<link href="bootstrap.min.css" rel="stylesheet" media="screen">
-	<script src="jquery.js"></script>
-    <script src="popup.js"></script>
+    <title>BlueKiwi Notifier</title>		
+	<script src="js/common.js"></script>
+	<script src="js/jquery.js"></script>
+    <script src="js/popup.js"></script>
+    
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="css/style.css" rel="stylesheet" media="screen">
   </head>
   
   <body>
-	<h4><a href="https://zen.myatos.net/home" target="_blank">BlueKiwi Home</a></h4>
+  <div class="navbar navbar-fixed-top">  
+ 	 <div class="navbar-inner">  
+	 	 <div class="container">  
+		 	 <ul class="nav">  
+		 	 	 <li><a href="https://zen.myatos.net/home" target="_blank"><i class="icon-home"></i></a></li>
+			 	 <li class="active"><a href="popup.html">Notifications</a></li>  
+			 	 <li><a href="options.html">Options</a></li>   
+			 </ul> 
+		</div>  
+	</div>  
+</div> 
+
 	<div id="loading">Loading...</div>
   </body>
 
