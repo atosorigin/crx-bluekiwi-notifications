@@ -27,7 +27,8 @@
   },
   "permissions": [
 	"https://zen.myatos.net/notification*",
-	"notifications"
+	"notifications",
+	"storage"
   ],
   
   "web_accessible_resources": [
