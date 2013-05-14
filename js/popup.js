@@ -6,7 +6,7 @@ function requestNotifications(){
 		try{
 			var feeds = $.parseJSON(data).feeds;
 			
-			var ul = $('<ul style="list-style: none" class="notif-ul"/>');
+			var ul = $('<div class="list"/>');
 			
 			if(feeds.length == 0){
 				var li = $('<li/>');
@@ -16,7 +16,7 @@ function requestNotifications(){
 			
 			for(var i in feeds){
 				var feed = feeds[i];
-				var li = $('<li style="cursor: pointer;" class="notif-li"/>');
+				var li = $('<div class="media"/>');
 				li.appendTo(ul);
 				li.click((function(feed) {
 					return function() {
@@ -24,13 +24,13 @@ function requestNotifications(){
 					};
 				})(feed));
 				
-				var avatarContainer = $('<div class="avatar"/>');
+				var avatarContainer = $('<a class="pull-left" href="#"/>');
 				avatarContainer.appendTo(li);
 				var avatar = $('<img/>');
 				avatar.appendTo(avatarContainer);
 				avatar.attr('src',feed.picture);
 				
-				var content = $('<div class="notif-content"/>');
+				var content = $('<div class="media-body"/>');
 				content.appendTo(li);
 				content.html(feed.content);
 			}
