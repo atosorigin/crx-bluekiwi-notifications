@@ -1,6 +1,15 @@
 var notification = null;
 
 function init(){
+	chrome.runtime.onInstalled.addListener(function(details){
+		var thisVersion = chrome.runtime.getManifest().version;
+		if(details.reason == "install"){
+			_gaq.push(['_trackEvent', 'ext', 'install', thisVersion]);
+		}else if(details.reason == "update"){
+			_gaq.push(['_trackEvent', 'ext', 'update', thisVersion]);
+			//console.log("Updated from " + details.previousVersion + " to " + thisVersion +" + !");
+		}
+	});
 	chrome.browserAction.onClicked.addListener(function(activeTab)
 	{
 		chrome.tabs.create({ url: BASE_URL });
