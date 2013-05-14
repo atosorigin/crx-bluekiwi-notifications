@@ -30,11 +30,13 @@ function init(){
 	});
 	*/
 }
+var evtNotifSrc = 'bg-notif';
 
 function clearNotification(){
 	if(notification != null){
 		notification.cancel();
 		notification = null;
+		_gaq.push(['_trackEvent', evtNotifSrc, 'canceled']);
 	}
 }
 
@@ -61,12 +63,15 @@ function checkUpdate(){
 						  'You have ' + val.notification + ' notification' + (val.notification > 1?'s':'')+ '!',  // notification title
 						  ''  // notification body text
 						);
+						_gaq.push(['_trackEvent', evtNotifSrc, 'created']);
 						notification.onclose = function(){
-							notification = null;
+							_gaq.push(['_trackEvent', evtNotifSrc, 'closed']);
+							notification = null;							
 						};
 						notification.onclick = function(){
+							_gaq.push(['_trackEvent', evtNotifSrc, 'clicked']);
 							chrome.tabs.create({ url: BASE_URL });
-							clearNotification()
+							clearNotification();
 						};
 						notification.show();
 					}else{

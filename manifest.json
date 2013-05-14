@@ -1,29 +1,21 @@
 {
   "manifest_version": 2,
 
-  "name": "BlueKiwi ZEN Notifications for myatos.net",
-  "description": "This is an unofficial extension for Atos Staff for use with BlueKiwi",
-  "version": "0.3.3.2",
+  "name": "blueKiwi ZEN Notifications for myatos.net",
+  "description": "This is an UNOFFICIAL extension for blueKiwi ZEN @ myatos.net.",
+  "version": "0.3.3.3",
 
   "background": {
     "scripts": [
-		"js/common.js",
-		"js/jquery.js",
-		"js/background.js"
+		"common.js",
+		"jquery-2.0.0.min.js",
+		"background.js"
 	]
   },
   
-  "icons": { "16": "img/icon16.png",
-           "48": "img/icon48.png",
-          "128": "img/icon128.png" },
-  
   "browser_action": {
-	  "default_icon": {                    
-      "19": "img/icon48.png",          
-      "38": "img/icon48.png"          
-    },
-	"default_popup": "popup.html",
-	"default_title": "BlueKiwi Notifier"
+    "default_icon": "bluekiwi.ico",
+	"default_popup": "popup.html"
   },
   "permissions": [
 	"https://zen.myatos.net/notification*",
@@ -33,8 +25,6 @@
   "web_accessible_resources": [
     "bluekiwi.ico"
   ],
-  
-  "options_page": "options.html",
   
   "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'"
 }
