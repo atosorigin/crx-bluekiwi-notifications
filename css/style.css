@@ -18,6 +18,10 @@ body {
 	font-size:12px;
 }
 
+.input-prepend {
+	width: 90%;
+}
+
 .media {
 	border-bottom:1px solid #F4F4F4;
 	cursor:pointer;
