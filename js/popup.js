@@ -1,5 +1,3 @@
-_gaq.push(['_trackPageview']);
-
 function requestNotifications(){
 	console.log("requestNotifications()");
 	$.get(NOTIF_FEED_URL, function(data){
@@ -20,7 +18,8 @@ function requestNotifications(){
 				li.appendTo(ul);
 				li.click((function(feed) {
 					return function() {
-					   chrome.tabs.create({ url: feed.rel });
+						_gaq.push(['_trackEvent', 'popup-feed', 'clicked']);
+						chrome.tabs.create({ url: feed.rel });
 					};
 				})(feed));
 				
@@ -71,4 +70,10 @@ document.addEventListener('DOMContentLoaded', function () {
 	});
 	
 	chrome.extension.getBackgroundPage().clearNotification();
+	
+	$('#btnHome').click(function(){
+		_gaq.push(['_trackEvent', 'popup-home-btn', 'clicked']);
+	});
 });
+
+_gaq.push(['_trackEvent', 'popup', 'clicked']);
