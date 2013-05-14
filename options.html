@@ -3,6 +3,7 @@
   <head>
     <title>BlueKiwi Notifier::Options</title>		
 	<script src="js/jquery.js"></script>
+	
 
     <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="css/style.css" rel="stylesheet" media="screen"> 
@@ -23,12 +24,12 @@
 </div> 
 
 <div class="menu">
+<div id="status"></div>
 <h5>Insert the URL to your BlueKiwi installation below.</h5>
 <div class="input-append">
-<form>
   <input class="span2" name="url" id="url" type="text" placeholder="BlueKiwi URL">
-</form>
-  <button class="btn" type="button">Go!</button>
+  <button class="btn" type="button" id="save">Go!</button>
+
 </div>
 
 <hr>
@@ -55,5 +56,6 @@
 </div>
 
 </body>
+<script src="js/options.js"></script>
 </html>
 

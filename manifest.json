@@ -9,6 +9,8 @@
     "scripts": [
 		"js/common.js",
 		"js/jquery.js",
+		"js/news.js",
+		"js/options.js",
 		"js/background.js"
 	]
   },
@@ -27,7 +29,8 @@
   },
   "permissions": [
 	"https://zen.myatos.net/notification*",
-	"notifications"
+	"notifications",
+	"storage"
   ],
   
   "web_accessible_resources": [
