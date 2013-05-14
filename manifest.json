@@ -9,7 +9,8 @@
     "scripts": [
 		"js/common.js",
 		"js/jquery.js",
-		"js/background.js"
+		"js/background.js",
+		"js/news.js"
 	]
   },
   
