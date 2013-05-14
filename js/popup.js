@@ -75,5 +75,3 @@ document.addEventListener('DOMContentLoaded', function () {
 		_gaq.push(['_trackEvent', 'popup-home-btn', 'clicked']);
 	});
 });
-
-_gaq.push(['_trackEvent', 'popup', 'clicked']);
