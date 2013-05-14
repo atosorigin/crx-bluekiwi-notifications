@@ -3,7 +3,7 @@
 
   "name": "BlueKiwi ZEN Notifications for myatos.net",
   "description": "This is an unofficial extension for Atos Staff for use with BlueKiwi",
-  "version": "0.3.4.0",
+  "version": "0.3.4.2",
 
   "background": {
     "scripts": [
@@ -31,7 +31,7 @@
   ],
   
   "web_accessible_resources": [
-    "bluekiwi.ico"
+     "img/icon128.png"
   ],
   
   "options_page": "options.html",
