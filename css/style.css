@@ -1,9 +1,13 @@
 body {
 	max-height:380px;
-	min-width:45px;
+	min-height:80px;
 	min-width:355px;
 	font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
 	font-size:12px;
+}
+
+.loading{
+	padding:50px 5px 5px;
 }
 
 .menu {
