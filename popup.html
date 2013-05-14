@@ -1,51 +1,30 @@
 <!doctype html>
 <html>
   <head>
-    <title>Extension's Popup</title>
-    <style>
-      body {
-		max-height: 380px;
-		min-width: 355px;
-      }
-	  .avatar{
-		border: 1px solid #d7d7d7;
-		width: 50px;
-		height: 50px;
-		margin: 0 10px;
-		float: left;
-		overflow: hidden;
-		cursor: pointer;
-		text-align: center;
-		vertical-align: middle;
-	  }
-	  .notif-li{
-		float: left;
-		padding: 9px 10px;
-		cursor: pointer;
-		border-bottom: solid 1px #d7d7d7;
-		width: 355px;
-		min-width: 355px;
-		font-size: 0.9em;
-		-webkit-border-radius: 0;
-		-moz-border-radius: 0;
-		border-radius: 0;
-		position: relative;
-	  }
-    </style>
-
-    <!--
-      - JavaScript and HTML must be in separate files: see our Content Security
-      - Policy documentation[1] for details and explanation.
-      -
-      - [1]: http://developer.chrome.com/extensions/contentSecurityPolicy.html
-     -->
-	<a id="btnHome" href="https://zen.myatos.net/home" target="_blank">Home</a>
-	<div id="loading">Loading...</div>
-	<script src="common.js"></script>
-	<script src="jquery-2.0.0.min.js"></script>
-    <script src="popup.js"></script>
+    <title>BlueKiwi Notifier</title>		
+	<script src="js/common.js"></script>
+	<script src="js/jquery.js"></script>
+    <script src="js/popup.js"></script>
+    
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="css/style.css" rel="stylesheet" media="screen">
   </head>
+  
   <body>
-  </body>
-</html>
+  <div class="navbar navbar-fixed-top">  
+ 	 <div class="navbar-inner">  
+	 	 <div class="container">  
+		 	 <ul class="nav">  
+		 	 	 <li><a href="https://zen.myatos.net/home" target="_blank"><i class="icon-home"></i></a></li>
+			 	 <li class="active"><a href="popup.html">Notifications</a></li>  
+			 	 <li><a href="news.html">News Feed</a></li>			 	 
+			 	 <li><a href="options.html">Options</a></li>    
+			 </ul> 
+		</div>  
+	</div>  
+</div> 
 
+	<div id="loading">Loading...</div>
+  </body>
+
+</html>
