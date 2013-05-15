@@ -74,7 +74,7 @@ function checkUpdate(){
 						);
 						_gaq.push(['_trackEvent', evtNotifSrc, 'created']);
 						notification.onclose = function(){
-							_gaq.push(['_trackEvent', evtNotifSrc, 'closed']);
+							//_gaq.push(['_trackEvent', evtNotifSrc, 'closed']);
 							notification = null;							
 						};
 						notification.onclick = function(){
