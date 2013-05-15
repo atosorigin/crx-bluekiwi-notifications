@@ -1,9 +1,9 @@
 {
   "manifest_version": 2,
 
-  "name": "BlueKiwi ZEN Notifications for myatos.net",
-  "description": "This is an unofficial extension for Atos Staff for use with BlueKiwi",
-  "version": "0.3.4.2",
+  "name": "BlueKiwi ZEN Notifications",
+  "description": "This is an unofficial Chrome extension for use with BlueKiwi",
+  "version": "0.3.4.3",
 
   "background": {
     "scripts": [

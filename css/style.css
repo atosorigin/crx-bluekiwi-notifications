@@ -9,6 +9,7 @@ body {
 .menu {
 	float:left;
 	padding:50px 5px 5px;
+	width: 100%;
 }
 
 .list {
