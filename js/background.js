@@ -45,7 +45,7 @@ function clearNotification(){
 	if(notification != null){
 		notification.cancel();
 		notification = null;
-		_gaq.push(['_trackEvent', evtNotifSrc, 'canceled']);
+		//_gaq.push(['_trackEvent', evtNotifSrc, 'canceled']);
 	}
 }
 
