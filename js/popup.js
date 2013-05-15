@@ -4,7 +4,7 @@ function requestNotifications(){
 		try{
 			var feeds = $.parseJSON(data).feeds;
 			
-			var ul = $('<div class="list"/>');
+			var ul = $('<div class="list scrollbar"/>');
 			
 			if(feeds.length == 0){
 				var li = $('<li/>');
