@@ -45,7 +45,7 @@ function requestNotifications(){
 			console.log('Error while loading or creating list of notifications, error message: ' + err.message);
 			$('#loading').hide();
 			var errorMsg = document.getElementById("status");
-			errorMsg.innerHTML = "<div class='alert alert-warning'>Error while loading notifications.  Are you <a href='" + BASE_URL + "'>logged in</a>?</div>";
+			errorMsg.innerHTML = "<div class='alert alert-warning'>Error while loading notifications.  Are you <a href='" + BASE_URL + "' target='_blank'>logged in</a>?</div>";
 		}
 	})
 	.fail(function(){
