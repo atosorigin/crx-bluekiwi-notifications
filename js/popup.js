@@ -73,7 +73,11 @@ document.addEventListener('DOMContentLoaded', function () {
 	chrome.storage.sync.get('bkurl', function(items){
 		requestNotifications(items.bkurl, 0);
 	});
-	
+	$('#btnHome').click(function(){
+		chrome.storage.sync.get('bkurl', function(items){
+			chrome.tabs.create({ url: items.bkurl });
+		});
+	});
 	/*
 	//for testing
 	var notification = webkitNotifications.createNotification(
