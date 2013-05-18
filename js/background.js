@@ -9,10 +9,7 @@ function init(){
 			_gaq.push(['_trackEvent', 'ext', 'update', thisVersion]);
 			//console.log("Updated from " + details.previousVersion + " to " + thisVersion +" + !");
 		}
-	});
-	chrome.browserAction.onClicked.addListener(function(activeTab)
-	{
-		chrome.tabs.create({ url: BASE_URL });
+		
 	});
 	var t = setInterval(checkUpdate, FETCH_INTERVAL);
 
