@@ -1,8 +1,10 @@
-function requestNotifications(bkurl){
+function requestNotifications(bkurl, offset){
+	$('#loading').show();
 	var feedurl = bkurl + NOTIF_FEED_URL;
 	console.log('Fetch notification feed from ' + feedurl);
-	$.get(feedurl, function(data){
+	$.get(feedurl, {'offset': offset}, function(data){
 		try{
+			
 			var feeds = $.parseJSON(data).feeds;
 			
 			var notiflist = $('#notif-list');
@@ -35,6 +37,13 @@ function requestNotifications(bkurl){
 				content.html(feed.content);
 			}
 			
+			var btnSeeMore = $('<button class="btn" style="width: 100%;" type="button" id="save">See More</button>');
+			btnSeeMore.click(function(){
+				$(this).detach();
+				requestNotifications(bkurl, offset + feeds.length);
+			})
+			btnSeeMore.appendTo(notiflist);
+			
 			$('#loading').hide();
 			notiflist.show();
 			
@@ -62,7 +71,7 @@ function requestNotifications(bkurl){
 document.addEventListener('DOMContentLoaded', function () {
 	console.log("DOMContentLoaded");
 	chrome.storage.sync.get('bkurl', function(items){
-		requestNotifications(items.bkurl);
+		requestNotifications(items.bkurl, 0);
 	});
 	
 	/*

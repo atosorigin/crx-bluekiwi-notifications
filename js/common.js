@@ -9,7 +9,7 @@ _gaq.push(['_trackPageview']);
 })();
 
 var NOTIF_URL = "/notification/updater";
-var NOTIF_FEED_URL = "/notification/get?offset=0";
+var NOTIF_FEED_URL = "/notification/get";
 var NOTIF_READ_URL = "/notification/read";
 var NEWS_READ_URL = "/syndication/home?filterType=all";
 
