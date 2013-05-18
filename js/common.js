@@ -8,11 +8,10 @@ _gaq.push(['_trackPageview']);
   var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 })();
 
-var BASE_URL = localStorage["bluekiwi_url"]
-var NOTIF_URL = BASE_URL + "/notification/updater"
-var NOTIF_FEED_URL = BASE_URL + "/notification/get?offset=0"
-var NOTIF_READ_URL = BASE_URL + "/notification/read"
-var NEWS_READ_URL = BASE_URL + "/syndication/home?filterType=all";
+var NOTIF_URL = "/notification/updater";
+var NOTIF_FEED_URL = "/notification/get?offset=0";
+var NOTIF_READ_URL = "/notification/read";
+var NEWS_READ_URL = "/syndication/home?filterType=all";
 
 var FETCH_INTERVAL = 2 * 60 * 1000;
 var ALARM_NAME = "notification_checker";

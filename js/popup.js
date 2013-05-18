@@ -1,6 +1,7 @@
-function requestNotifications(){
-	console.log("requestNotifications()");
-	$.get(NOTIF_FEED_URL, function(data){
+function requestNotifications(bkurl){
+	var feedurl = bkurl + NOTIF_FEED_URL;
+	console.log('Fetch notification feed from ' + feedurl);
+	$.get(feedurl, function(data){
 		try{
 			var feeds = $.parseJSON(data).feeds;
 			
@@ -38,7 +39,9 @@ function requestNotifications(){
 			ul.appendTo('body');
 			
 			chrome.browserAction.setBadgeText( { text: ''} );
-			$.get(NOTIF_READ_URL,function(){
+			var readurl = bkurl + NOTIF_READ_URL;
+			console.log('mark notifications as read with ' + readurl);
+			$.get(bkurl + NOTIF_READ_URL,function(){
 				console.log('mark notification as read');
 			});
 		}catch(err){
@@ -58,7 +61,10 @@ function requestNotifications(){
 
 document.addEventListener('DOMContentLoaded', function () {
 	console.log("DOMContentLoaded");
-	requestNotifications();
+	chrome.storage.sync.get('bkurl', function(items){
+		requestNotifications(items.bkurl);
+	});
+	
 	/*
 	//for testing
 	var notification = webkitNotifications.createNotification(
