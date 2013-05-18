@@ -9,7 +9,16 @@ function init(){
 			_gaq.push(['_trackEvent', 'ext', 'update', thisVersion]);
 			//console.log("Updated from " + details.previousVersion + " to " + thisVersion +" + !");
 		}
-		
+		//check if bkurl is set
+		chrome.storage.sync.get('bkurl', function(items){
+			if(!items.bkurl){
+				webkitNotifications.createNotification(
+							  'img/icon128.png',  // icon url - can be relative
+							  'You need to enter a BlueKiwi URL in the Options page before you can begin',  // notification title
+							  ''  // notification body text
+							).show();
+			}
+		});
 	});
 	var t = setInterval(checkUpdate, FETCH_INTERVAL);
 
