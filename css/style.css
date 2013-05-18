@@ -7,12 +7,12 @@ body {
 }
 
 .menu {
-	float:left;
+	/*float:left;*/
 	padding:40px 5px 5px;
 }
 
 .list {
-	float:left;
+	/*float:left;*/
 	padding: 0px 5px 5px;
 	font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
 	font-size:12px;
@@ -56,6 +56,10 @@ body {
 
 .media-object {
 	border:1px solid #c4c4c4;
+}
+
+.avatar{
+	width: 50px;
 }
 
 .bold {

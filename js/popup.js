@@ -5,19 +5,19 @@ function requestNotifications(bkurl){
 		try{
 			var feeds = $.parseJSON(data).feeds;
 			
-			var ul = $('<div class="list scrollbar"/>');
+			var notiflist = $('#notif-list');
 			
 			if(feeds.length == 0){
-				var li = $('<li/>');
-				li.html('No notifications');
-				li.appendTo(ul);
+				$('<div></div>')
+				.html('No notifications')
+				.appendTo(notiflist);
 			}
 			
 			for(var i in feeds){
 				var feed = feeds[i];
-				var li = $('<div class="media"/>');
-				li.appendTo(ul);
-				li.click((function(feed) {
+				var media = $('<div class="media"/>');
+				media.appendTo(notiflist);
+				media.click((function(feed) {
 					return function() {
 						_gaq.push(['_trackEvent', 'popup-feed', 'clicked']);
 						chrome.tabs.create({ url: feed.rel });
@@ -25,18 +25,18 @@ function requestNotifications(bkurl){
 				})(feed));
 				
 				var avatarContainer = $('<a class="pull-left" href="#"/>');
-				avatarContainer.appendTo(li);
-				var avatar = $('<img/>');
+				avatarContainer.appendTo(media);
+				var avatar = $('<img class="avatar"/>');
 				avatar.appendTo(avatarContainer);
 				avatar.attr('src',feed.picture);
 				
 				var content = $('<div class="media-body"/>');
-				content.appendTo(li);
+				content.appendTo(media);
 				content.html(feed.content);
 			}
 			
 			$('#loading').hide();
-			ul.appendTo('body');
+			notiflist.show();
 			
 			chrome.browserAction.setBadgeText( { text: ''} );
 			var readurl = bkurl + NOTIF_READ_URL;
