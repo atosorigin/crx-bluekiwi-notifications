@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
 
-  "name": "blueKiwi ZEN Notifications",
+  "name": "blueKiwi Notifier",
   "description": "This is an unofficial Chrome extension for use with blueKiwi",
   "version": "0.3.4.3",
 
