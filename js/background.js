@@ -4,13 +4,9 @@ function init(){
 	chrome.runtime.onInstalled.addListener(function(details){
 		var thisVersion = chrome.runtime.getManifest().version;
 		if(details.reason == "install"){
-			if(!DEBUG_MODE){
-				_gaq.push(['_trackEvent', 'ext', 'install', thisVersion]);
-			}
+			_gaq.push(['_trackEvent', 'ext', 'install', thisVersion]);
 		}else if(details.reason == "update"){
-			if(!DEBUG_MODE){
-				_gaq.push(['_trackEvent', 'ext', 'update', thisVersion]);
-			}
+			_gaq.push(['_trackEvent', 'ext', 'update', thisVersion]);
 			//console.log("Updated from " + details.previousVersion + " to " + thisVersion +" + !");
 		}
 		//check if bkurl is set
