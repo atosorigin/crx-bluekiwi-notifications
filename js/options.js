@@ -5,7 +5,7 @@ function save_options() {
 
   var bkurl = document.getElementById("url").value;
   
-  bkurl = bkurl.replace(/\/$/,'');//remove last splash if exists
+  bkurl = bkurl.replace(/\/+$/,'');//remove last splash if exists
   console.log('bkurl ' + bkurl);
   
   var notifurl = bkurl + NOTIF_URL;
