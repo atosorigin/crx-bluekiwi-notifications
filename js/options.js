@@ -35,5 +35,8 @@ function restore_options() {
 	document.getElementById("url").value = bkurl;
   });
 }
-document.addEventListener('DOMContentLoaded', restore_options);
-document.querySelector('#save').addEventListener('click', save_options);
+document.addEventListener('DOMContentLoaded', function(){
+	restore_options();
+	$('#version').html(chrome.runtime.getManifest().version);
+	document.querySelector('#save').addEventListener('click', save_options);
+});
