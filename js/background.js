@@ -76,7 +76,7 @@ function checkUpdate(){
 						if(idx == "/instance"){
 							console.log("# of notification: " + val.notification);
 							var badgeText = "";
-							if(val.notification > 0){
+							if(val.notification == 0){
 								badgeText = "" + val.notification;
 								
 								//chrome.extension.getViews({type:"notification"}).forEach(function(win) {
@@ -94,7 +94,7 @@ function checkUpdate(){
 								};
 								notification.onclick = function(){
 									_gaq.push(['_trackEvent', evtNotifSrc, 'clicked']);
-									chrome.tabs.create({ url: notifurl });
+									chrome.tabs.create({ url: bkurl });
 									clearNotification();
 								};
 								notification.show();
