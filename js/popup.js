@@ -57,14 +57,14 @@ function requestNotifications(bkurl, offset){
 			console.log('Error while loading or creating list of notifications, error message: ' + err.message);
 			$('#loading').hide();
 			var errorMsg = document.getElementById("status");
-			errorMsg.innerHTML = "<div class='alert alert-warning'>Error while loading notifications.  Are you <a href='" + bkurl + "' target='_blank'>logged in</a>?</div>";
+			errorMsg.innerHTML = "<div class='alert alert-warning enter-url'>Error while loading notifications.  Are you <a href='" + bkurl + "' target='_blank'>logged in</a>?</div>";
 		}
 	})
 	.fail(function(){
 		console.log("failed to fetch notification data")
 		$('#loading').hide();
 		var errorMsg = document.getElementById("status");
-		errorMsg.innerHTML = "<div class='alert'>You need to enter a BlueKiwi URL in the <a href='options.html'>Options</a> page before you can begin</div>";
+		errorMsg.innerHTML = "<div class='alert enter-url'>You need to enter a BlueKiwi URL in the <a href='options.html' target='_blank'>Options</a> page before you can begin</div>";
 	});;
 }
 

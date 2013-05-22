@@ -81,3 +81,12 @@ h4 {
 	float:left;
 	padding:5px;
 }
+
+.container
+ {
+  width: 940px;
+}
+
+.enter-url{
+	margin-top: 10px;
+}
