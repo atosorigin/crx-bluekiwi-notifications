@@ -90,3 +90,7 @@ h4 {
 .enter-url{
 	margin-top: 10px;
 }
+
+.nav-right {
+	text-align: right;
+}
