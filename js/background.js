@@ -16,11 +16,7 @@ function init(){
 		//check if bkurl is set
 		chrome.storage.sync.get('bkurl', function(items){
 			if(!items.bkurl){
-				webkitNotifications.createNotification(
-							  'img/icon128.png',  // icon url - can be relative
-							  'You need to enter a BlueKiwi URL in the Options page before you can begin',  // notification title
-							  ''  // notification body text
-							).show();
+				chrome.tabs.create({ url: 'options.html' });
 			}
 		});
 	});
