@@ -78,7 +78,6 @@ body {
 
 h4 {
 	font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
-	float:left;
 	padding:5px;
 }
 
@@ -93,4 +92,8 @@ h4 {
 
 .nav-right {
 	text-align: right;
+}
+
+ul.changelog-list{
+	margin-left: 20px;
 }
