@@ -64,48 +64,50 @@ function checkUpdate(){
 	clearNotification();
 	chrome.storage.sync.get('bkurl', function(items){
 		var bkurl = items.bkurl;
-		var notifurl = bkurl + NOTIF_URL;
-		console.log('check notification with ' + notifurl);
-		$.get(notifurl, function(data){
-			if(typeof data.data === 'undefined'){
-				chrome.browserAction.setBadgeText( { text: "ERR"} );
-			}else{
-				var binding = data.data.binding;
-				$.each( binding, function(idx, val){
-					if(idx == "/instance"){
-						console.log("# of notification: " + val.notification);
-						var badgeText = "";
-						if(val.notification > 0){
-							badgeText = "" + val.notification;
-							
-							//chrome.extension.getViews({type:"notification"}).forEach(function(win) {
-							//});
-							
-							notification = webkitNotifications.createNotification(
-							  'img/icon128.png',  // icon url - can be relative
-							  'You have ' + val.notification + ' notification' + (val.notification > 1?'s':'')+ '!',  // notification title
-							  ''  // notification body text
-							);
-							_gaq.push(['_trackEvent', evtNotifSrc, 'created']);
-							notification.onclose = function(){
-								//_gaq.push(['_trackEvent', evtNotifSrc, 'closed']);
-								notification = null;							
-							};
-							notification.onclick = function(){
-								_gaq.push(['_trackEvent', evtNotifSrc, 'clicked']);
-								chrome.tabs.create({ url: notifurl });
+		if(bkurl){
+			var notifurl = bkurl + NOTIF_URL;
+			console.log('check notification with ' + notifurl);
+			$.get(notifurl, function(data){
+				if(typeof data.data === 'undefined'){
+					chrome.browserAction.setBadgeText( { text: "ERR"} );
+				}else{
+					var binding = data.data.binding;
+					$.each( binding, function(idx, val){
+						if(idx == "/instance"){
+							console.log("# of notification: " + val.notification);
+							var badgeText = "";
+							if(val.notification > 0){
+								badgeText = "" + val.notification;
+								
+								//chrome.extension.getViews({type:"notification"}).forEach(function(win) {
+								//});
+								
+								notification = webkitNotifications.createNotification(
+								  'img/icon128.png',  // icon url - can be relative
+								  'You have ' + val.notification + ' notification' + (val.notification > 1?'s':'')+ '!',  // notification title
+								  ''  // notification body text
+								);
+								_gaq.push(['_trackEvent', evtNotifSrc, 'created']);
+								notification.onclose = function(){
+									//_gaq.push(['_trackEvent', evtNotifSrc, 'closed']);
+									notification = null;							
+								};
+								notification.onclick = function(){
+									_gaq.push(['_trackEvent', evtNotifSrc, 'clicked']);
+									chrome.tabs.create({ url: notifurl });
+									clearNotification();
+								};
+								notification.show();
+							}else{
 								clearNotification();
-							};
-							notification.show();
-						}else{
-							clearNotification();
+							}
+							chrome.browserAction.setBadgeText( { text: badgeText} );
 						}
-						chrome.browserAction.setBadgeText( { text: badgeText} );
-					}
-				});
-			}
-		})
-		.fail(function(){console.log("failed to fetch notification data")});
+					});
+				}
+			})
+			.fail(function(){console.log("failed to fetch notification data")});
+		}
 	});
 }
 
