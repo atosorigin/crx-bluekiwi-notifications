@@ -1,7 +1,7 @@
 crx-bluekiwi-notifications
 ==========================
 
-BlueKiwi Notifier for Chrome.
+blueKiwi Notifier for Chrome.
 
-BlueKiwi ZEN Notifications
-This is an unofficial extension for Atos Staff for use with BlueKiwi
+blueKiwi ZEN Notifications
+This is an unofficial extension for Atos Staff for use with blueKiwi

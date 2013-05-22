@@ -68,7 +68,7 @@ function requestNotifications(bkurl, offset){
 		console.log("failed to fetch notification data")
 		$('#loading').hide();
 		var errorMsg = document.getElementById("status");
-		errorMsg.innerHTML = "<div class='alert enter-url'>You need to enter a BlueKiwi URL in the <a href='options.html' target='_blank'>Options</a> page before you can begin</div>";
+		errorMsg.innerHTML = "<div class='alert enter-url'>You need to enter a blueKiwi URL in the <a href='options.html' target='_blank'>Options</a> page before you can begin</div>";
 	});;
 }
 
