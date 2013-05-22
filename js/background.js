@@ -28,16 +28,13 @@ function init(){
 
 	/*
 	//for testing
-	notification = webkitNotifications.createNotification(
-						  '',  // icon url - can be relative
-						  'test',  // notification title
-						  'test'  // notification body text
-						);
+	var notification = webkitNotifications.createHTMLNotification(
+	  'notification.html#1'  // html url - can be relative
+	);
 	notification.show();
-	console.log('desktop notif');
 	chrome.extension.getViews({type:"notification"}).forEach(function(win) {
-	  //FIXME cannot fetch any notification
-		console.log('notification ' + win);
+	  console.log(win);
+	});
 	});
 	*/
 }
