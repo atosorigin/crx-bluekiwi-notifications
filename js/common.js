@@ -15,3 +15,14 @@ var NEWS_READ_URL = "/syndication/home?filterType=all";
 
 var FETCH_INTERVAL = 2 * 60 * 1000;
 var ALARM_NAME = "notification_checker";
+
+
+var DEBUG_MODE = function(){
+	var extid = chrome.i18n.getMessage('@@extension_id');
+	var prodextid = 'nmokaddnjebadokcmjfbinphpfkenghp';
+	if(prodextid === extid){
+		return false;
+	}else{
+		return true;
+	}
+}();
