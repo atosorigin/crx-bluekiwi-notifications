@@ -97,3 +97,9 @@ h4 {
 ul.changelog-list{
 	margin-left: 20px;
 }
+
+.changelog-area {
+	height: 300px;
+	overflow-y: scroll;
+
+}
