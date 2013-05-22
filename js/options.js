@@ -1,4 +1,7 @@
 function save_options() {
+  $('#url').prop('disabled',true);
+  $('#save').prop('disabled',true);
+
   var bkurl = document.getElementById("url").value;
   
   bkurl = bkurl.replace(/\/$/,'');//remove last splash if exists
@@ -20,8 +23,12 @@ function save_options() {
 				}, 2000);
 			});
 		}
+		$('#url').prop('disabled',false);
+		$('#save').prop('disabled',false);
   }).fail(function(){
 		status.html(errorhtml);
+		$('#url').prop('disabled',false);
+		$('#save').prop('disabled',false);
   });
 }
 
