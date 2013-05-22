@@ -10,7 +10,7 @@ function save_options() {
   
   var notifurl = bkurl + NOTIF_URL;
   var status = $("#status");
-  var errorhtml = "<div class='alert alert-error'><strong>Invalid URL!</strong></div>";
+  var errorhtml = "<div class='alert alert-warning enter-url'>Error while validating blueKiwi URL.  Are you <a href='" + bkurl + "' target='_blank'>logged in</a>?</div>";
   status.html("<div class='alert alert-info'><img src='img/ajax-loader.gif'/><strong>Validating URL...</strong></div>");
   $.get(notifurl, function(data){
 		if(typeof data.data === 'undefined'){
