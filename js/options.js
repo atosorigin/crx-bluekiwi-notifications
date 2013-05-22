@@ -1,4 +1,5 @@
 function save_options() {
+  var evtOptionSrc = 'options';
   $('#url').prop('disabled',true);
   $('#save').prop('disabled',true);
 
@@ -13,9 +14,11 @@ function save_options() {
   status.html("<div class='alert alert-info'><img src='img/ajax-loader.gif'/><strong>Validating URL...</strong></div>");
   $.get(notifurl, function(data){
 		if(typeof data.data === 'undefined'){
+			_gaq.push(['_trackEvent', evtOptionSrc, 'bkurl' , 'invalid']);
 			$("#status").html(errorhtml);
 		}else{
 			chrome.storage.sync.set({'bkurl': bkurl},function(){
+				_gaq.push(['_trackEvent', evtOptionSrc, 'bkurl' , 'valid']);
 				console.log('bkurl saved with ' + bkurl);
 				status.html("<div class='alert alert-success'><strong>Confirmed!</strong> URL Saved!</div>");
 				setTimeout(function() {
@@ -26,6 +29,7 @@ function save_options() {
 		$('#url').prop('disabled',false);
 		$('#save').prop('disabled',false);
   }).fail(function(){
+		_gaq.push(['_trackEvent', evtOptionSrc, 'bkurl' , 'invalid']);
 		status.html(errorhtml);
 		$('#url').prop('disabled',false);
 		$('#save').prop('disabled',false);

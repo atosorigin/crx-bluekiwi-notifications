@@ -57,7 +57,6 @@ function clearNotification(){
 
 function checkUpdate(){
 	console.log('checking update');
-	clearNotification();
 	chrome.storage.sync.get('bkurl', function(items){
 		var bkurl = items.bkurl;
 		if(bkurl){
@@ -75,15 +74,16 @@ function checkUpdate(){
 							if(val.notification > 0){
 								badgeText = "" + val.notification;
 								
-								//chrome.extension.getViews({type:"notification"}).forEach(function(win) {
-								//});
-								
+								if(notification == null){
+									_gaq.push(['_trackEvent', evtNotifSrc, 'created']);
+								}
+								clearNotification();
 								notification = webkitNotifications.createNotification(
 								  'img/icon128.png',  // icon url - can be relative
 								  'You have ' + val.notification + ' notification' + (val.notification > 1?'s':'')+ '!',  // notification title
 								  ''  // notification body text
 								);
-								_gaq.push(['_trackEvent', evtNotifSrc, 'created']);
+								
 								notification.onclose = function(){
 									//_gaq.push(['_trackEvent', evtNotifSrc, 'closed']);
 									notification = null;							
