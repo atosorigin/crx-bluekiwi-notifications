@@ -22,7 +22,11 @@ function requestNotifications(bkurl, offset){
 				media.click((function(feed) {
 					return function() {
 						_gaq.push(['_trackEvent', 'popup-feed', 'clicked']);
-						chrome.tabs.create({ url: feed.rel });
+						var itemurl = feed.rel;
+						if(itemurl.indexOf('http') != 0){
+							itemurl = bkurl + itemurl;
+						}
+						chrome.tabs.create({ url: itemurl });
 					};
 				})(feed));
 				
