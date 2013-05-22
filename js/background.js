@@ -76,7 +76,7 @@ function checkUpdate(){
 						if(idx == "/instance"){
 							console.log("# of notification: " + val.notification);
 							var badgeText = "";
-							if(val.notification == 0){
+							if(val.notification > 0){
 								badgeText = "" + val.notification;
 								
 								//chrome.extension.getViews({type:"notification"}).forEach(function(win) {
