@@ -100,6 +100,6 @@ ul.changelog-list{
 
 .changelog-area {
 	height: 300px;
-	overflow-y: scroll;
+	overflow-y: auto;
 
 }
