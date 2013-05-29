@@ -28,7 +28,8 @@
   "permissions": [
 	"http://*/*", "https://*/*",
 	"notifications",
-	"storage"
+	"storage",
+	"background"
   ],
   
   "web_accessible_resources": [
