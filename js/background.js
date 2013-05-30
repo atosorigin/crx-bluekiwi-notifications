@@ -16,9 +16,9 @@ function init(){
 			}
 		});
 	});
-	var t = setInterval(checkUpdate, FETCH_INTERVAL);
+	//var t = setTimeout(checkUpdate, FETCH_INTERVAL);
 
-	//TODO use alarms instead of setInterval as suggested by Chrome extension guidline
+	//TODO use alarms instead of setTimeout as suggested by Chrome extension guidline
 	/*
 	chrome.alarms.create(ALARM_NAME, {
 		periodInMinutes: 1
@@ -42,14 +42,18 @@ var evtNotifSrc = 'bg-notif';
 
 function clearNotification(){
 	if(notification != null){
+		console.log('canceling notification');
 		notification.cancel();
 		notification = null;
 		//_gaq.push(['_trackEvent', evtNotifSrc, 'canceled']);
+	}else{
+		console.log('notification is null');
 	}
 }
 
 function checkUpdate(){
 	console.log('checking update');
+	clearNotification();
 	chrome.storage.sync.get('bkurl', function(items){
 		var bkurl = items.bkurl;
 		if(bkurl){
@@ -68,9 +72,9 @@ function checkUpdate(){
 								badgeText = "" + val.notification;
 								
 								if(notification == null){
-									_gaq.push(['_trackEvent', evtNotifSrc, 'created']);
+									//_gaq.push(['_trackEvent', evtNotifSrc, 'created']);
 								}
-								clearNotification();
+								
 								notification = webkitNotifications.createNotification(
 								  'img/icon128.png',  // icon url - can be relative
 								  'You have ' + val.notification + ' notification' + (val.notification > 1?'s':'')+ '!',  // notification title
@@ -95,7 +99,11 @@ function checkUpdate(){
 					});
 				}
 			})
-			.fail(function(){console.log("failed to fetch notification data")});
+			.fail(function(){console.log("failed to fetch notification data")})
+			.always(function(){
+				//check update
+				setTimeout(checkUpdate, FETCH_INTERVAL);
+			});
 		}
 	});
 }
