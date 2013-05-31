@@ -118,7 +118,7 @@ function checkUpdate(){
 					});
 				}
 			})
-			.fail(function(){
+			.fail(function(jqXHR, textStatus, errorThrown){
         console.log("failed to fetch notification data");
         _gaq.push(['_trackEvent', evtNotifReqSrc , 'fail' , textStatus]);
       })
