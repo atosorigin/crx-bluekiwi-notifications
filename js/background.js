@@ -61,10 +61,12 @@ function checkUpdate(){
 	chrome.storage.sync.get('bkurl', function(items){
 		var bkurl = items.bkurl;
 		if(bkurl){
+      var evtNotifReqSrc = 'notif-req';
 			var notifurl = bkurl + NOTIF_URL;
 			console.log('check notification with ' + notifurl);
 			$.get(notifurl, function(data){
 				if(typeof data.data === 'undefined'){
+          _gaq.push(['_trackEvent', evtNotifReqSrc , 'fail' , 'invalid resp data']);
 					chrome.browserAction.setBadgeText( { text: "ERR"} );
           if(loginNotification == null){
             loginNotification = webkitNotifications.createNotification(
@@ -116,7 +118,10 @@ function checkUpdate(){
 					});
 				}
 			})
-			.fail(function(){console.log("failed to fetch notification data")})
+			.fail(function(){
+        console.log("failed to fetch notification data");
+        _gaq.push(['_trackEvent', evtNotifReqSrc , 'fail' , textStatus]);
+      })
 			.always(function(){
 				//check update
 				setTimeout(checkUpdate, FETCH_INTERVAL);
