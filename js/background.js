@@ -1,4 +1,5 @@
 var notification = null;
+var loginNotification = null;
 
 function init(){
 	chrome.runtime.onInstalled.addListener(function(details){
@@ -62,6 +63,19 @@ function checkUpdate(){
 			$.get(notifurl, function(data){
 				if(typeof data.data === 'undefined'){
 					chrome.browserAction.setBadgeText( { text: "ERR"} );
+          if(loginNotification == null){
+            loginNotification = webkitNotifications.createNotification(
+                    'img/icon128.png',
+                    'Please login blueKiwi in order to receive notification.',
+                    ''
+                  );
+            loginNotification.onclick = function(){
+									_gaq.push(['_trackEvent', evtNotifSrc, 'clicked']);
+									chrome.tabs.create({ url: bkurl });
+									loginNotification.cancel();
+								};
+            loginNotification.show();
+          }
 				}else{
 					var binding = data.data.binding;
 					$.each( binding, function(idx, val){
