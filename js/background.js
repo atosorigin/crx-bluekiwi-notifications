@@ -25,6 +25,9 @@ function init(){
 		periodInMinutes: 1
 	});
 	*/
+  
+  //setup timeout for ajax request
+  $.ajaxSetup({timeout:60 * 1000}); 
 	checkUpdate();
 
 	/*
