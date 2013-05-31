@@ -1,3 +1,5 @@
+$.ajaxSetup({timeout:10 * 1000}); 
+
 function save_options() {
   var evtOptionSrc = 'options';
   $('#url').prop('disabled',true);
@@ -28,11 +30,12 @@ function save_options() {
 		}
 		$('#url').prop('disabled',false);
 		$('#save').prop('disabled',false);
-  }).fail(function(){
-		_gaq.push(['_trackEvent', evtOptionSrc, 'bkurl' , 'invalid']);
+  }).fail(function(jqXHR, textStatus, errorThrown){
 		status.html(errorhtml);
 		$('#url').prop('disabled',false);
 		$('#save').prop('disabled',false);
+		console.error('unable to get notifiation data from %s. Error Message: %s', bkurl, textStatus);
+		_gaq.push(['_trackEvent', evtOptionSrc, 'bkurl' , 'error-' + textStatus]);
   });
 }
 
