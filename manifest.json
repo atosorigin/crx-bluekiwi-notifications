@@ -3,7 +3,7 @@
 
   "name": "blueKiwi Notifier",
   "description": "This is an unofficial Chrome extension for use with blueKiwi",
-  "version": "0.3.4.3",
+  "version": "1.0.0.0",
 
   "background": {
     "scripts": [
