@@ -31,7 +31,7 @@ function save_options() {
 				chrome.storage.sync.set({'bkurl': bkurl},function(){
 					_gaq.push(['_trackEvent', evtOptionSrc, 'bkurl' , 'valid']);
 					console.log('bkurl saved with ' + bkurl);
-					status.html("<div class='alert alert-success'><strong>Confirmed!</strong> URL Saved!</div>");
+					status.html("<div class='alert alert-success'><strong>Confirmed!</strong> Settings Saved!</div>");
 					setTimeout(function() {
 						status.html('');
 					}, 2000);
