@@ -156,11 +156,18 @@ function checkUpdate(){
 
 function enableNotification(b){
   console.log('enableNotification ' + b);
+  var icon = "img/icon48.png";
   if(b){
     checkUpdate();
   }else{
     clearTimeout(checkUpdateTimeoutId);
+    icon = "img/icon48-gray.png";
   }
+  chrome.browserAction.setIcon({
+      path  : icon
+    }, function(){
+    console.log('browser-action icon updated');
+  });
 }
 
 init();
