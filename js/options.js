@@ -47,6 +47,10 @@ function save_options() {
 			_gaq.push(['_trackEvent', evtOptionSrc, 'bkurl' , 'error-' + textStatus]);
 	  });
    }
+   
+   var timer = document.getElementById("noti-time").value; 
+   
+   
 }
 
 function restore_options() {
