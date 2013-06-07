@@ -49,6 +49,7 @@ function init(){
 
 	/*
 	//for testing
+  createNotification(1);
 	var notification = webkitNotifications.createHTMLNotification(
 	  'notification.html#1'  // html url - can be relative
 	);
@@ -111,22 +112,7 @@ function checkUpdate(){
 									//_gaq.push(['_trackEvent', evtNotifSrc, 'created']);
 								}
 								
-								notification = webkitNotifications.createNotification(
-								  'img/icon128.png',  // icon url - can be relative
-								  'You have ' + val.notification + ' notification' + (val.notification > 1?'s':'')+ '!',  // notification title
-								  ''  // notification body text
-								);
-								
-								notification.onclose = function(){
-									//_gaq.push(['_trackEvent', evtNotifSrc, 'closed']);
-									notification = null;							
-								};
-								notification.onclick = function(){
-									_gaq.push(['_trackEvent', evtNotifSrc, 'clicked']);
-									chrome.tabs.create({ url: bkurl });
-									clearNotification();
-								};
-								notification.show();
+								createNotification(val.notification);
 							}else{
 								clearNotification();
 							}
@@ -154,13 +140,36 @@ function checkUpdate(){
 	});
 }
 
+function createNotification(cnt){
+  var notif = webkitNotifications.createNotification(
+    'img/icon128.png',  // icon url - can be relative
+    'You have ' + cnt + ' notification' + (cnt > 1?'s':'')+ '!',  // notification title
+    ''  // notification body text
+  );
+  notification = notif;
+  
+  notif.onclick = function(){
+    _gaq.push(['_trackEvent', evtNotifSrc, 'clicked']);
+    chrome.tabs.create({ url: bkurl });
+    clearNotification();
+  };
+  
+  chrome.storage.sync.get(['notifDisabled'], function(items){
+    var notifDisabled = items.notifDisabled;
+    if(!notifDisabled){
+      console.log('notification=' + notif);
+      notif.show();
+    }
+  });
+}
+
 function enableNotification(b){
   console.log('enableNotification ' + b);
   var icon = "img/icon48.png";
   if(b){
     checkUpdate();
   }else{
-    clearTimeout(checkUpdateTimeoutId);
+    //clearTimeout(checkUpdateTimeoutId);
     icon = "img/icon48-gray.png";
   }
   chrome.browserAction.setIcon({
