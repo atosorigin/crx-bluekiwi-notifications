@@ -11,53 +11,46 @@ function save_options() {
 
   var bkurl = document.getElementById("url").value;
   
-  if(!validateURL(bkurl)){
-    $("#status").html("<div class='alert alert-warning enter-url'>Invalid URL format.");
+  bkurl = bkurl.replace(/\/+$/,'');//remove last splash if exists
+  console.log('bkurl ' + bkurl);
+  
+  var notifurl = bkurl + NOTIF_URL;
+  var status = $("#status");
+  var errorhtml = "<div class='alert alert-warning enter-url'>Error while validating blueKiwi URL.  Are you <a href='" + bkurl + "' target='_blank'>logged in</a>?</div>";
+  status.html("<div class='alert alert-info'><img src='img/ajax-loader.gif'/><strong>Validating URL...</strong></div>");
+  $.get(notifurl, function(data){
+    if(typeof data.data === 'undefined'){
+      _gaq.push(['_trackEvent', evtOptionSrc, 'bkurl' , 'invalid']);
+      $("#status").html(errorhtml);
+    }else{
+      chrome.storage.sync.set({'bkurl': bkurl},function(){
+        _gaq.push(['_trackEvent', evtOptionSrc, 'bkurl' , 'valid']);
+        console.log('bkurl saved with ' + bkurl);
+        status.html("<div class='alert alert-success'><strong>Confirmed!</strong> Settings Saved!</div>");
+        setTimeout(function() {
+          status.html('');
+        }, 2000);
+      });
+    }
     $('#url').prop('disabled',false);
-		$('#save').prop('disabled',false);
-  }else{
-	  bkurl = bkurl.replace(/\/+$/,'');//remove last splash if exists
-	  console.log('bkurl ' + bkurl);
-	  
-	  var notifurl = bkurl + NOTIF_URL;
-	  var status = $("#status");
-	  var errorhtml = "<div class='alert alert-warning enter-url'>Error while validating blueKiwi URL.  Are you <a href='" + bkurl + "' target='_blank'>logged in</a>?</div>";
-	  status.html("<div class='alert alert-info'><img src='img/ajax-loader.gif'/><strong>Validating URL...</strong></div>");
-	  $.get(notifurl, function(data){
-			if(typeof data.data === 'undefined'){
-				_gaq.push(['_trackEvent', evtOptionSrc, 'bkurl' , 'invalid']);
-				$("#status").html(errorhtml);
-			}else{
-				chrome.storage.sync.set({'bkurl': bkurl},function(){
-					_gaq.push(['_trackEvent', evtOptionSrc, 'bkurl' , 'valid']);
-					console.log('bkurl saved with ' + bkurl);
-					status.html("<div class='alert alert-success'><strong>Confirmed!</strong> Settings Saved!</div>");
-					setTimeout(function() {
-						status.html('');
-					}, 2000);
-				});
-			}
-			$('#url').prop('disabled',false);
-			$('#save').prop('disabled',false);
-	  }).fail(function(jqXHR, textStatus, errorThrown){
-			status.html(errorhtml);
-			$('#url').prop('disabled',false);
-			$('#save').prop('disabled',false);
-			console.error('unable to get notifiation data from %s. Error Message: %s', bkurl, textStatus);
-			_gaq.push(['_trackEvent', evtOptionSrc, 'bkurl' , 'error-' + textStatus]);
-	  });
-      
-    var options = {
-      'notifFetchInterval': $("#noti-time").val(),
-      'notifDisabled': $("#noti-disable").prop('checked')
-    };
-      
-    chrome.storage.sync.set(options, function(){
-        console.log('options saved' + JSON.stringify(options));
-        chrome.extension.getBackgroundPage().enableNotification(!options.notifDisabled);
-		});
-  }
-   
+    $('#save').prop('disabled',false);
+  }).fail(function(jqXHR, textStatus, errorThrown){
+    status.html(errorhtml);
+    $('#url').prop('disabled',false);
+    $('#save').prop('disabled',false);
+    console.error('unable to get notifiation data from %s. Error Message: %s', bkurl, textStatus);
+    _gaq.push(['_trackEvent', evtOptionSrc, 'bkurl' , 'error-' + textStatus]);
+  });
+    
+  var options = {
+    'notifFetchInterval': $("#noti-time").val(),
+    'notifDisabled': $("#noti-disable").prop('checked')
+  };
+    
+  chrome.storage.sync.set(options, function(){
+      console.log('options saved' + JSON.stringify(options));
+      chrome.extension.getBackgroundPage().enableNotification(!options.notifDisabled);
+  });
 }
 
 function restore_options() {
@@ -92,4 +85,12 @@ document.addEventListener('DOMContentLoaded', function(){
       save_options();
   });
 
+  var url = document.getElementById("url");
+  url.addEventListener("input", function() {
+      if (!validateURL(url.value)) {
+          url.setCustomValidity("Invalid URL format.");
+      } else {
+          url.setCustomValidity("");
+      }
+  });
 });
