@@ -54,6 +54,7 @@ function save_options() {
       
     chrome.storage.sync.set(options, function(){
         console.log('options saved' + JSON.stringify(options));
+        chrome.extension.getBackgroundPage().enableNotification(!options.notifDisabled);
 		});
   }
    

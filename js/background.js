@@ -1,5 +1,6 @@
 var notification = null;
 var loginNotification = null;
+var checkUpdateTimeoutId = null;
 
 function init(){
 	chrome.runtime.onInstalled.addListener(function(details){
@@ -27,8 +28,16 @@ function init(){
 	*/
   
   //setup timeout for ajax request
-  $.ajaxSetup({timeout:60 * 1000}); 
-	checkUpdate();
+  $.ajaxSetup({timeout:60 * 1000});
+  
+  chrome.storage.sync.get(['notifDisabled'], function(items){
+    var notifDisabled = items.notifDisabled;
+    if(!notifDisabled){
+      checkUpdate();
+    }else{
+      console.log('notification is disabled');
+    }
+  });
 
 	/*
 	//for testing
@@ -130,11 +139,20 @@ function checkUpdate(){
 						fetchIntvl = DEFAULT_FETCH_INTERVAL;
 					}
 					console.log('fetchIntvl='+fetchIntvl);
-					setTimeout(checkUpdate, fetchIntvl * 60 * 1000);
+					checkUpdateTimeoutId = setTimeout(checkUpdate, fetchIntvl * 60 * 1000);
 				});
 			});
 		}
 	});
+}
+
+function enableNotification(b){
+  console.log('enableNotification ' + b);
+  if(b){
+    checkUpdate();
+  }else{
+    clearTimeout(checkUpdateTimeoutId);
+  }
 }
 
 init();
