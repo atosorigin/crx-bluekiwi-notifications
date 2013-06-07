@@ -124,7 +124,14 @@ function checkUpdate(){
       })
 			.always(function(){
 				//check update
-				setTimeout(checkUpdate, FETCH_INTERVAL);
+				chrome.storage.sync.get('notifFetchInterval', function(items){
+					var fetchIntvl = items.notifFetchInterval;
+					if(!fetchIntvl){
+						fetchIntvl = DEFAULT_FETCH_INTERVAL;
+					}
+					console.log('fetchIntvl='+fetchIntvl);
+					setTimeout(checkUpdate, fetchIntvl * 60 * 1000);
+				});
 			});
 		}
 	});

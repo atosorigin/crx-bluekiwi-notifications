@@ -46,25 +46,49 @@ function save_options() {
 			console.error('unable to get notifiation data from %s. Error Message: %s', bkurl, textStatus);
 			_gaq.push(['_trackEvent', evtOptionSrc, 'bkurl' , 'error-' + textStatus]);
 	  });
-   }
-   
-   var timer = document.getElementById("noti-time").value; 
-   
+      
+    var options = {
+      'notifFetchInterval': $("#noti-time").val(),
+      'notifDisabled': $("#noti-disable").prop('checked')
+    };
+      
+    chrome.storage.sync.set(options, function(){
+        console.log('options saved' + JSON.stringify(options));
+		});
+  }
    
 }
 
 function restore_options() {
-  chrome.storage.sync.get('bkurl', function(items){
+  chrome.storage.sync.get(['bkurl','notifFetchInterval','notifDisabled'], function(items){
 	var bkurl = items.bkurl;
+	var fetchIntvl = items.notifFetchInterval;
+	var notifDisabled = items.notifDisabled;
 	console.log('bkurl got ' + bkurl);
-	if (!bkurl) {
-		return;
+	if (bkurl) {
+		$("#url").val(bkurl);
 	}
-	document.getElementById("url").value = bkurl;
+	if(!fetchIntvl){
+		fetchIntvl = DEFAULT_FETCH_INTERVAL;
+	}
+
+	if(notifDisabled){
+		$('#noti-disable').prop('checked',true);
+	}else{
+		$('#noti-disable').prop('checked',false);
+	}
+	$("#noti-time").val(fetchIntvl);
   });
 }
 document.addEventListener('DOMContentLoaded', function(){
 	restore_options();
 	$('#version').html(chrome.runtime.getManifest().version);
-	document.querySelector('#save').addEventListener('click', save_options);
+	//$('#save').click(save_options);
+	
+  $('#form-options').submit(function(event){
+			console.log('submit');
+			event.preventDefault();
+      save_options();
+  });
+
 });
