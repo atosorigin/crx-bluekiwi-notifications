@@ -44,11 +44,7 @@ function init(){
   
   chrome.storage.sync.get(['notifDisabled'], function(items){
     var notifDisabled = items.notifDisabled;
-    if(!notifDisabled){
-      checkUpdate();
-    }else{
-      console.log('notification is disabled');
-    }
+    enableNotification(!notifDisabled);
   });
 
 	/*
