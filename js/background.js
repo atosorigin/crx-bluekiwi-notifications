@@ -9,7 +9,19 @@ function init(){
 			_gaq.push(['_trackEvent', 'ext', 'install', thisVersion]);
 		}else if(details.reason == "update"){
 			_gaq.push(['_trackEvent', 'ext', 'update', thisVersion]);
-			//console.log("Updated from " + details.previousVersion + " to " + thisVersion +" + !");
+			console.log("Updated from " + details.previousVersion + " to " + thisVersion +" + !");
+      
+      var notif = webkitNotifications.createNotification(
+        'img/icon128.png',
+        'blueKiwi Notifier is Updated!',
+        'Updated from ' + details.previousVersion + ' to ' + thisVersion + '.'
+        + '\n' + 'Click here to view the change log.'
+			);
+      notif.onclick = function(){
+        chrome.tabs.create({ url: 'changelog.html' });
+        notif.cancel();
+      };
+      notif.show();
 		}
 		//check if bkurl is set
 		chrome.storage.sync.get('bkurl', function(items){
