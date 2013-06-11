@@ -22,6 +22,7 @@ function init(){
         notif.cancel();
       };
       notif.show();
+      setTimeout(function(){notif.cancel()},10 * 1000);
 		}
 		//check if bkurl is set
 		chrome.storage.sync.get('bkurl', function(items){
