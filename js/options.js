@@ -1,5 +1,7 @@
 $.ajaxSetup({timeout:30 * 1000}); 
 
+var _bkurl = null;
+
 function validateURL(url){
 	return /^(https?):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test(url);
 }
@@ -26,6 +28,7 @@ function save_options() {
       chrome.storage.sync.set({'bkurl': bkurl},function(){
         _gaq.push(['_trackEvent', evtOptionSrc, 'bkurl' , 'valid']);
         console.log('bkurl saved with ' + bkurl);
+        _bkurl = bkurl;
         status.html("<div class='alert alert-success'><strong>Confirmed!</strong> Settings Saved!</div>");
         setTimeout(function() {
           status.html('');
@@ -61,6 +64,7 @@ function restore_options() {
 	console.log('bkurl got ' + bkurl);
 	if (bkurl) {
 		$("#url").val(bkurl);
+    _bkurl = bkurl;
 	}
 	if(!fetchIntvl){
 		fetchIntvl = DEFAULT_FETCH_INTERVAL;
@@ -93,4 +97,10 @@ document.addEventListener('DOMContentLoaded', function(){
           url.setCustomValidity("");
       }
   });
+  
+  window.onbeforeunload = function(){
+    if(!_bkurl){
+      return 'blueKiwi URL have to be set in order to receive notification.';
+    }
+  }
 });
