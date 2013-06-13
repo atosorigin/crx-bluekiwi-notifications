@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function(){
   
   window.onbeforeunload = function(){
     if(!_bkurl){
-      return 'blueKiwi URL have to be set in order to receive notification.';
+      return 'The blueKiwi URL needs to be set in order to receive notifications.';
     }
   }
 });
