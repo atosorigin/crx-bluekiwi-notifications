@@ -167,10 +167,10 @@ function createNotification(cnt){
 function enableNotification(b){
   console.log('enableNotification ' + b);
   var icon = "img/icon48.png";
+  clearTimeout(checkUpdateTimeoutId);
   if(b){
     checkUpdate();
   }else{
-    //clearTimeout(checkUpdateTimeoutId);
     icon = "img/icon48-gray.png";
   }
   chrome.browserAction.setIcon({
