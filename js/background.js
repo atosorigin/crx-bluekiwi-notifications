@@ -151,7 +151,7 @@ function createNotification(cnt){
   
   notif.onclick = function(){
     _gaq.push(['_trackEvent', evtNotifSrc, 'clicked']);
-    chrome.tabs.create({ url: bkurl });
+    //chrome.tabs.create({ url: bkurl });
     clearNotification();
   };
   
