@@ -4,12 +4,18 @@
     <title>blueKiwi Notifier::Options</title>	
 	<script src="js/common.js"></script>
 	<script src="js/jquery.js"></script>
-	
+	<script src="js/farbtastic.js"></script>
 
+	<link href="css/farbtastic.css" type="text/css" />
     <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="css/style.css" rel="stylesheet" media="screen"> 
     
-
+ <script type="text/javascript" charset="utf-8">
+  $(document).ready(function() {
+    $('#demo').hide();
+    $('#picker').farbtastic('#color');
+  });
+ </script>
   </head>
   
   <body>
@@ -80,7 +86,12 @@
             </tbody>
             </table>
             
-            
+<div id="demo" style="color: red; font-size: 1.4em">jQuery.js is not present. You must install jQuery in this folder for the demo to work.</div>
+
+<form action="" style="width: 400px;">
+  <div class="form-item"><label for="color">Color:</label><input type="text" id="color" name="color" value="#123456" /></div><div id="picker"></div>
+</form>
+   
             
 
             

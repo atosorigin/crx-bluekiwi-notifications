@@ -10,6 +10,7 @@
 		"js/common.js",
 		"js/jquery.js",
 		"js/dropdown.js",
+		"js/farbtastic.js",
 		"js/background.js"
 	]
   },
