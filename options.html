@@ -4,12 +4,18 @@
     <title>blueKiwi Notifier::Options</title>	
 	<script src="js/common.js"></script>
 	<script src="js/jquery.js"></script>
-	
+	<script src="js/farbtastic.js"></script>
 
+	<link href="css/farbtastic.css" type="text/css" />
     <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="css/style.css" rel="stylesheet" media="screen"> 
     
-
+ <script type="text/javascript" charset="utf-8">
+  $(document).ready(function() {
+    $('#demo').hide();
+    $('#picker').farbtastic('#color');
+  });
+ </script>
   </head>
   
   <body>
@@ -32,10 +38,62 @@
 	<form id="form-options" action="#">
       <!--<legend> blueKiwi Options</legend>-->
         <div id="status"></div>
-            <h5>Insert the URL to your blueKiwi installation below.</h5>
-            <div class="input-append">
-              <input name="url" id="url" type="url" placeholder="blueKiwi URL">
-            </div>
+            <h5>Insert the URL(s) to your blueKiwi installation below.</h5>
+            <table class="table">
+            <thead>
+			  <tr>
+			    <td><strong>Instance Name</strong></td>
+			    <td><strong>bK URL</strong></td>
+			  </tr>
+            </thead>
+            <tbody>
+			  <tr>
+			    <td>
+			<div class="input-append">
+              <input name="name-1" id="name-1" type="url" placeholder="Instance Name 1">
+            </div>    
+			    </td>
+			    <td>
+			<div class="input-append">
+              <input name="url-1" id="url-1" type="url" placeholder="blueKiwi URL 1">
+            </div> 
+			    </td>
+			  </tr>
+			  <tr>
+			    <td>
+			<div class="input-append">
+              <input name="name-2" id="name-2" type="url" placeholder="Instance Name 2">
+            </div>    
+			    </td>
+			    <td>
+			<div class="input-append">
+              <input name="url-2" id="url-2" type="url" placeholder="blueKiwi URL 2">
+            </div> 
+			    </td>
+			  </tr>
+			  <tr>
+			    <td>
+			<div class="input-append">
+              <input name="name-3" id="name-3" type="url" placeholder="Instance Name 3">
+            </div>    
+			    </td>
+			    <td>
+			<div class="input-append">
+              <input name="url-3" id="url-3" type="url" placeholder="blueKiwi URL 3">
+            </div> 
+			    </td>
+			  </tr>  
+            </tbody>
+            </table>
+            
+<div id="demo" style="color: red; font-size: 1.4em">jQuery.js is not present. You must install jQuery in this folder for the demo to work.</div>
+
+<form action="" style="width: 400px;">
+  <div class="form-item"><label for="color">Color:</label><input type="text" id="color" name="color" value="#123456" /></div><div id="picker"></div>
+</form>
+   
+            
+
             
             <h5>How often would you like to check for notifications?</h5>
             <div class="input-append">
