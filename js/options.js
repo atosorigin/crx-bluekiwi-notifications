@@ -89,6 +89,7 @@ document.addEventListener('DOMContentLoaded', function(){
       save_options();
   });
 
+  /*
   var url = document.getElementById("url");
   url.addEventListener("input", function() {
       if (!validateURL(url.value)) {
@@ -97,10 +98,13 @@ document.addEventListener('DOMContentLoaded', function(){
           url.setCustomValidity("");
       }
   });
-  
+  */
   window.onbeforeunload = function(){
     if(!_bkurl){
       return 'The blueKiwi URL needs to be set in order to receive notifications.';
     }
   }
+  
+  $('#demo').hide();
+  $('#picker').farbtastic('#color');
 });
