@@ -80,65 +80,69 @@ function checkUpdate(){
 	chrome.storage.sync.get('bkurl', function(items){
 		var bkurl = items.bkurl;
 		if(bkurl){
-      var evtNotifReqSrc = 'notif-req';
-			var notifurl = bkurl + NOTIF_URL;
-			console.log('check notification with ' + notifurl);
-			$.get(notifurl, function(data){
-				if(typeof data.data === 'undefined'){
-          _gaq.push(['_trackEvent', evtNotifReqSrc , 'fail' , 'invalid resp data']);
-					chrome.browserAction.setBadgeText( { text: "ERR"} );
-          if(loginNotification == null){
-            loginNotification = webkitNotifications.createNotification(
-                    'img/icon128.png',
-                    'Please login blueKiwi in order to receive notification.',
-                    ''
-                  );
-            loginNotification.onclick = function(){
-									_gaq.push(['_trackEvent', evtNotifSrc, 'clicked']);
-									chrome.tabs.create({ url: bkurl });
-									loginNotification.cancel();
-								};
-            loginNotification.show();
-          }
-				}else{
-					var binding = data.data.binding;
-					$.each( binding, function(idx, val){
-						if(idx == "/instance"){
-							console.log("# of notification: " + val.notification);
-							var badgeText = "";
-							if(val.notification > 0){
-								badgeText = "" + val.notification;
-								
-								if(notification == null){
-									//_gaq.push(['_trackEvent', evtNotifSrc, 'created']);
-								}
-								
-								createNotification(val.notification);
-							}else{
-								clearNotification();
-							}
-							chrome.browserAction.setBadgeText( { text: badgeText} );
-						}
-					});
-				}
-			})
-			.fail(function(jqXHR, textStatus, errorThrown){
-        console.log("failed to fetch notification data");
-        _gaq.push(['_trackEvent', evtNotifReqSrc , 'fail' , textStatus + '-' + errorThrown]);
-      })
-			.always(function(){
-				//check update
-				chrome.storage.sync.get('notifFetchInterval', function(items){
-					var fetchIntvl = items.notifFetchInterval;
-					if(!fetchIntvl){
-						fetchIntvl = DEFAULT_FETCH_INTERVAL;
-					}
-					console.log('fetchIntvl='+fetchIntvl);
-					checkUpdateTimeoutId = setTimeout(checkUpdate, fetchIntvl * 60 * 1000);
-				});
-			});
+      checkNotification(bkurl);
 		}
 	});
+}
+
+function checkNotification(bkurl){
+  var evtNotifReqSrc = 'notif-req';
+  var notifurl = bkurl + NOTIF_URL;
+  console.log('check notification with ' + notifurl);
+  $.get(notifurl, function(data){
+    if(typeof data.data === 'undefined'){
+      _gaq.push(['_trackEvent', evtNotifReqSrc , 'fail' , 'invalid resp data']);
+      chrome.browserAction.setBadgeText( { text: "ERR"} );
+      if(loginNotification == null){
+        loginNotification = webkitNotifications.createNotification(
+                'img/icon128.png',
+                'Please login blueKiwi in order to receive notification.',
+                ''
+              );
+        loginNotification.onclick = function(){
+              _gaq.push(['_trackEvent', evtNotifSrc, 'clicked']);
+              chrome.tabs.create({ url: bkurl });
+              loginNotification.cancel();
+            };
+        loginNotification.show();
+      }
+    }else{
+      var binding = data.data.binding;
+      $.each( binding, function(idx, val){
+        if(idx == "/instance"){
+          console.log("# of notification: " + val.notification);
+          var badgeText = "";
+          if(val.notification > 0){
+            badgeText = "" + val.notification;
+            
+            if(notification == null){
+              //_gaq.push(['_trackEvent', evtNotifSrc, 'created']);
+            }
+            
+            createNotification(val.notification);
+          }else{
+            clearNotification();
+          }
+          chrome.browserAction.setBadgeText( { text: badgeText} );
+        }
+      });
+    }
+  })
+  .fail(function(jqXHR, textStatus, errorThrown){
+    console.log("failed to fetch notification data");
+    _gaq.push(['_trackEvent', evtNotifReqSrc , 'fail' , textStatus + '-' + errorThrown]);
+  })
+  .always(function(){
+    //check update
+    chrome.storage.sync.get('notifFetchInterval', function(items){
+      var fetchIntvl = items.notifFetchInterval;
+      if(!fetchIntvl){
+        fetchIntvl = DEFAULT_FETCH_INTERVAL;
+      }
+      console.log('fetchIntvl='+fetchIntvl);
+      checkUpdateTimeoutId = setTimeout(checkUpdate, fetchIntvl * 60 * 1000);
+    });
+  });
 }
 
 function createNotification(cnt){
