@@ -101,4 +101,6 @@ document.addEventListener('DOMContentLoaded', function () {
 	$('#btnHome').click(function(){
 		_gaq.push(['_trackEvent', 'popup-home-btn', 'clicked']);
 	});
+  
+  //$(".collapse").collapse();
 });
