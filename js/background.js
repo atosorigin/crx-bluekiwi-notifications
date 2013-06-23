@@ -93,19 +93,21 @@ function checkNotification(bkurl){
     if(typeof data.data === 'undefined'){
       _gaq.push(['_trackEvent', evtNotifReqSrc , 'fail' , 'invalid resp data']);
       chrome.browserAction.setBadgeText( { text: "ERR"} );
-      if(loginNotification == null){
-        loginNotification = webkitNotifications.createNotification(
-                'img/icon128.png',
-                'Please login blueKiwi in order to receive notification.',
-                ''
-              );
-        loginNotification.onclick = function(){
-              _gaq.push(['_trackEvent', evtNotifSrc, 'clicked']);
-              chrome.tabs.create({ url: bkurl });
-              loginNotification.cancel();
-            };
-        loginNotification.show();
+      if(loginNotification){
+        loginNotification.cancel();
+        loginNotification = loginNotification;
       }
+      loginNotification = webkitNotifications.createNotification(
+              'img/icon128.png',
+              'Please login blueKiwi in order to receive notification.',
+              ''
+            );
+      loginNotification.onclick = function(){
+            _gaq.push(['_trackEvent', evtNotifSrc, 'clicked']);
+            chrome.tabs.create({ url: bkurl });
+            loginNotification.cancel();
+          };
+      loginNotification.show();
     }else{
       var binding = data.data.binding;
       $.each( binding, function(idx, val){
