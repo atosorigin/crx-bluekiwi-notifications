@@ -105,6 +105,5 @@ document.addEventListener('DOMContentLoaded', function(){
     }
   }
   
-  $('#demo').hide();
-  $('#picker').farbtastic('#color');
+  $('#color1').colorPicker();
 });

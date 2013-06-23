@@ -4,6 +4,9 @@
     <title>blueKiwi Notifier::Options</title>	
     <script src="js/common.js"></script>
     <script src="js/jquery.js"></script>
+    <script src="js/jquery.colorPicker.min.js"></script>
+    
+    <link href="css/colorPicker.css" rel="stylesheet" media="screen">
     <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="css/style.css" rel="stylesheet" media="screen"> 
     
@@ -30,11 +33,17 @@
       <!--<legend> blueKiwi Options</legend>-->
         <div id="status"></div>
             <h5>Insert the URL(s) to your blueKiwi installation below.</h5>
+            <div class="input">
+              <input id="url" type="text" placeholder="blueKiwi URL">
+            </div>
+            
+            <!--
             <table class="table">
               <thead>
                 <tr>
                   <td><strong>Instance Name</strong></td>
                   <td><strong>bK URL</strong></td>
+                  <td><strong>Color</strong></td>
                 </tr>
               </thead>
               <tbody>
@@ -49,25 +58,29 @@
                       <input name="url-1" id="url-1" type="url" placeholder="blueKiwi URL">
                     </div> 
                   </td>
+                  <td>
+                    <div class="input">
+                      <input id="color1" name="color1" type="text" value="#333399" />
+                    </div>    
+                  </td>
                 </tr>
               </tbody>
             </table>
- 
-            <h5>How often would you like to check for notifications?</h5>
-            <div class="input-append">
-              <input class="span2" id="noti-time" type="number" min="2" name="noti-time" type="text" placeholder="2" value="2">
-              <span class="add-on"> Minutes</span>
-            </div>
-            
-            <h5>Disable desktop notifications</h5>
-            <label class="checkbox">
-              <input type="checkbox" value="" id="noti-disable" name="noti-disable">
-              Check to disable desktop notifications.
-            </label>
-            
-            <br/>
-            
-            <button class="btn btn-success" type="submit" id="save">Save</button>
+            -->
+
+              <h5>How often would you like to check for notifications?</h5>
+              <div class="input-append">
+                <input class="span2" id="noti-time" type="number" min="2" name="noti-time" type="text" placeholder="2" value="2">
+                <span class="add-on"> Minutes</span>
+              </div>
+              
+              <h5>Disable desktop notifications</h5>
+              <label class="checkbox">
+                <input type="checkbox" value="" id="noti-disable" name="noti-disable">
+                Check to disable desktop notifications.
+              </label>
+              <br/>
+              <button class="btn btn-success" type="submit">Save</button>
     </form>
   </div>
   <div class="span2"></div>		  
