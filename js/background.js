@@ -100,7 +100,7 @@ function checkNotification(bkurl){
       loginNotification = webkitNotifications.createNotification(
               'img/icon128.png',
               'Please login blueKiwi in order to receive notification.',
-              ''
+              'If you see this notification frequently. Check "Keep me logged in" on login page.'
             );
       loginNotification.onclick = function(){
             _gaq.push(['_trackEvent', evtNotifSrc, 'clicked']);
