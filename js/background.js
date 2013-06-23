@@ -108,6 +108,7 @@ function checkNotification(bkurl){
             loginNotification.cancel();
           };
       loginNotification.show();
+      setTimeout(function(){loginNotification.cancel()},30 * 1000);
     }else{
       var binding = data.data.binding;
       $.each( binding, function(idx, val){
