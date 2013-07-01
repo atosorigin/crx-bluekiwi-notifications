@@ -99,7 +99,7 @@ function checkNotification(bkurl){
           if(loginNotification == null){
           loginNotification = webkitNotifications.createNotification(
                   'img/icon128.png',
-                  'Please login blueKiwi in order to receive notification.',
+                  'Please login blueKiwi in order to receive notifications.',
                   'If you see this notification frequently. Check "Keep me logged in" on login page.'
                 );
           loginNotification.onclick = function(){
