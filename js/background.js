@@ -22,7 +22,7 @@ function init(){
         notif.cancel();
       };
       notif.show();
-      setTimeout(function(){notif.cancel()},30 * 1000);
+      setTimeout(function(){notif.cancel()},10 * 1000);
 		}
 		//check if bkurl is set
 		chrome.storage.sync.get('bkurl', function(items){
@@ -93,27 +93,31 @@ function checkNotification(bkurl){
     if(typeof data.data === 'undefined'){
       _gaq.push(['_trackEvent', evtNotifReqSrc , 'fail' , 'invalid resp data']);
       chrome.browserAction.setBadgeText( { text: "ERR"} );
-      if(loginNotification){
-        loginNotification.cancel();
-        loginNotification = loginNotification;
-      }
-      loginNotification = webkitNotifications.createNotification(
-              'img/icon128.png',
-              'Please login blueKiwi in order to receive notification.',
-              'If you see this notification frequently. Check "Keep me logged in" on login page.'
-            );
-      loginNotification.onclick = function(){
-            _gaq.push(['_trackEvent', evtNotifSrc, 'clicked']);
-            chrome.tabs.create({ url: bkurl });
-            loginNotification.cancel();
-          };
-      loginNotification.show();
-      setTimeout(function(){
-        if(loginNotification){
-          loginNotification.cancel()
-          loginNotification = null;
+      chrome.storage.sync.get('loginReminderDisabled', function(items){
+        var loginReminderDisabled = items.loginReminderDisabled;
+        if(!loginReminderDisabled){
+          if(loginNotification == null){
+          loginNotification = webkitNotifications.createNotification(
+                  'img/icon128.png',
+                  'Please login blueKiwi in order to receive notification.',
+                  'If you see this notification frequently. Check "Keep me logged in" on login page.'
+                );
+          loginNotification.onclick = function(){
+                _gaq.push(['_trackEvent', evtNotifSrc, 'clicked']);
+                chrome.tabs.create({ url: bkurl });
+                loginNotification.cancel();
+                loginNotification = null;
+              };
+          loginNotification.show();
+          setTimeout(function(){
+            if(loginNotification){
+              loginNotification.cancel()
+              loginNotification = null;
+            }
+          },30 * 1000);
+          }
         }
-      },30 * 1000);
+      });
     }else{
       var binding = data.data.binding;
       $.each( binding, function(idx, val){

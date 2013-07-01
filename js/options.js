@@ -47,7 +47,8 @@ function save_options() {
     
   var options = {
     'notifFetchInterval': $("#noti-time").val(),
-    'notifDisabled': $("#noti-disable").prop('checked')
+    'notifDisabled': $("#noti-disable").prop('checked'),
+    'loginReminderDisabled': $("#login-reminder-disable").prop('checked')
   };
     
   chrome.storage.sync.set(options, function(){
