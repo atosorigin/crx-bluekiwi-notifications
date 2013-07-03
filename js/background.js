@@ -131,7 +131,7 @@ function checkNotification(bkurl){
               //_gaq.push(['_trackEvent', evtNotifSrc, 'created']);
             }
             
-            createNotification(val.notification);
+            createNotification(val.notification, bkurl);
           }else{
             clearNotification();
           }
@@ -157,7 +157,7 @@ function checkNotification(bkurl){
   });
 }
 
-function createNotification(cnt){
+function createNotification(cnt, bkurl){
   var notif = webkitNotifications.createNotification(
     'img/icon128.png',  // icon url - can be relative
     'You have ' + cnt + ' notification' + (cnt > 1?'s':'')+ '!',  // notification title
@@ -167,7 +167,7 @@ function createNotification(cnt){
   
   notif.onclick = function(){
     _gaq.push(['_trackEvent', evtNotifSrc, 'clicked']);
-    //chrome.tabs.create({ url: bkurl });
+    chrome.tabs.create({ url: bkurl });
     clearNotification();
   };
   
