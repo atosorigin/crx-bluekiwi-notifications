@@ -1,50 +1,20 @@
 $.ajaxSetup({timeout:30 * 1000}); 
 
 function loadSpaces(bkurl){
-  var spacesURL = bkurl + SETTINGS_SPACES_URL;
-  console.log('spacesURL='+spacesURL);
-  //https://zen.myatos.net/user/in/Anthony_Lau/settings/spaces 
+  var spacesURL = 'https://zen.myatos.net/user/in/Greg_Hesp/settings/spaces';
   $.get(spacesURL, function(data){
-    var spacesPage = $(data);
+    var spacesTable = $(data);
     var spacelist = $('#space-list');
-    spacesPage.find('.item_to_preview').each(function(idx,el){
-      var avatarImg = $(el).find('.avatar img');
-      var avatarImgSrc;
-      if(avatarImg){
-        avatarImgSrc = avatarImg.attr('src');
-      }
-      var aspace = $(el).find('.item_content a.post_title');
-      var spaceName = aspace.text();
-      var spaceURL = bkurl + aspace.attr('href');
-      console.log('spaceName='+spaceName+',spaceURL='+spaceURL+',avatarImgSrc='+avatarImgSrc);
-      
-      var media = $('<div class="media"/>');
-      media.appendTo(spacelist);
-      media.click((function(spaceURL) {
-					return function() {
-						_gaq.push(['_trackEvent', 'space-item', 'clicked']);
-						chrome.tabs.create({ url: spaceURL });
-					};
-				})(spaceURL));
-      var avatarContainer = $('<a class="pull-left" href="#"/>');
-      avatarContainer.appendTo(media);
-      var avatar = $('<img class="avatar"/>');
-      avatar.appendTo(avatarContainer);
-      avatar.attr('src',avatarImgSrc);
-      
-      var content = $('<div class="media-body"/>');
-      content.appendTo(media);
-      content.html(spaceName);
-    });
-    /*
-    sapcesTable.find('tr td:nth-child(1) a').each(function(idx,el){
+      console.log(spacesTable); 
+    spacesTable.find('tr td:nth-child(1) a').each(function(idx,el){
       var spaceURL = bkurl + $(el).attr('href');
+      console.log(spaceURL);
       $(el).attr('href', spaceURL);
       $(el).attr('target', '_blank');
-      console.log('spaceURL='+spaceURL);
-      $('#space-list').append($('<div></div>').append(el));
+      $('#space-listtbl tbody').append('<tr><td></td></tr>');
+      $('#space-listtbl tbody tr:last td').append(el);
     });
-    */
+    
     $('#space-list').show();
     $('#loading').hide();
   },'html')

@@ -1,3 +1,4 @@
+
 $.ajaxSetup({timeout:30 * 1000}); 
 
 var _bkurl = null;
@@ -12,6 +13,7 @@ function save_options() {
   $('#save').prop('disabled',true);
 
   var bkurl = document.getElementById("url").value;
+  var spacesUrl = document.getElementById("spaceurl").value;
   
   bkurl = bkurl.replace(/\/+$/,'');//remove last splash if exists
   console.log('bkurl ' + bkurl);

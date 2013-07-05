@@ -4,13 +4,14 @@
     <title>blueKiwi Notifier::Options</title>	
     <script src="js/common.js"></script>
     <script src="js/jquery.js"></script>
-    <script src="js/jquery.colorPicker.min.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <!--<script src="js/jquery.colorPicker.min.js"></script>-->
     <script src="js/options.js"></script>
     
     <link href="css/colorPicker.css" rel="stylesheet" media="screen">
     <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="css/style.css" rel="stylesheet" media="screen"> 
-    
+
   </head>
   
   <body>
@@ -33,44 +34,18 @@
 	<form id="form-options" action="#">
       <!--<legend> blueKiwi Options</legend>-->
         <div id="status"></div>
-            <h5>Insert the URL(s) to your blueKiwi installation below.</h5>
+            <h5>Insert the URL to your blueKiwi installation below.</h5>
             <div class="input">
               <input id="url" type="text" placeholder="blueKiwi URL">
             </div>
             
-            <!--
-            <table class="table">
-              <thead>
-                <tr>
-                  <td><strong>Instance Name</strong></td>
-                  <td><strong>bK URL</strong></td>
-                  <td><strong>Color</strong></td>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    <div class="input">
-                      <input name="name-1" id="name-1" type="url" placeholder="Instance Name">
-                    </div>    
-                  </td>
-                  <td>
-                    <div class="input">
-                      <input name="url-1" id="url-1" type="url" placeholder="blueKiwi URL">
-                    </div> 
-                  </td>
-                  <td>
-                    <div class="input">
-                      <input id="color1" name="color1" type="text" value="#333399" />
-                    </div>    
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            -->
+            <h5>Insert the URL(s) to your blueKiwi space management settings.  <small><a data-toggle="modal" data-target="#myModal">Need helping finding it?</a></small></h5>
+            <div class="input">
+              <input id="spaceurl" type="text" placeholder="Space Management URL">
+            </div>
 
               <h5>How often would you like to check for notifications?</h5>
-              <div class="input-append">
+              <div class="input-append">€
                 <input class="span2" id="noti-time" type="number" min="2" name="noti-time" type="text" placeholder="2" value="2">
                 <span class="add-on"> Minutes</span>
               </div>
@@ -109,6 +84,31 @@ Want to find out more about blueKiwi? Visit the <a href="http://www.bluekiwi-sof
 <footer>
 blueKiwi Notifier is an <strong>unofficial</strong> Chrome extension made by Anthony Lau & Greg Hesp for the blueKiwi platform .
 </footer>
+
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <h3 id="myModalLabel">How to find your space management settings</h3>
+  </div>
+  <div class="modal-body">
+    <h5>Step 1</h5>
+    <p>Open up blueKiwi and navigate to your profile page by clicking on your name in the "Home" tab</p>
+    <h5>Step 2</h5>
+    <p>Click on the "Settings" option in the left hand navigation panel</p>
+    <img src="img/step1.jpg"/>
+    <h5>Step 3</h5>
+    <p>Click on the "Spaces" tab in the settings page</p>
+    <img src="img/step2.jpg"/>
+    <h5>Step 4</h5>
+    <p>Copy the URL at the top and paste it into the blueKiwi Extension Options page.  It should look something like:<br>
+    https://zen.domain.net/user/in/Joe_Bloggs/settings/spaces
+    <h5>Step 5</h5>
+    Click Save
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+  </div>
+</div> 
+
 
 
 </body>
