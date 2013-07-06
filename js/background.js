@@ -165,19 +165,46 @@ function createNotification(cnt, bkurl){
   );
   notification = notif;
   
-  notif.onclick = function(){
-    _gaq.push(['_trackEvent', evtNotifSrc, 'clicked']);
-    chrome.tabs.create({ url: bkurl });
-    clearNotification();
+  var showNotification = function(){
+    chrome.storage.sync.get(['notifDisabled'], function(items){
+      var notifDisabled = items.notifDisabled;
+      if(!notifDisabled){
+        console.log('notification=' + notif);
+        notif.show();
+      }
+    });
   };
   
-  chrome.storage.sync.get(['notifDisabled'], function(items){
-    var notifDisabled = items.notifDisabled;
-    if(!notifDisabled){
-      console.log('notification=' + notif);
-      notif.show();
-    }
-  });
+  if(cnt == 1){
+    var feedurl = bkurl + NOTIF_FEED_URL;
+    console.log('Fetch notification feed from ' + feedurl);
+    $.get(feedurl, {'offset': 0}, function(data){
+      try{
+        var feeds = $.parseJSON(data).feeds;
+        if(feeds.length >= 1){
+          notif.onclick = function(){
+            _gaq.push(['_trackEvent', evtNotifSrc, 'clicked', 'itemurl']);
+            var itemurl = feed.rel;
+						if(itemurl.indexOf('http') != 0){
+							itemurl = bkurl + itemurl;
+						}
+						chrome.tabs.create({ url: itemurl })
+            clearNotification();
+          };
+        }
+        showNotification();
+      }catch(err){
+        _gaq.push(['_trackEvent', evtNotifSrc, 'error', err]);
+      }
+    });
+  }else{
+    notif.onclick = function(){
+      _gaq.push(['_trackEvent', evtNotifSrc, 'clicked', 'bkurl']);
+      chrome.tabs.create({ url: bkurl });
+      clearNotification();
+    };
+    showNotification();
+  }
 }
 
 function enableNotification(b){
