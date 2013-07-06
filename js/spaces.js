@@ -2,7 +2,7 @@ $.ajaxSetup({timeout:30 * 1000});
 
 function loadSpaces(bkurl){
 
-	$.get(bkurl,{ dataType: 'html' })
+	$.get(bkurl + '/dashboard/welcome' ,{ dataType: 'html' })
   .then(function(data){
     var tmp = $(data).find('a[href^="/user/in"]').attr('href');
 	   console.log(tmp);
