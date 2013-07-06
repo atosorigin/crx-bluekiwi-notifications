@@ -30,8 +30,11 @@ function loadSpaces(bkurl){
     $('#loading').hide();
 	}).fail(function(jqXHR, textStatus, errorThrown){
 	    console.log('failed to fetch space list, ' + textStatus + '-' + errorThrown);
+	    $('#loading').hide();
+		var errorMsg = document.getElementById("status");
+		errorMsg.innerHTML = "<div class='alert enter-url'>You need to enter a blueKiwi URL in the <a href='options.html' target='_blank'>Options</a> page before you can begin</div>";
 	    _gaq.push(['_trackEvent', 'space-list' , 'fail' , textStatus + '-' + errorThrown]);
-	});
+	});	
 }
 
 document.addEventListener('DOMContentLoaded', function () {
