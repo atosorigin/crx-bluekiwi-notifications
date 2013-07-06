@@ -1,14 +1,15 @@
 $.ajaxSetup({timeout:30 * 1000}); 
 
 function loadSpaces(bkurl){
-
-	$.get(bkurl + '/dashboard/welcome' ,{ dataType: 'html' })
+  var pageURL = bkurl + '/dashboard/welcome';
+  console.log('pageURL='+pageURL);
+	$.get(pageURL,{ dataType: 'html' })
   .then(function(data){
     var tmp = $(data).find('a[href^="/user/in"]').attr('href');
-	   console.log(tmp);
-	   var userID = /\/user\/in\/(.*)\/.*/g.exec(tmp)[1];
-	   var spacesURL = bkurl + '/user/in/' + userID + '/settings/spaces';
-	
+	  console.log(tmp);
+	  var userID = /\/user\/in\/(.*)\/.*/g.exec(tmp)[1];
+	  var spacesURL = bkurl + '/user/in/' + userID + '/settings/spaces';
+    console.log('userID='+userID);
 	  return $.get(spacesURL,{ dataType: 'html' });
   }).done(function(data){
     var spacesTable = $(data);
