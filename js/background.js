@@ -190,6 +190,9 @@ function createNotification(cnt, bkurl){
 						}
 						chrome.tabs.create({ url: itemurl })
             clearNotification();
+            $.get(bkurl + NOTIF_READ_URL,function(){
+              console.log('mark notification as read');
+            });
           };
         }
         showNotification();
