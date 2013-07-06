@@ -184,6 +184,7 @@ function createNotification(cnt, bkurl){
         if(feeds.length >= 1){
           notif.onclick = function(){
             _gaq.push(['_trackEvent', evtNotifSrc, 'clicked', 'itemurl']);
+            var feed = feeds[0];
             var itemurl = feed.rel;
 						if(itemurl.indexOf('http') != 0){
 							itemurl = bkurl + itemurl;
