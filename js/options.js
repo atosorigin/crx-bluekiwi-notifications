@@ -13,7 +13,6 @@ function save_options() {
   $('#save').prop('disabled',true);
 
   var bkurl = document.getElementById("url").value;
-  var spacesUrl = document.getElementById("spaceurl").value;
   
   bkurl = bkurl.replace(/\/+$/,'');//remove last splash if exists
   console.log('bkurl ' + bkurl);
