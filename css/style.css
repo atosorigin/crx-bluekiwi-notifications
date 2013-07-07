@@ -6,6 +6,10 @@ body {
 	font-size:12px;
 }
 
+ul.nav a {
+    outline: none;
+}
+
 .menu {
 	/*float:left;*/
 	padding:36px 5px 5px;
@@ -104,7 +108,7 @@ ul.changelog-list{
 }
 
 .changelog-area {
-	height: 300px;
+	height: 350px;
 	overflow-y: auto;
 
 }
@@ -116,4 +120,8 @@ ul.changelog-list{
   line-height: 16px;
   padding: 0 5px 0 15px;
   font-size: 11px;
+}
+
+.current {
+	border-bottom: 1px #0d6fac solid;
 }
