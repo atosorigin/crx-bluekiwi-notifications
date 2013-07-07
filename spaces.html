@@ -29,10 +29,12 @@
 	<div class="menu">
 		<div id="status"></div>
 	</div>
-	<div id="space-list" class="list scrollbar" style="display: none;">
-	<table class="table table-striped" id="space-listtbl"><thead><tr><th>Spaces</th></tr></thead><tbody></tbody></table>	
+	<div id="space-list" class="list scrollbar">
+	<table class="table table-striped" id="space-listtbl">
+    <thead><tr><th>Spaces <div id="loading" class="loading" style="display: inline"><img src="img/ajax-loader.gif"/> Updating Spaces...</div></th></tr></thead>
+    <tbody id="space-listtbl-body"></tbody>
+  </table>	
 	</div>
-	<div id="loading" class="loading"><img src="img/ajax-loader.gif"/> Loading Spaces...</div>
   </body>
 
 </html>
