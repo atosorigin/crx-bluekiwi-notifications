@@ -1,63 +1,71 @@
 $.ajaxSetup({timeout:30 * 1000}); 
 
 function loadSpaces(bkurl){
-  var spacesURL = bkurl + SETTINGS_SPACES_URL;
-  console.log('spacesURL='+spacesURL);
-  //https://zen.myatos.net/user/in/Anthony_Lau/settings/spaces 
-  $.get(spacesURL, function(data){
-    var spacesPage = $(data);
+  var pageURL = bkurl + '/dashboard/welcome';
+  console.log('pageURL='+pageURL);
+	$.get(pageURL,{ dataType: 'html' })
+  .then(function(data){
+    var tmp = $(data).find('a[href^="/user/in"][href*="settings"]').attr('href');
+	  var userID = /\/user\/in\/(.*)\/settings(.*)/g.exec(tmp)[1];
+	  var spacesURL = bkurl + '/user/in/' + userID + '/settings/spaces';
+    console.log('userID='+userID);
+	  return $.get(spacesURL,{ dataType: 'html' });
+  }).done(function(data){
+    var spacesTable = $(data);
     var spacelist = $('#space-list');
-    spacesPage.find('.item_to_preview').each(function(idx,el){
-      var avatarImg = $(el).find('.avatar img');
-      var avatarImgSrc;
-      if(avatarImg){
-        avatarImgSrc = avatarImg.attr('src');
-      }
-      var aspace = $(el).find('.item_content a.post_title');
-      var spaceName = aspace.text();
-      var spaceURL = bkurl + aspace.attr('href');
-      console.log('spaceName='+spaceName+',spaceURL='+spaceURL+',avatarImgSrc='+avatarImgSrc);
-      
-      var media = $('<div class="media"/>');
-      media.appendTo(spacelist);
-      media.click((function(spaceURL) {
-					return function() {
-						_gaq.push(['_trackEvent', 'space-item', 'clicked']);
-						chrome.tabs.create({ url: spaceURL });
-					};
-				})(spaceURL));
-      var avatarContainer = $('<a class="pull-left" href="#"/>');
-      avatarContainer.appendTo(media);
-      var avatar = $('<img class="avatar"/>');
-      avatar.appendTo(avatarContainer);
-      avatar.attr('src',avatarImgSrc);
-      
-      var content = $('<div class="media-body"/>');
-      content.appendTo(media);
-      content.html(spaceName);
+    var spaces = [];
+    spacesTable.find('tr td:nth-child(1)').each(function(idx,el){
+      spaces.push({
+        spaceURL: bkurl + $(el).find('a').attr('href'),
+        spaceName: $(el).find('a').text(),
+        spaceType: $(el).find('.space_type').text()
+      });
     });
-    /*
-    sapcesTable.find('tr td:nth-child(1) a').each(function(idx,el){
-      var spaceURL = bkurl + $(el).attr('href');
-      $(el).attr('href', spaceURL);
-      $(el).attr('target', '_blank');
-      console.log('spaceURL='+spaceURL);
-      $('#space-list').append($('<div></div>').append(el));
+    spaces.sort(function(a,b){
+      if (a.spaceName < b.spaceName)
+        return -1;
+      if (a.spaceName > b.spaceName)
+        return 1;
+      return 0;
     });
-    */
-    $('#space-list').show();
+    chrome.storage.local.set({bkSpacesCache: spaces});
+    renderSpaces(spaces);
     $('#loading').hide();
-  },'html')
-  .fail(function(jqXHR, textStatus, errorThrown){
-    console.log('failed to fetch space list, ' + textStatus + '-' + errorThrown);
-    _gaq.push(['_trackEvent', 'space-list' , 'fail' , textStatus + '-' + errorThrown]);
-  });
+	}).fail(function(jqXHR, textStatus, errorThrown){
+	    console.log('failed to fetch space list, ' + textStatus + '-' + errorThrown);
+	    $('#loading').hide();
+		var errorMsg = document.getElementById("status");
+		errorMsg.innerHTML = "<div class='alert enter-url'>You need to enter a blueKiwi URL in the <a href='options.html' target='_blank'>Options</a> page before you can begin</div>";
+	    _gaq.push(['_trackEvent', 'space-list' , 'fail' , textStatus + '-' + errorThrown]);
+	});	
+}
+
+function renderSpaces(spaces){
+  if(spaces){
+    $('#space-listtbl-body').empty();
+    for(var i=0; i<spaces.length; i++){
+      var spaceURL= spaces[i].spaceURL;
+      var spaceName = spaces[i].spaceName;
+      var spaceType = spaces[i].spaceType;
+      var space = $('<a></a>').attr('href', spaceURL)
+        .attr('target', '_blank').html(spaceName + '[' + spaceType + ']');
+      $('#space-listtbl-body').append(
+        $('<tr></tr>').append(
+          $('<td></td>').append(space)
+        )
+      );
+    }
+  }
 }
 
 document.addEventListener('DOMContentLoaded', function () {
 	console.log("DOMContentLoaded");
 	chrome.storage.sync.get('bkurl', function(items){
     loadSpaces(items.bkurl);
+	});
+  chrome.storage.local.get('bkSpacesCache', function(items){
+    console.log(items);
+    renderSpaces(items.bkSpacesCache);
 	});
 	$('#btnHome').click(function(){
     _gaq.push(['_trackEvent', 'popup-home-btn', 'clicked']);

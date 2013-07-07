@@ -6,6 +6,10 @@ body {
 	font-size:12px;
 }
 
+ul.nav a {
+    outline: none;
+}
+
 .menu {
 	/*float:left;*/
 	padding:36px 5px 5px;
@@ -13,12 +17,16 @@ body {
 
 .list {
 	/*float:left;*/
-	padding: 5px 5px 5px;
+	padding: 0px;
 	font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
 	font-size:12px;
 	height: 500px;
 	overflow-y: scroll;
 	overflow-x: hidden;
+}
+
+.list-caption{
+  padding: 5px;
 }
 
 /*
@@ -52,6 +60,7 @@ body {
 	border-bottom:1px solid #F4F4F4;
 	cursor:pointer;
 	margin-top: 5px;
+  padding: 5px;
 }
 
 .media-object {
@@ -99,7 +108,7 @@ ul.changelog-list{
 }
 
 .changelog-area {
-	height: 300px;
+	height: 350px;
 	overflow-y: auto;
 
 }
@@ -111,4 +120,8 @@ ul.changelog-list{
   line-height: 16px;
   padding: 0 5px 0 15px;
   font-size: 11px;
+}
+
+.current {
+	border-bottom: 1px #0d6fac solid;
 }

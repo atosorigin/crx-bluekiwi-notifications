@@ -24,9 +24,9 @@ var NOTIF_URL = "/notification/updater";
 var NOTIF_FEED_URL = "/notification/get";
 var NOTIF_READ_URL = "/notification/read";
 var NEWS_READ_URL = "/syndication/home?filterType=all";
-var SETTINGS_SPACES_URL = "/spaces?locationRole=-3";
+var SETTINGS_SPACES_URL = "/spaces?locationRole=-5&hideOunits=1";
 
-var DEFAULT_FETCH_INTERVAL = 2; //in minutes
+var DEFAULT_FETCH_INTERVAL = 5; //in minutes
 var ALARM_NAME = "notification_checker";
 
 

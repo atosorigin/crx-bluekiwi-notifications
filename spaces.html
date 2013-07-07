@@ -17,10 +17,10 @@
  	 <div class="navbar-inner">  
 	 	 <div class="container">  
 		 	 <ul class="nav">  
-          <li><a id="btnHome" href="#" title="blueKiwi Home"><i class="icon-home"></i></a></li> 
-          <li><a href="popup.html" title="Spaces" ><i class="icon-bell"></i></a></li>
-         <li><a href="spaces.html" title="Spaces" ><i class="icon-th-list"></i></a></li>
-			 	 <li><a href="options.html" target="_blank" title="Options" ><i class="icon-wrench "></i></a></li>
+          <li><a id="btnHome" href="#" title="blueKiwi Home"><img src="img/bk.png"/></a></li> 
+         <li><a href="popup.html" title="Notifications" ><i class="icon-bell"></i></a></li>
+         <li class="current"><a href="spaces.html" title="Spaces" ><i class="icon-th-list"></i></a></li>
+	     <li><a href="options.html" target="_blank" title="Options" ><i class="icon-wrench "></i></a></li>
 			 </ul> 
 
 		</div>  
@@ -29,8 +29,12 @@
 	<div class="menu">
 		<div id="status"></div>
 	</div>
-	<div id="space-list" class="list scrollbar" style="display: none;"></div>
-	<div id="loading" class="loading"><img src="img/ajax-loader.gif"/> Loading Spaces...</div>
+	<div id="space-list" class="list scrollbar">
+	<table class="table table-striped" id="space-listtbl">
+    <thead><tr><th>Spaces <div id="loading" class="loading" style="display: inline"><img src="img/ajax-loader.gif"/> Updating Spaces...</div></th></tr></thead>
+    <tbody id="space-listtbl-body"></tbody>
+  </table>	
+	</div>
   </body>
 
 </html>

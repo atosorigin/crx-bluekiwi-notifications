@@ -3,13 +3,14 @@
 
   "name": "blueKiwi Notifier",
   "description": "This is an unofficial Chrome extension for use with blueKiwi",
-  "version": "1.0.3.1",
+  "version": "2.0.0.0",
 
   "background": {
     "scripts": [
 		"js/common.js",
 		"js/jquery.js",
-		"js/background.js"
+		"js/background.js",
+		"js/bootstrap.js"
 	]
   },
   

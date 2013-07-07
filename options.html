@@ -4,13 +4,14 @@
     <title>blueKiwi Notifier::Options</title>	
     <script src="js/common.js"></script>
     <script src="js/jquery.js"></script>
-    <script src="js/jquery.colorPicker.min.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <!--<script src="js/jquery.colorPicker.min.js"></script>-->
     <script src="js/options.js"></script>
     
     <link href="css/colorPicker.css" rel="stylesheet" media="screen">
     <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="css/style.css" rel="stylesheet" media="screen"> 
-    
+
   </head>
   
   <body>
@@ -29,48 +30,17 @@
 </ul>
 
 <div class="row">
-  <div class="span5">
+  <div class="span6">
 	<form id="form-options" action="#">
       <!--<legend> blueKiwi Options</legend>-->
         <div id="status"></div>
-            <h5>Insert the URL(s) to your blueKiwi installation below.</h5>
+            <h5>Insert the URL to your blueKiwi installation below.</h5>
             <div class="input">
               <input id="url" type="text" placeholder="blueKiwi URL">
             </div>
-            
-            <!--
-            <table class="table">
-              <thead>
-                <tr>
-                  <td><strong>Instance Name</strong></td>
-                  <td><strong>bK URL</strong></td>
-                  <td><strong>Color</strong></td>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    <div class="input">
-                      <input name="name-1" id="name-1" type="url" placeholder="Instance Name">
-                    </div>    
-                  </td>
-                  <td>
-                    <div class="input">
-                      <input name="url-1" id="url-1" type="url" placeholder="blueKiwi URL">
-                    </div> 
-                  </td>
-                  <td>
-                    <div class="input">
-                      <input id="color1" name="color1" type="text" value="#333399" />
-                    </div>    
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            -->
 
               <h5>How often would you like to check for notifications?</h5>
-              <div class="input-append">
+              <div class="input-append">€
                 <input class="span2" id="noti-time" type="number" min="2" name="noti-time" type="text" placeholder="2" value="2">
                 <span class="add-on"> Minutes</span>
               </div>
@@ -91,11 +61,14 @@
               <button class="btn btn-success" type="submit">Save</button>
     </form>
   </div>
-  <div class="span2"></div>		  
+  <div class="span1"></div>		  
   <div class="span5"><h3>Do you like blueKiwi Notifier?</h3>
   <div class="alert alert-info">
   <p><strong>Like this? </strong> If you like blueKiwi Notifier, please rate it on the <a href="https://chrome.google.com/webstore/detail/nmokaddnjebadokcmjfbinphpfkenghp">Chrome Web Store</a></p>
   <p>Don't forget to share it on blueKiwi!</p>
+  <strong>Want to request a feature or submit a bug?</strong><br>
+  <p>If you have a Github account, please submit the report on our <a href="https://github.com/atosorigin/crx-bluekiwi-notifications/issues" target="_blank">GitHub Page</a><br>
+  <p>If you don't have a Github account, feel free to submit it using the <a href="https://chrome.google.com/webstore/support/nmokaddnjebadokcmjfbinphpfkenghp?hl=en&gl=GB" target="_blank">Web Store Support Tool</a>
 </div>
 Want to find out more about blueKiwi? Visit the <a href="http://www.bluekiwi-software.com/en/" target="_blank">homepage</a>
   </div>
