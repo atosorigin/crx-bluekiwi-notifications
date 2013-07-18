@@ -60,6 +60,13 @@ function init(){
 	});
 	});
 	*/
+  chrome.notifications.onClicked.addListener(function(notificationId){
+    if(notificationId == NOTIF_ID){
+      chrome.notifications.clear(notificationId, function(wasCleared){
+        console.log('notificationId=%s, wasCleared=%s', notificationId, wasCleared);
+      });
+    }
+  });
 }
 var evtNotifSrc = 'bg-notif';
 
@@ -158,6 +165,22 @@ function checkNotification(bkurl){
 }
 
 function createNotification(cnt, bkurl){
+  var chromeVersion = parseInt(window.navigator.appVersion.match(/Chrome\/(\d+)\./)[1], 10);
+  console.log('chromeVersion='+chromeVersion);
+  if(chromeVersion >= 28){
+    var opt = {
+      type: "basic",
+      title: 'You have ' + cnt + ' notification' + (cnt > 1?'s':'')+ '!',
+      message: '',
+      iconUrl: "img/icon128.png"
+    };
+    chrome.notifications.create(NOTIF_ID, opt, function(id){console.log('notification id='+id);});
+  }else{
+    createWebkitNotification(cnt, bkurl);
+  }
+}
+
+function createWebkitNotification(cnt, bkurl){
   var notif = webkitNotifications.createNotification(
     'img/icon128.png',  // icon url - can be relative
     'You have ' + cnt + ' notification' + (cnt > 1?'s':'')+ '!',  // notification title
