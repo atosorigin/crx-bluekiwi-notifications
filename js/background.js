@@ -79,6 +79,13 @@ function clearNotification(){
 	}else{
 		console.log('notification is null');
 	}
+  var chromeVersion = parseInt(window.navigator.appVersion.match(/Chrome\/(\d+)\./)[1], 10);
+  console.log('chromeVersion='+chromeVersion);
+  if(chromeVersion >= 28){
+    chrome.notifications.clear(NOTIF_ID, function(wasCleared){
+      console.log('notificationId=%s, wasCleared=%s', NOTIF_ID, wasCleared);
+    });
+  }
 }
 
 function checkUpdate(){
