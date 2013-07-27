@@ -8,9 +8,16 @@ function loadCalendar(bkurl){
   .then(function(data){
     var tmp = $(data).find('a[href^="/user/in"][href*="settings"]').attr('href');
 	  userID = /\/user\/in\/(.*)\/settings(.*)/g.exec(tmp)[1];
+    
+    var date = new Date();
+    var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+    var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+    
+    console.log('firstDay=' + firstDay.getTime() + ';' + 'lastDay=' + lastDay.getTime());
+    
 	  var calendarURL = bkurl + '/user/in/' + userID + '/newCalendar';
     console.log('userID='+userID);
-	  return $.get(calendarURL);
+	  return $.get(calendarURL, {start: firstDay.getTime()/1000, end: lastDay.getTime()/1000});
   }).done(function(data){
     if(data){
       var events = $.parseJSON(data);
@@ -31,18 +38,21 @@ function loadCalendar(bkurl){
 
 function renderEvents(events, bkurl, userID){
   $('#calendar-listtbl-body').empty();
-  console.log(events);
-  for(var i=0; i<events.length; i++){
-    var event = events[i];
-    console.log(event.title);
-    var eventEl = $('<a></a>').attr('href', bkurl + '/user/in/' + userID + '/post?id=' + event.id)
-        .attr('target', '_blank').html(event.title);
-    var tr = $('<tr></tr>');
-    var td = $('<td></td>').append(eventEl)
-    tr.append(td);
-    $('#calendar-listtbl-body').append(tr);
+  if(events){
+    console.log(events);
+    for(var i=0; i<events.length; i++){
+      var event = events[i];
+      console.log(event.title);
+      var eventEl = $('<a></a>').attr('href', bkurl + '/user/in/' + userID + '/post?id=' + event.id)
+          .attr('target', '_blank').html(event.title);
+      var tr = $('<tr></tr>');
+      var td = $('<td></td>').append(eventEl)
+      tr.append(td);
+      $('#calendar-listtbl-body').append(tr);
+    }
   }
   //https://zen.myatos.net/user/in/Anthony_Lau/post?id=758373
+  //https://zen.myatos.net/user/in/Anthony_Lau/newCalendar?start=1372608000&end=1376236800&_=1374947745380
   //[{"id":1317727,"title":"Test Event","start":"2013-07-24T12:00:00+08:00",
   //"end":"2013-07-27T12:00:00+08:00",
   //"allDay":true,"editable":false,
