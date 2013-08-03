@@ -122,6 +122,10 @@ ul.changelog-list{
   font-size: 11px;
 }
 
-.current {
+.currentnav {
 	border-bottom: 1px #0d6fac solid;
+}
+
+.calendarcont {
+	padding-top: 40px;
 }
