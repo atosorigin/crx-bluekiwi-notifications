@@ -135,13 +135,13 @@
 				}
 
 			.eventsCalendar-daysList li.dayWithEvents a {
-				background:#89B814;
+				background:#5bb75b;
 				/*box-shadow:inset 5px 5px 10px #698B10;
 				text-shadow: 2px 2px 2px #698B10;*/
 				color:#fff;
 			}
 				li.eventsCalendar-day.dayWithEvents a:hover {
-					background-color:#C2D374;
+					background-color:#51a351;
 					/*box-shadow:inset 5px 5px 10px #89B814;
 					text-shadow: 2px 2px 2px #89B814;*/
 				}
@@ -181,6 +181,7 @@
 .eventsCalendar-list-wrap {
 	min-height:100px;
 	position:relative;
+	padding-top: 8%;
 }
 	.eventsCalendar-list-content.scrollable {
 
@@ -220,7 +221,7 @@
 			text-decoration:none;
 		}
 			.eventsCalendar-list li a.eventTitle {
-				color:#0E8EAB;
+				color:#0066a1;
 			}
 			.eventsCalendar-list li a.eventTitle:hover { text-decoration:underline;}
 		.eventsCalendar-list li .eventDesc {
@@ -256,36 +257,30 @@
 	line-height: 1;
 
 	color: #ffffff;
-	background-color: #698B10;
+	background-color: #5bb75b;
 	background-repeat: repeat-x;
+	
+	background-image: -moz-linear-gradient(top, #62c462, #51a351);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#62c462), to(#51a351));
+	background-image: -webkit-linear-gradient(top, #62c462, #51a351);
+	background-image: -o-linear-gradient(top, #62c462, #51a351);
+	background-image: linear-gradient(to bottom, #62c462, #51a351);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff62c462', endColorstr='#ff51a351', GradientType=0);
 
-	background-image: -khtml-gradient(linear, left top, left bottom, from(#89B814), to(#698B10));
-	background-image: -moz-linear-gradient(top, #89B814, #698B10);
-	background-image: -ms-linear-gradient(top, #89B814, #698B10);
-	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #89B814), color-stop(100%, #698B10));
-	background-image: -webkit-linear-gradient(top, #89B814, #698B10);
-	background-image: -o-linear-gradient(top, #89B814, #698B10);
-	background-image: linear-gradient(top, #89B814, #698B10);
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#89B814', endColorstr='#698B10', GradientType=0);
 
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-
-	border: 1px solid #698B10;
-	border-color: #698B10 #698B10 #465F05;
+	border-color: #51a351 #51a351 #387038;
+	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+	filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
 
 	border-radius: 4px;
 
 	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
 
-	-webkit-transition: 0.1s linear all;
-	-moz-transition: 0.1s linear all;
-	-ms-transition: 0.1s linear all;
-	-o-transition: 0.1s linear all;
-	transition: 0.1s linear all;
 }
 .bt:hover {
-	  background-position: 0 -15px;
-	  text-decoration: none;
+	color: #ffffff;
+	background-color: #408940;
 	}
 /* end of theme css */
 
