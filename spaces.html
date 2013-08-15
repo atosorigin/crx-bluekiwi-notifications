@@ -13,29 +13,37 @@
   </head>
   
   <body>
-  <div class="navbar navbar-fixed-top">  
- 	 <div class="navbar-inner">  
-	 	 <div class="container">  
-		 	 <ul class="nav">  
-		        <li><a id="btnHome" href="#" title="blueKiwi Home"><img src="img/bk.png"/></a></li> 
+  
+<div class="navbar navbar-fixed-top">  
+	<div class="navbar-inner">  
+		<div class="container">  
+			<ul class="nav">  
+		    	<li><a id="btnHome" href="#" title="blueKiwi Home"><img src="img/icon16.png"/></a></li> 
 		        <li><a href="popup.html" title="Notifications"><i class="icon-bell"></i></a></li>
 		        <li class="currentnav"><a href="spaces.html" title="Spaces" ><i class="icon-th-list"></i></a></li>
 		        <li><a href="calendar.html" title="Calendar" ><i class="icon-calendar"></i></a></li>     
 				<li><a href="options.html" target="_blank" title="Options" ><i class="icon-wrench "></i></a></li>
 			 </ul> 
-
 		</div>  
 	</div>  
-	</div> 
-	<div class="menu">
-		<div id="status"></div>
-	</div>
-	<div id="space-list" class="list scrollbar">
-	<table class="table table-striped" id="space-listtbl">
-    <thead><tr><th>Spaces <div id="loading" class="loading" style="display: inline"><img src="img/ajax-loader.gif"/></div></th></tr></thead>
-    <tbody id="space-listtbl-body"></tbody>
-  </table>	
-	</div>
-  </body>
+</div> 
 
+<div class="extcontainer">	
+	<div id="loading" class="loading">
+		<div id="followingBallsG">
+			<div id="followingBallsG_1" class="followingBallsG"></div>
+			<div id="followingBallsG_2" class="followingBallsG"></div>
+			<div id="followingBallsG_3" class="followingBallsG"></div>
+			<div id="followingBallsG_4" class="followingBallsG"></div>
+		</div>
+	</div>
+	
+	<div id="space-list" class="list scrollbar">
+    <table class="table table-striped" id="space-listtbl">
+    	<tbody id="space-listtbl-body"></tbody>
+    </table>	
+    </div>
+</div>
+
+</body>
 </html>
