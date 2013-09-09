@@ -31,4 +31,3 @@ var ALARM_NAME = "notification_checker";
 
 var NOTIF_ID = 'bknotif';
 
-$("[rel=tooltip]").tooltip({ placement: 'bottom'});
