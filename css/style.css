@@ -6,6 +6,16 @@ body {
 	font-size:12px;
 }
 
+.extcontainer {
+	width: 355px;
+	padding-top: 40px;
+}
+
+.displayname {
+	width: 100%;
+	height: 15px;
+}
+
 ul.nav a {
     outline: none;
 }
@@ -113,6 +123,10 @@ ul.changelog-list{
 
 }
 
+.loading {
+	position: absolute;
+}
+
 .space_type{
   border: 1px solid #d7d7d7 !important;
   color: #808080;
@@ -122,6 +136,184 @@ ul.changelog-list{
   font-size: 11px;
 }
 
-.current {
+.currentnav {
 	border-bottom: 1px #0d6fac solid;
+}
+
+
+
+/*================================ Loading Animation ======================*/
+
+#followingBallsG{
+position:relative;
+width:355px;
+height:5px;
+}
+
+.followingBallsG{
+background-color:#0066AA;
+position:absolute;
+top:0;
+left:0;
+width:5px;
+height:5px;
+-moz-border-radius:15px;
+-moz-animation-name:bounce_followingBallsG;
+-moz-animation-duration:2.6s;
+-moz-animation-iteration-count:infinite;
+-moz-animation-direction:linear;
+-webkit-border-radius:15px;
+-webkit-animation-name:bounce_followingBallsG;
+-webkit-animation-duration:2.6s;
+-webkit-animation-iteration-count:infinite;
+-webkit-animation-direction:linear;
+-ms-border-radius:15px;
+-ms-animation-name:bounce_followingBallsG;
+-ms-animation-duration:2.6s;
+-ms-animation-iteration-count:infinite;
+-ms-animation-direction:linear;
+-o-border-radius:15px;
+-o-animation-name:bounce_followingBallsG;
+-o-animation-duration:2.6s;
+-o-animation-iteration-count:infinite;
+-o-animation-direction:linear;
+border-radius:15px;
+animation-name:bounce_followingBallsG;
+animation-duration:2.6s;
+animation-iteration-count:infinite;
+animation-direction:linear;
+}
+
+#followingBallsG_1{
+-moz-animation-delay:0s;
+}
+
+#followingBallsG_1{
+-webkit-animation-delay:0s;
+}
+
+#followingBallsG_1{
+-ms-animation-delay:0s;
+}
+
+#followingBallsG_1{
+-o-animation-delay:0s;
+}
+
+#followingBallsG_1{
+animation-delay:0s;
+}
+
+#followingBallsG_2{
+-moz-animation-delay:0.26s;
+-webkit-animation-delay:0.26s;
+-ms-animation-delay:0.26s;
+-o-animation-delay:0.26s;
+animation-delay:0.26s;
+}
+
+#followingBallsG_3{
+-moz-animation-delay:0.52s;
+-webkit-animation-delay:0.52s;
+-ms-animation-delay:0.52s;
+-o-animation-delay:0.52s;
+animation-delay:0.52s;
+}
+
+#followingBallsG_4{
+-moz-animation-delay:0.78s;
+-webkit-animation-delay:0.78s;
+-ms-animation-delay:0.78s;
+-o-animation-delay:0.78s;
+animation-delay:0.78s;
+}
+
+@-moz-keyframes bounce_followingBallsG{
+0%{
+left:0px;
+background-color:#0066AA;
+}
+
+50%{
+left:351px;
+background-color:#FFFFFF;
+}
+
+100%{
+left:0px;
+background-color:#0066AA;
+}
+
+}
+
+@-webkit-keyframes bounce_followingBallsG{
+0%{
+left:0px;
+background-color:#0066AA;
+}
+
+50%{
+left:351px;
+background-color:#FFFFFF;
+}
+
+100%{
+left:0px;
+background-color:#0066AA;
+}
+
+}
+
+@-ms-keyframes bounce_followingBallsG{
+0%{
+left:0px;
+background-color:#0066AA;
+}
+
+50%{
+left:351px;
+background-color:#FFFFFF;
+}
+
+100%{
+left:0px;
+background-color:#0066AA;
+}
+
+}
+
+@-o-keyframes bounce_followingBallsG{
+0%{
+left:0px;
+background-color:#0066AA;
+}
+
+50%{
+left:351px;
+background-color:#FFFFFF;
+}
+
+100%{
+left:0px;
+background-color:#0066AA;
+}
+
+}
+
+@keyframes bounce_followingBallsG{
+0%{
+left:0px;
+background-color:#0066AA;
+}
+
+50%{
+left:351px;
+background-color:#FFFFFF;
+}
+
+100%{
+left:0px;
+background-color:#0066AA;
+}
+
 }

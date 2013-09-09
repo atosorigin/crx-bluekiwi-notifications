@@ -74,6 +74,9 @@ function requestNotifications(bkurl, offset){
 
 document.addEventListener('DOMContentLoaded', function () {
 	console.log("DOMContentLoaded");
+	$(document).ready(function(){
+    $("[rel=tooltip]").tooltip({ placement: 'bottom'});
+});
 	chrome.storage.sync.get('bkurl', function(items){
 		requestNotifications(items.bkurl, 0);
 	});

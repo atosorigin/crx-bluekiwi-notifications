@@ -22,9 +22,9 @@ function loadSpaces(bkurl){
       });
     });
     spaces.sort(function(a,b){
-      if (a.spaceName < b.spaceName)
+      if (a.spaceName.toLowerCase() < b.spaceName.toLowerCase())
         return -1;
-      if (a.spaceName > b.spaceName)
+      if (a.spaceName.toLowerCase() > b.spaceName.toLowerCase())
         return 1;
       return 0;
     });
