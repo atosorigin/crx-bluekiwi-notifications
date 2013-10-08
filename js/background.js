@@ -74,7 +74,7 @@ function init(){
       if(buttonIndex == 0){
         console.log("snooze notification button clicked");
         enableNotification(false);
-        snoozeNotifTimeoutId = setTimeout(function(){enableNotification(true);}, 30 * 60 * 1000);
+        snoozeNotifTimeoutId = setTimeout(function(){enableNotification(true);}, 60 * 60 * 1000);
         clearNotification();
       }
     }
@@ -193,7 +193,7 @@ function createNotification(cnt, bkurl){
       message: '',
       iconUrl: "img/icon128.png",
       buttons: [
-        {title: "Snooze notification for 30 minutes"}
+        {title: "Snooze notification for an hour"}
       ]
     };
     chrome.notifications.create(NOTIF_ID, opt, function(id){console.log('notification id='+id);});
