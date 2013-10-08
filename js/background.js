@@ -1,6 +1,7 @@
 var notification = null;
 var loginNotification = null;
 var checkUpdateTimeoutId = null;
+var snoozeNotifTimeoutId = null;
 
 function init(){
 	chrome.runtime.onInstalled.addListener(function(details){
@@ -21,8 +22,8 @@ function init(){
         chrome.tabs.create({ url: 'changelog.html' });
         notif.cancel();
       };
-      notif.show();
-      setTimeout(function(){notif.cancel()},10 * 1000);
+      //notif.show();
+      //setTimeout(function(){notif.cancel()},10 * 1000);
 		}
 		//check if bkurl is set
 		chrome.storage.sync.get('bkurl', function(items){
@@ -65,6 +66,17 @@ function init(){
       chrome.notifications.clear(notificationId, function(wasCleared){
         console.log('notificationId=%s, wasCleared=%s', notificationId, wasCleared);
       });
+    }
+  });
+  chrome.notifications.onButtonClicked.addListener(function(notificationId, buttonIndex){
+    if(notificationId == NOTIF_ID){
+      console.log("onButtonClicked, " + notificationId + ";" + buttonIndex);
+      if(buttonIndex == 0){
+        console.log("snooze notification button clicked");
+        enableNotification(false);
+        snoozeNotifTimeoutId = setTimeout(function(){enableNotification(true);}, 60 * 60 * 1000);
+        clearNotification();
+      }
     }
   });
 }
@@ -179,7 +191,10 @@ function createNotification(cnt, bkurl){
       type: "basic",
       title: 'You have ' + cnt + ' notification' + (cnt > 1?'s':'')+ '!',
       message: '',
-      iconUrl: "img/icon128.png"
+      iconUrl: "img/icon128.png",
+      buttons: [
+        {title: "Snooze notification for an hour"}
+      ]
     };
     chrome.notifications.create(NOTIF_ID, opt, function(id){console.log('notification id='+id);});
   }else{
@@ -243,6 +258,7 @@ function createWebkitNotification(cnt, bkurl){
 
 function enableNotification(b){
   console.log('enableNotification ' + b);
+  clearTimeout(snoozeNotifTimeoutId);
   var icon = "img/icon48.png";
   clearTimeout(checkUpdateTimeoutId);
   if(b){
