@@ -62,6 +62,7 @@ function requestNotifications(bkurl, offset){
 			$('#loading').hide();
 			var errorMsg = document.getElementById("status");
 			errorMsg.innerHTML = "<div class='alert alert-warning enter-url'>Error while loading notifications.  Are you <a href='" + bkurl + "' target='_blank'>logged in</a>?</div>";
+      $(errorMsg).css('display','block');
 		}
 	}
   ,'text')
@@ -70,7 +71,9 @@ function requestNotifications(bkurl, offset){
 		$('#loading').hide();
 		var errorMsg = document.getElementById("status");
 		errorMsg.innerHTML = "<div class='alert enter-url'>You need to enter a blueKiwi URL in the <a href='options.html' target='_blank'>Options</a> page before you can begin</div>";
-	});;
+    $(errorMsg).css('display','block');
+	});
+  
 }
 
 document.addEventListener('DOMContentLoaded', function () {
