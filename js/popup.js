@@ -63,7 +63,8 @@ function requestNotifications(bkurl, offset){
 			var errorMsg = document.getElementById("status");
 			errorMsg.innerHTML = "<div class='alert alert-warning enter-url'>Error while loading notifications.  Are you <a href='" + bkurl + "' target='_blank'>logged in</a>?</div>";
 		}
-	})
+	}
+  ,'text')
 	.fail(function(){
 		console.log("failed to fetch notification data")
 		$('#loading').hide();
