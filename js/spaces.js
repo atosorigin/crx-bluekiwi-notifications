@@ -16,7 +16,7 @@ function loadSpaces(bkurl){
     var spaces = [];
     spacesTable.find('tr td:nth-child(1)').each(function(idx,el){
       spaces.push({
-        spaceURL: bkurl + $(el).find('a').attr('href'),
+        spaceURL: $(el).find('a').attr('href'),
         spaceName: $(el).find('a').text(),
         spaceType: $(el).find('.space_type').text()
       });
