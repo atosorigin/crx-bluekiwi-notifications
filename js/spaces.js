@@ -5,8 +5,8 @@ function loadSpaces(bkurl){
   console.log('pageURL='+pageURL);
 	$.get(pageURL,{ dataType: 'html' })
   .then(function(data){
-    var tmp = $(data).find('a[href^="/user/in"][href*="settings"]').attr('href');
-	  var userID = /\/user\/in\/(.*)\/settings(.*)/g.exec(tmp)[1];
+    //var tmp = $(data).find('a[href^="/user/in"][href*="profile"]').attr('href');
+	  var userID = /\/user\/in\/(.*)\/settings(.*)/g.exec(data)[1];
 	  var spacesURL = bkurl + '/user/in/' + userID + '/settings/spaces';
     console.log('userID='+userID);
 	  return $.get(spacesURL,{ dataType: 'html' });
