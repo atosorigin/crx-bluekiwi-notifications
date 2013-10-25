@@ -21,3 +21,53 @@ var origTitle = document.querySelector('title').innerHTML;
   document.querySelector('title').innerHTML = title;
 })();
 
+(function($){
+  $.event.special.destroyed = {
+    remove: function(o) {
+      if (o.handler) {
+        o.handler()
+      }
+    }
+  }
+})(jQuery);
+
+$(document).bind('DOMSubtreeModified',function(e,a){
+  if(e.target.attributes['id'] &&  e.target.attributes['id'].value === 'modale_preview'){
+    console.log('test');
+    var title = origTitle;
+    var postTitle = $(e.target).find('.post_title');
+    var h1 = $(e.target).find('h1');
+    if(postTitle){
+      title = postTitle.text();
+    }else if(h1){
+      title = h1.text();
+    }
+    document.querySelector('title').innerHTML = title;
+    
+    //reset title when the popup is removed
+    // select the target node
+    var target = document.querySelector('body');
+    // create an observer instance
+    var observer = new MutationObserver(function(mutations) {
+      mutations.forEach(function(mutation) {
+        //console.log(mutation.removedNodes);
+        if(mutation.removedNodes.length){
+          for(var i=0; i<mutation.removedNodes.length; i++){
+            var node = mutation.removedNodes[i];
+            if(node.id && node.id === 'modale_preview'){
+              observer.disconnect();
+              document.querySelector('title').innerHTML = origTitle;
+            }
+          }
+        }
+      });    
+    });
+    // configuration of the observer:
+    var config = {childList: true};
+    // pass in the target node, as well as the observer options
+    observer.observe(target, config);
+  } 
+});
+
+
+
