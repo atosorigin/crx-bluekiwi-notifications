@@ -42,7 +42,7 @@
   "content_scripts": [
     {
       "matches": ["http://zen.myatos.net/*","https://zen.myatos.net/*"],
-      "js": ["js/content_script.js"],
+      "js": ["js/jquery.js","js/content_script.js"],
       "run_at": "document_end"
     }
   ],
