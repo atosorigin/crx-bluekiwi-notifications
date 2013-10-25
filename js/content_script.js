@@ -21,16 +21,6 @@ var origTitle = document.querySelector('title').innerHTML;
   document.querySelector('title').innerHTML = title;
 })();
 
-(function($){
-  $.event.special.destroyed = {
-    remove: function(o) {
-      if (o.handler) {
-        o.handler()
-      }
-    }
-  }
-})(jQuery);
-
 $(document).bind('DOMSubtreeModified',function(e,a){
   if(e.target.attributes['id'] &&  e.target.attributes['id'].value === 'modale_preview'){
     console.log('test');
