@@ -38,6 +38,14 @@
   ],
   
    "options_page": "options.html",
+   
+  "content_scripts": [
+    {
+      "matches": ["http://zen.myatos.net/*","https://zen.myatos.net/*"],
+      "js": ["js/content_script.js"],
+      "run_at": "document_end"
+    }
+  ],
   
   "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'"
 }
