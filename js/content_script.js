@@ -8,4 +8,7 @@
 })();
 
 
+
 //$('.page_footer > .railway > li').slice(1,3).text().replace(/(\r\n|\n|\r)/gm,"").replace(/\s+/gm,' ').trim();
+
+//$('h2 > .max70.ellipsis').parent().text().replace(/(\r\n|\n|\r)/gm,"").replace(/\s+/gm,' ').trim();
