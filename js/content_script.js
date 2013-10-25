@@ -19,6 +19,7 @@ var origTitle = document.querySelector('title').innerHTML;
   }
   
   document.querySelector('title').innerHTML = title;
+  origTitle = title;
 })();
 
 $(document).bind('DOMSubtreeModified',function(e,a){
