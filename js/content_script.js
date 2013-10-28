@@ -3,8 +3,8 @@
   
   var bkURLDeferred = $.Deferred();
   
-  chrome.storage.sync.get('bkurl', function(items){
-    bkURLDeferred.resolve(items.bkurl);
+  chrome.storage.sync.get(['bkurl','expTitleEnchance'], function(items){
+    bkURLDeferred.resolve(items.bkurl, items.expTitleEnchance);
   });
   
   var injectScript = function(){
@@ -67,8 +67,12 @@
     });
   };
 
-  bkURLDeferred.done(function(bkurl){
-    if(document.URL.indexOf(bkurl) == 0) injectScript();
+  bkURLDeferred.done(function(bkurl, expTitleEnchance){
+    if(document.URL.indexOf(bkurl) == 0){
+      if(expTitleEnchance){
+        injectScript();
+      }
+    }
   });
 })();
 

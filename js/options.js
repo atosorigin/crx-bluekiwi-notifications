@@ -49,7 +49,8 @@ function save_options() {
   var options = {
     'notifFetchInterval': $("#noti-time").val(),
     'notifDisabled': $("#noti-disable").prop('checked'),
-    'loginReminderDisabled': $("#login-reminder-disable").prop('checked')
+    'loginReminderDisabled': $("#login-reminder-disable").prop('checked'),
+    'expTitleEnchance': $('#title-enhance').prop('checked')
   };
     
   chrome.storage.sync.set(options, function(){
@@ -59,10 +60,12 @@ function save_options() {
 }
 
 function restore_options() {
-  chrome.storage.sync.get(['bkurl','notifFetchInterval','notifDisabled'], function(items){
+  chrome.storage.sync.get(['bkurl','notifFetchInterval','notifDisabled','expTitleEnchance'], function(items){
 	var bkurl = items.bkurl;
 	var fetchIntvl = items.notifFetchInterval;
 	var notifDisabled = items.notifDisabled;
+  var expTitleEnchance = items.expTitleEnchance;
+  
 	console.log('bkurl got ' + bkurl);
 	if (bkurl) {
 		$("#url").val(bkurl);
@@ -77,6 +80,9 @@ function restore_options() {
 	}else{
 		$('#noti-disable').prop('checked',false);
 	}
+  
+  $('#title-enhance').prop('checked',expTitleEnchance);
+  
 	$("#noti-time").val(fetchIntvl);
   });
 }
