@@ -10,10 +10,13 @@
   var injectScript = function(){
     var title = origTitle;
     
+    var navTabActive = $('.nav-tabs > .active').text().trim();
     var spaceTitle = $('h2 > .max70.ellipsis');
     var navItems = document.querySelectorAll('.page_footer > .railway > li');
 
-    if(spaceTitle.text()){
+    if(navTabActive){
+      title = navTabActive;
+    }else if(spaceTitle.text()){
       var nav1 = spaceTitle.text().replace(/(\r\n|\n|\r)/gm,"").replace(/\s+/gm,' ').trim();
       //var nav2 = spaceTitle.parent().contents().filter(function(){return this.nodeType == 3;}).last().text().replace(/(\r\n|\n|\r|\/)/gm,"").replace(/\s+/gm,' ').trim();
       //not work if the sub title has link
