@@ -10,6 +10,10 @@
   var injectScript = function(){
     var title = origTitle;
     
+    var favicon=new Favico({
+      animation:'slide'
+    });
+    
     var navTabActive = $('.nav-tabs > .active').text().trim();
     var spaceTitle = $('h2 > .max70.ellipsis');
     var navItems = document.querySelectorAll('.page_footer > .railway > li');
@@ -66,6 +70,12 @@
         var config = {childList: true};
         // pass in the target node, as well as the observer options
         observer.observe(target, config);
+      }else if(e.target.attributes['id'] &&  e.target.attributes['id'].value === 'module_feeds_list'){
+        var newFeedItemMatches = $('.items_new').text().match(/^(\d*)/g);
+        if(newFeedItemMatches && newFeedItemMatches[0]){
+          var newFeedItemCount = newFeedItemMatches[0];
+          favicon.badge(newFeedItemCount);
+        }
       } 
     });
   };
@@ -77,6 +87,7 @@
       }
     }
   });
+
 })();
 
 
