@@ -37,7 +37,6 @@
     
     $(document).bind('DOMSubtreeModified',function(e,a){
       if(e.target.attributes['id'] &&  e.target.attributes['id'].value === 'modale_preview'){
-        console.log('test');
         var title = origTitle;
         var postTitle = $(e.target).find('.post_title');
         var h1 = $(e.target).find('h1');
@@ -75,6 +74,8 @@
         if(newFeedItemMatches && newFeedItemMatches[0]){
           var newFeedItemCount = newFeedItemMatches[0];
           favicon.badge(newFeedItemCount);
+        }else{
+          favicon.badge(0);
         }
       } 
     });
