@@ -35,6 +35,39 @@
     document.querySelector('title').innerHTML = title;
     origTitle = title;
     
+    //reset title when the popup is removed
+    // select the target node
+    var target = document.querySelector('body');
+    // create an observer instance
+    var observer = new MutationObserver(function(mutations) {
+      mutations.forEach(function(mutation) {
+        //console.log(mutation);
+        if(mutation.removedNodes.length){
+          for(var i=0; i<mutation.removedNodes.length; i++){
+            var node = mutation.removedNodes[i];
+            if(node.id && node.id === 'modale_preview'){
+              document.querySelector('title').innerHTML = origTitle;
+            }
+          }
+        }else if(mutation.target.id && mutation.target.id === 'modale_preview'){
+          var title = origTitle;
+          var postTitle = $(mutation.target).find('.post_title');
+          var h1 = $(mutation.target).find('h1');
+          if(postTitle){
+            title = postTitle.text();
+          }else if(h1){
+            title = h1.text();
+          }
+          document.querySelector('title').innerHTML = title;
+        }
+      });    
+    });
+    // configuration of the observer:
+    var config = {childList: true, subtree: true};
+    // pass in the target node, as well as the observer options
+    observer.observe(target, config);
+    
+    /*
     $(document).bind('DOMSubtreeModified',function(e,a){
       if(e.target.attributes['id'] &&  e.target.attributes['id'].value === 'modale_preview'){
         var title = origTitle;
@@ -46,29 +79,6 @@
           title = h1.text();
         }
         document.querySelector('title').innerHTML = title;
-        
-        //reset title when the popup is removed
-        // select the target node
-        var target = document.querySelector('body');
-        // create an observer instance
-        var observer = new MutationObserver(function(mutations) {
-          mutations.forEach(function(mutation) {
-            //console.log(mutation.removedNodes);
-            if(mutation.removedNodes.length){
-              for(var i=0; i<mutation.removedNodes.length; i++){
-                var node = mutation.removedNodes[i];
-                if(node.id && node.id === 'modale_preview'){
-                  observer.disconnect();
-                  document.querySelector('title').innerHTML = origTitle;
-                }
-              }
-            }
-          });    
-        });
-        // configuration of the observer:
-        var config = {childList: true};
-        // pass in the target node, as well as the observer options
-        observer.observe(target, config);
       }else if(e.target.attributes['id'] &&  e.target.attributes['id'].value === 'module_feeds_list'){
         var newFeedItemMatches = $('.items_new').text().match(/^(\d*)/g);
         if(newFeedItemMatches && newFeedItemMatches[0]){
@@ -79,6 +89,7 @@
         }
       } 
     });
+    */
   };
 
   bkURLDeferred.done(function(bkurl, expTitleEnchance){
