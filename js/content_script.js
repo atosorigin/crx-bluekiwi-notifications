@@ -3,16 +3,12 @@
   
   var bkURLDeferred = $.Deferred();
   
-  chrome.storage.sync.get(['bkurl','expTitleEnchance'], function(items){
-    bkURLDeferred.resolve(items.bkurl, items.expTitleEnchance);
+  chrome.storage.sync.get(['bkurl','expTitleEnchance', 'faviconNewItemFeedCountEnhance'], function(items){
+    bkURLDeferred.resolve(items.bkurl, items.expTitleEnchance, items.faviconNewItemFeedCountEnhance);
   });
   
-  var injectScript = function(){
+  var injectTitleEnhanceScript = function(){
     var title = origTitle;
-    
-    var favicon=new Favico({
-      animation:'slide'
-    });
     
     var navTabActive = $('.nav-tabs > .active').text().trim();
     var spaceTitle = $('h2 > .max70.ellipsis');
@@ -66,36 +62,53 @@
     var config = {childList: true, subtree: true};
     // pass in the target node, as well as the observer options
     observer.observe(target, config);
-    
-    /*
-    $(document).bind('DOMSubtreeModified',function(e,a){
-      if(e.target.attributes['id'] &&  e.target.attributes['id'].value === 'modale_preview'){
-        var title = origTitle;
-        var postTitle = $(e.target).find('.post_title');
-        var h1 = $(e.target).find('h1');
-        if(postTitle){
-          title = postTitle.text();
-        }else if(h1){
-          title = h1.text();
-        }
-        document.querySelector('title').innerHTML = title;
-      }else if(e.target.attributes['id'] &&  e.target.attributes['id'].value === 'module_feeds_list'){
-        var newFeedItemMatches = $('.items_new').text().match(/^(\d*)/g);
-        if(newFeedItemMatches && newFeedItemMatches[0]){
-          var newFeedItemCount = newFeedItemMatches[0];
-          favicon.badge(newFeedItemCount);
-        }else{
-          favicon.badge(0);
-        }
-      } 
-    });
-    */
-  };
 
-  bkURLDeferred.done(function(bkurl, expTitleEnchance){
+  };
+  
+  var injectItemFeedCountFaviconScript = function(){
+    var favicon=new Favico({
+      animation:'slide'
+    });
+    
+    var extractNewFeedItemCount = function(node){
+      var newFeedItemMatches = $(node).text().match(/^(\d*)/g);
+      if(newFeedItemMatches && newFeedItemMatches[0]){
+        var newFeedItemCount = newFeedItemMatches[0];
+        favicon.badge(newFeedItemCount);
+      }else{
+        favicon.badge(0);
+      }
+    };
+  
+    var target = document.querySelector('#module_feeds_list');
+    // create an observer instance
+    new MutationObserver(function(mutations) {
+      mutations.forEach(function(mutation) {
+        if(mutation.target === target){
+          for(var i=0; i<mutation.addedNodes.length; i++){
+            var node = mutation.addedNodes[i];
+            if($(node).hasClass('items_new')){
+              extractNewFeedItemCount(node);
+            }
+          }
+        }else if(mutation.type === 'characterData'){
+          console.log(mutation);
+          if($(mutation.target).hasClass('items_new')){
+            extractNewFeedItemCount(mutation.target);
+          }
+        }
+      });    
+    }).observe(target, {childList: true, subtree: true, characterData: true});
+  };
+  
+
+  bkURLDeferred.done(function(bkurl, expTitleEnchance, faviconNewItemFeedCountEnhance){
     if(document.URL.indexOf(bkurl) == 0){
       if(expTitleEnchance){
-        injectScript();
+        injectTitleEnhanceScript();
+      }
+      if(faviconNewItemFeedCountEnhance){
+        injectItemFeedCountFaviconScript();
       }
     }
   });

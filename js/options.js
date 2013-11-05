@@ -50,7 +50,8 @@ function save_options() {
     'notifFetchInterval': $("#noti-time").val(),
     'notifDisabled': $("#noti-disable").prop('checked'),
     'loginReminderDisabled': $("#login-reminder-disable").prop('checked'),
-    'expTitleEnchance': $('#title-enhance').prop('checked')
+    'expTitleEnchance': $('#title-enhance').prop('checked'),
+    'faviconNewItemFeedCountEnhance': $('#favicon-newItemFeedCount').prop('checked')
   };
     
   chrome.storage.sync.set(options, function(){
@@ -60,11 +61,12 @@ function save_options() {
 }
 
 function restore_options() {
-  chrome.storage.sync.get(['bkurl','notifFetchInterval','notifDisabled','expTitleEnchance'], function(items){
+  chrome.storage.sync.get(['bkurl','notifFetchInterval','notifDisabled','expTitleEnchance','faviconNewItemFeedCountEnhance'], function(items){
 	var bkurl = items.bkurl;
 	var fetchIntvl = items.notifFetchInterval;
 	var notifDisabled = items.notifDisabled;
   var expTitleEnchance = items.expTitleEnchance;
+  var faviconNewItemFeedCountEnhance = items.faviconNewItemFeedCountEnhance;
   
 	console.log('bkurl got ' + bkurl);
 	if (bkurl) {
@@ -82,6 +84,8 @@ function restore_options() {
 	}
   
   $('#title-enhance').prop('checked',expTitleEnchance);
+  
+  $('#favicon-newItemFeedCount').prop('checked',faviconNewItemFeedCountEnhance);
   
 	$("#noti-time").val(fetchIntvl);
   });
@@ -112,6 +116,4 @@ document.addEventListener('DOMContentLoaded', function(){
       return 'The blueKiwi URL needs to be set in order to receive notifications.';
     }
   }
-  
-  $('#color1').colorPicker();
 });
