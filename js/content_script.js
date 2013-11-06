@@ -81,6 +81,8 @@
     };
   
     var target = document.querySelector('#module_feeds_list');
+    if(!target) return;
+    
     // create an observer instance
     new MutationObserver(function(mutations) {
       mutations.forEach(function(mutation) {
