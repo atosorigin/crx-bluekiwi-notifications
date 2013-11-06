@@ -43,6 +43,7 @@
             var node = mutation.removedNodes[i];
             if(node.id && node.id === 'modale_preview'){
               document.querySelector('title').innerHTML = origTitle;
+              break;
             }
           }
         }else if(mutation.target.id && mutation.target.id === 'modale_preview'){
@@ -86,23 +87,35 @@
     // create an observer instance
     new MutationObserver(function(mutations) {
       mutations.forEach(function(mutation) {
+        if(mutation.target.className !== 'timeago'){
+          console.log(mutation);
+        }
         if(mutation.target === target){
+          //trace items_new creation
           for(var i=0; i<mutation.addedNodes.length; i++){
             var node = mutation.addedNodes[i];
             if($(node).hasClass('items_new')){
               extractNewFeedItemCount(node);
+              break;
             }
           }
-        }else if(mutation.type === 'characterData'){
-          console.log(mutation);
-          if($(mutation.target).hasClass('items_new')){
-            extractNewFeedItemCount(mutation.target);
+        }else if(mutation.type === 'characterData' && mutation.target.parentElement
+          && $(mutation.target.parentElement).hasClass('items_new')){
+          //trace items_new text updated
+           extractNewFeedItemCount(mutation.target);
+        }else if(mutation.removedNodes.length){
+          //trace items_new removed
+          for(var i=0; i<mutation.removedNodes.length; i++){
+            var node = mutation.removedNodes[i];
+            if(node.className === 'items_new'){
+              favicon.badge(0);
+              break;
+            }
           }
         }
       });    
     }).observe(target, {childList: true, subtree: true, characterData: true});
   };
-  
 
   bkURLDeferred.done(function(bkurl, expTitleEnchance, faviconNewItemFeedCountEnhance){
     if(document.URL.indexOf(bkurl) == 0){
