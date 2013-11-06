@@ -13,6 +13,7 @@
     var navTabActive = $('.nav-tabs > .active').text().trim();
     var spaceTitle = $('h2 > .max70.ellipsis');
     var navItems = document.querySelectorAll('.page_footer > .railway > li');
+    var feedTitle = $('#feedTitle').text().trim();
 
     if(navTabActive){
       title = navTabActive;
@@ -28,6 +29,10 @@
       title = (nav1 + nav2).trim();
     }
     
+    if(feedTitle){
+      title += ' » ' + feedTitle.trim();
+    }
+    
     document.querySelector('title').innerHTML = title;
     origTitle = title;
     
@@ -35,7 +40,7 @@
     // select the target node
     var target = document.querySelector('body');
     // create an observer instance
-    var observer = new MutationObserver(function(mutations) {
+    new MutationObserver(function(mutations) {
       mutations.forEach(function(mutation) {
         //console.log(mutation);
         if(mutation.removedNodes.length){
@@ -58,11 +63,7 @@
           document.querySelector('title').innerHTML = title;
         }
       });    
-    });
-    // configuration of the observer:
-    var config = {childList: true, subtree: true};
-    // pass in the target node, as well as the observer options
-    observer.observe(target, config);
+    }).observe(target, {childList: true, subtree: true});
 
   };
   
