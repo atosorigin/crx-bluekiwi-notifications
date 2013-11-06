@@ -87,9 +87,9 @@
     // create an observer instance
     new MutationObserver(function(mutations) {
       mutations.forEach(function(mutation) {
-        if(mutation.target.className !== 'timeago'){
+        /*if(mutation.target.className !== 'timeago'){
           console.log(mutation);
-        }
+        }*/
         if(mutation.target === target){
           //trace items_new creation
           for(var i=0; i<mutation.addedNodes.length; i++){
@@ -99,19 +99,19 @@
               break;
             }
           }
-        }else if(mutation.type === 'characterData' && mutation.target.parentElement
-          && $(mutation.target.parentElement).hasClass('items_new')){
-          //trace items_new text updated
-           extractNewFeedItemCount(mutation.target);
-        }else if(mutation.removedNodes.length){
+          
           //trace items_new removed
           for(var i=0; i<mutation.removedNodes.length; i++){
             var node = mutation.removedNodes[i];
-            if(node.className === 'items_new'){
+            if($(node).hasClass('items_new')){
               favicon.badge(0);
               break;
             }
           }
+        }else if(mutation.type === 'characterData' && mutation.target.parentElement
+          && $(mutation.target.parentElement).hasClass('items_new')){
+          //trace items_new text updated
+           extractNewFeedItemCount(mutation.target);
         }
       });    
     }).observe(target, {childList: true, subtree: true, characterData: true});
