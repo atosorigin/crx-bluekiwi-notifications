@@ -72,7 +72,7 @@
         if(mutation.type === 'characterData'){
           //console.log('feed title change = ' + mutation.target.textContent.trim());
           feedTitle = mutation.target.textContent.trim();
-          title = origTitle + ' » ' + feedTitle;
+          title = pageTitle + ' » ' + feedTitle;
           document.querySelector('title').innerHTML = title;
         }
       })
