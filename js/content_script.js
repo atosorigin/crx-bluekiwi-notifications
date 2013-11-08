@@ -14,7 +14,7 @@
     var navTabActive = $('.nav-tabs > .active').text().trim();
     var spaceTitle = $('h2 > .max70.ellipsis');
     var navItems = document.querySelectorAll('.page_footer > .railway > li');
-    var feedTitle = $('#feedTitle').text().trim();
+    var feedTitle = $('.all_news_selected.browse_title.browse_title_to_modify').text();
 
     if(navTabActive){
       pageTitle = navTabActive;
@@ -76,7 +76,7 @@
           document.querySelector('title').innerHTML = title;
         }
       })
-    }).observe(document.querySelector('#feedTitle'),{subtree: true, characterData: true});
+    }).observe(document.querySelector('.all_news_selected.browse_title.browse_title_to_modify'),{subtree: true, characterData: true});
   };
   
   var injectItemFeedCountFaviconScript = function(){
