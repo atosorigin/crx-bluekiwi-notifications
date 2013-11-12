@@ -47,11 +47,17 @@ function renderSpaces(spaces){
       var spaceURL= spaces[i].spaceURL;
       var spaceName = spaces[i].spaceName;
       var spaceType = spaces[i].spaceType;
+      var star = $('<div style="display: inline-block; font-size: 1.5em; cursor: pointer">&#9734;</div>');
+      
+      star.click(function(){
+        //★☆
+        $(this).text('★');
+      });
       var space = $('<a></a>').attr('href', spaceURL)
         .attr('target', '_blank').html(spaceName + '[' + spaceType + ']');
       $('#space-listtbl-body').append(
         $('<tr></tr>').append(
-          $('<td></td>').append(space)
+          $('<td></td>').append(star).append(space)
         )
       );
     }
