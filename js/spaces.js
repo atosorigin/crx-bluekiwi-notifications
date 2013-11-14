@@ -3,6 +3,7 @@ $.ajaxSetup({timeout:30 * 1000});
 function loadSpaces(bkurl){
   var pageURL = bkurl + '/dashboard/welcome';
   console.log('pageURL='+pageURL);
+  
 	$.get(pageURL,{ dataType: 'html' })
   .then(function(data){
     //var tmp = $(data).find('a[href^="/user/in"][href*="profile"]').attr('href');
@@ -44,15 +45,34 @@ function renderSpaces(spaces){
   if(spaces){
     $('#space-listtbl-body').empty();
     for(var i=0; i<spaces.length; i++){
+      var space = spaces[i];
       var spaceURL= spaces[i].spaceURL;
       var spaceName = spaces[i].spaceName;
       var spaceType = spaces[i].spaceType;
-      var star = $('<div style="display: inline-block; font-size: 1.5em; cursor: pointer">&#9734;</div>');
-      
+      var spaceStared = spaces[i].spaceStared;
+      var star = $('<div class="icon-star-empty" style="display: inline-block; font-size: 1.5em; cursor: pointer"></div>');
+
+      //star.text(spaceStared?'★':'☆');
+      if(spaceStared){
+        star.addClass('icon-star');
+      }else{
+        star.addClass('icon-star-empty');
+      }
       star.click(function(){
-        //★☆
-        $(this).text('★');
-      });
+        var s = space;
+        return function(){
+          s.spaceStared = !s.spaceStared;
+          //$(this).text(s.spaceStared?'★':'☆');
+          if(s.spaceStared){
+            $(this).removeClass('icon-star-empty');
+            $(this).addClass('icon-star');
+          }else{
+            $(this).removeClass('icon-star');
+            $(this).addClass('icon-star-empty');
+          }
+        };
+      }());
+      
       var space = $('<a></a>').attr('href', spaceURL)
         .attr('target', '_blank').html(spaceName + '[' + spaceType + ']');
       $('#space-listtbl-body').append(
@@ -70,7 +90,6 @@ document.addEventListener('DOMContentLoaded', function () {
     loadSpaces(items.bkurl);
 	});
   chrome.storage.local.get('bkSpacesCache', function(items){
-    console.log(items);
     renderSpaces(items.bkSpacesCache);
 	});
 	$('#btnHome').click(function(){
