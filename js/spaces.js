@@ -50,19 +50,22 @@ function renderSpaces(spaces){
       var spaceName = spaces[i].spaceName;
       var spaceType = spaces[i].spaceType;
       var spaceStared = spaces[i].spaceStared;
-      var star = $('<div class="icon-star-empty" style="display: inline-block; font-size: 1.5em; cursor: pointer"></div>');
+      var star = $('<div style="display: inline-block; font-size: 2em; cursor: pointer"></div>');
 
-      //star.text(spaceStared?'★':'☆');
+      star.text(spaceStared?'★':'☆');
+      /*
       if(spaceStared){
         star.addClass('icon-star');
       }else{
         star.addClass('icon-star-empty');
       }
+      */
       star.click(function(){
         var s = space;
         return function(){
           s.spaceStared = !s.spaceStared;
-          //$(this).text(s.spaceStared?'★':'☆');
+          $(this).text(s.spaceStared?'★':'☆');
+          /*
           if(s.spaceStared){
             $(this).removeClass('icon-star-empty');
             $(this).addClass('icon-star');
@@ -70,6 +73,7 @@ function renderSpaces(spaces){
             $(this).removeClass('icon-star');
             $(this).addClass('icon-star-empty');
           }
+          */
         };
       }());
       
