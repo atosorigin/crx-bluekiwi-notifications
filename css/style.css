@@ -140,6 +140,10 @@ ul.changelog-list{
 	border-bottom: 1px #0d6fac solid;
 }
 
+.fa-star:before {
+	color: rgb(255, 173, 0);
+}
+
 
 
 /*================================ Loading Animation ======================*/
