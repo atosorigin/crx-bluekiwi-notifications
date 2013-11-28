@@ -50,7 +50,7 @@ function renderSpaces(spaces){
       var spaceName = spaces[i].spaceName;
       var spaceType = spaces[i].spaceType;
       var spaceStared = spaces[i].spaceStared;
-      var star = $('<div style="display: inline-block; font-size: 2em; cursor: pointer"></div>');
+      var star = $('<div></div>');
 
       //star.text(spaceStared?'★':'☆');
       
