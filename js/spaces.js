@@ -52,28 +52,28 @@ function renderSpaces(spaces){
       var spaceStared = spaces[i].spaceStared;
       var star = $('<div style="display: inline-block; font-size: 2em; cursor: pointer"></div>');
 
-      star.text(spaceStared?'★':'☆');
-      /*
+      //star.text(spaceStared?'★':'☆');
+      
       if(spaceStared){
-        star.addClass('icon-star');
+        star.addClass('fa fa-star');
       }else{
-        star.addClass('icon-star-empty');
+        star.addClass('fa fa-star-o');
       }
-      */
+      
       star.click(function(){
         var s = space;
         return function(){
           s.spaceStared = !s.spaceStared;
-          $(this).text(s.spaceStared?'★':'☆');
-          /*
+          //$(this).text(s.spaceStared?'★':'☆');
+          
           if(s.spaceStared){
-            $(this).removeClass('icon-star-empty');
-            $(this).addClass('icon-star');
+            $(this).removeClass('fa fa-star-o');
+            $(this).addClass('fa fa-star');
           }else{
-            $(this).removeClass('icon-star');
-            $(this).addClass('icon-star-empty');
+            $(this).removeClass('fa fa-star');
+            $(this).addClass('fa fa-star-o');
           }
-          */
+          
         };
       }());
       
