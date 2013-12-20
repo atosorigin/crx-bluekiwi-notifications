@@ -43,49 +43,95 @@ function loadSpaces(bkurl){
 
 function renderSpaces(spaces){
   if(spaces){
-    $('#space-listtbl-body').empty();
-    for(var i=0; i<spaces.length; i++){
-      var space = spaces[i];
-      var spaceURL= spaces[i].spaceURL;
-      var spaceName = spaces[i].spaceName;
-      var spaceType = spaces[i].spaceType;
-      var spaceStared = spaces[i].spaceStared;
-      var star = $('<div></div>');
-
-      //star.text(spaceStared?'★':'☆');
-      
-      if(spaceStared){
-        star.addClass('fa fa-star');
-      }else{
-        star.addClass('fa fa-star-o');
+    chrome.storage.sync.get('staredSpaceURLs', function(items){
+      var staredSpaceURLs = items.staredSpaceURLs || [];
+      $('#space-listtbl-body').empty();
+      for(var i=0; i<spaces.length; i++){
+        var space = spaces[i];
+        var spaceURL= space.spaceURL;
+        if($.inArray(spaceURL, staredSpaceURLs) > 0){
+          space.spaceStared = true;
+        }else{
+          space.spaceStared = false;
+        }
       }
-      
-      star.click(function(){
-        var s = space;
-        return function(){
-          s.spaceStared = !s.spaceStared;
-          //$(this).text(s.spaceStared?'★':'☆');
-          
-          if(s.spaceStared){
-            $(this).removeClass('fa fa-star-o');
-            $(this).addClass('fa fa-star');
-          }else{
-            $(this).removeClass('fa fa-star');
-            $(this).addClass('fa fa-star-o');
-          }
-          
-        };
-      }());
-      
-      var space = $('<a></a>').attr('href', spaceURL)
-        .attr('target', '_blank').html(spaceName + '[' + spaceType + ']');
-      $('#space-listtbl-body').append(
-        $('<tr></tr>').append(
-          $('<td></td>').append(star).append(space)
-        )
-      );
-    }
+      spaces.sort(function(a,b){
+        if (a.spaceStared && !b.spaceStared )
+          return -1;
+        if (!a.spaceStared && b.spaceStared)
+          return 1;
+        if (a.spaceStared == b.spaceStared){
+          if (a.spaceName.toLowerCase() < b.spaceName.toLowerCase())
+            return -1;
+          if (a.spaceName.toLowerCase() > b.spaceName.toLowerCase())
+            return 1;
+        }
+        return 0;
+      });
+      for(var i=0; i<spaces.length; i++){
+        var space = spaces[i];
+        var spaceURL= space.spaceURL;
+        var spaceName = space.spaceName;
+        var spaceType = space.spaceType;
+        var spaceStared = space.spaceStared;
+        var star = $('<div></div>');
+
+        //star.text(spaceStared?'★':'☆');
+        
+        if(spaceStared){
+          star.addClass('fa fa-star');
+        }else{
+          star.addClass('fa fa-star-o');
+        }
+        
+        star.click(function(){
+          var s = space;
+          return function(){
+            s.spaceStared = !s.spaceStared;
+            //$(this).text(s.spaceStared?'★':'☆');
+            
+            if(s.spaceStared){
+              $(this).removeClass('fa fa-star-o');
+              $(this).addClass('fa fa-star');
+              putStaredSpace(s);
+            }else{
+              $(this).removeClass('fa fa-star');
+              $(this).addClass('fa fa-star-o');
+              removeStartedSpace(s);
+            }
+            
+          };
+        }());
+        
+        var space = $('<a></a>').attr('href', spaceURL)
+          .attr('target', '_blank').html(spaceName + '[' + spaceType + ']');
+        $('#space-listtbl-body').append(
+          $('<tr></tr>').append(
+            $('<td></td>').append(star).append(space)
+          )
+        );
+      }
+    });
   }
+}
+
+function putStaredSpace(space){
+  var url = space.spaceURL;
+  chrome.storage.sync.get('staredSpaceURLs', function(items){
+    var urls = items.staredSpaceURLs || [];
+    if($.inArray(url, urls) <= 0){
+      urls.push(url);
+      chrome.storage.sync.set({staredSpaceURLs: urls});
+    }
+	});
+}
+
+function removeStartedSpace(space){
+  var url = space.spaceURL;
+  chrome.storage.sync.get('staredSpaceURLs', function(items){
+    var urls = items.staredSpaceURLs || [];
+      //TODO
+	});
 }
 
 document.addEventListener('DOMContentLoaded', function () {
