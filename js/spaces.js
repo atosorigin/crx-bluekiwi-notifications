@@ -49,7 +49,7 @@ function renderSpaces(spaces){
       for(var i=0; i<spaces.length; i++){
         var space = spaces[i];
         var spaceURL= space.spaceURL;
-        if($.inArray(spaceURL, staredSpaceURLs) > 0){
+        if(~staredSpaceURLs.indexOf(spaceURL)){
           space.spaceStared = true;
         }else{
           space.spaceStared = false;
@@ -119,7 +119,7 @@ function putStaredSpace(space){
   var url = space.spaceURL;
   chrome.storage.sync.get('staredSpaceURLs', function(items){
     var urls = items.staredSpaceURLs || [];
-    if($.inArray(url, urls) <= 0){
+    if(urls.indexOf(url) <= 0){
       urls.push(url);
       chrome.storage.sync.set({staredSpaceURLs: urls});
     }
@@ -130,7 +130,11 @@ function removeStartedSpace(space){
   var url = space.spaceURL;
   chrome.storage.sync.get('staredSpaceURLs', function(items){
     var urls = items.staredSpaceURLs || [];
-      //TODO
+    var urlIdx = urls.indexOf(url);
+    if(~urlIdx){
+      urls.splice(urlIdx,1);
+      chrome.storage.sync.set({staredSpaceURLs: urls});
+    }
 	});
 }
 
