@@ -25,6 +25,7 @@ var NOTIF_FEED_URL = "/notification/get";
 var NOTIF_READ_URL = "/notification/read";
 var NEWS_READ_URL = "/syndication/home?filterType=all";
 var SETTINGS_SPACES_URL = "/spaces?locationRole=-5&hideOunits=1";
+var ARCHIVE_POST_URL = "/post/hide/set"; //post/hide/set?postId=[id]
 
 var DEFAULT_FETCH_INTERVAL = 5; //in minutes
 var ALARM_NAME = "notification_checker";

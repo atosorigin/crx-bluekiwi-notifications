@@ -39,6 +39,22 @@ function requestNotifications(bkurl, offset){
 				var content = $('<div class="media-body"/>');
 				content.appendTo(media);
 				content.html(feed.content);
+        
+        var buttons = $('<span>&nbsp;&raquo;&nbsp;</span>');
+        buttons.appendTo(content);
+        
+        var btnArchive = $('<a>Archive</a>');
+        btnArchive.appendTo(buttons);
+        btnArchive.data('objectId', feed.objectId);
+        btnArchive.click(function(e){
+          var objId = $(e.target).data('objectId');
+          $.post(bkurl + ARCHIVE_POST_URL,{postId: objId})
+            .then(function(){
+              alert('Archived !');
+            });
+          e.stopPropagation();
+          //https://zen.myatos.net/post/hide/set?postId=[id]
+        });
 			}
 			
 			var btnSeeMore = $('<button class="btn" style="width: 100%;" type="button" id="save">See More</button>');
