@@ -139,7 +139,7 @@
     if(endswith(location.pathname, '/post')){
       console.log('is a post')
       var actionbar = $('.bkaction[data-load-module="post/post.actionbar"]');
-      var archive = $('<li class="action_box tooltip-toggle"><a herf="#">Archive</a></li>');
+      var archive = $('<li class="action_box tooltip-toggle"><a herf="#"><span class="bkpicto picto-archiveBlack"></span>Archive</a></li>');
       archive.click(function(){
         var url = bkurl + '/post/hide/set?postId='+location.search.replace("?id=","");
         console.log(url);
@@ -170,7 +170,7 @@
           console.log(e);
         }
       }
-      injectArchiveButton(bkurl);
+      //injectArchiveButton(bkurl);
     }
   });
 
