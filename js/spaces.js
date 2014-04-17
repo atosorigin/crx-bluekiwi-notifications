@@ -149,7 +149,8 @@ document.addEventListener('DOMContentLoaded', function () {
 	$('#btnHome').click(function(){
     _gaq.push(['_trackEvent', 'popup-home-btn', 'clicked']);
 		chrome.storage.sync.get('bkurl', function(items){
-			chrome.tabs.create({ url: items.bkurl });
+			//chrome.tabs.create({ url: items.bkurl });
+      
 		});
 	});
 
