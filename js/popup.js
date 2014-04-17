@@ -34,7 +34,7 @@ function requestNotifications(bkurl, offset){
 				avatarContainer.appendTo(media);
 				var avatar = $('<img class="avatar"/>');
 				avatar.appendTo(avatarContainer);
-				avatar.attr('src',feed.picture);
+				avatar.attr('src',feed.avatar);
 				
 				var content = $('<div class="media-body"/>');
 				content.appendTo(media);
