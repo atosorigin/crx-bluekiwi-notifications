@@ -129,15 +129,48 @@
       });    
     }).observe(target, {childList: true, subtree: true, characterData: true});
   };
+  
+  var injectArchiveButton = function(bkurl){
+    console.log('injectArchiveButton');
+    var endswith = function(str,suffix){
+        return str.indexOf(suffix, str.length - suffix.length) !== -1;
+    };
+
+    if(endswith(location.pathname, '/post')){
+      console.log('is a post')
+      var actionbar = $('.bkaction[data-load-module="post/post.actionbar"]');
+      var archive = $('<li class="action_box tooltip-toggle"><a herf="#"><span class="bkpicto picto-archiveBlack"></span>Archive</a></li>');
+      archive.click(function(){
+        var url = bkurl + '/post/hide/set?postId='+location.search.replace("?id=","");
+        console.log(url);
+        $.get(url, function(){
+          alert('archived!');
+        }).fail(function(){alert('Unable to archive')});
+      });
+      console.log('append archive button');
+      actionbar.append(archive);
+    }
+    
+  };
 
   bkURLDeferred.done(function(bkurl, expTitleEnchance, faviconNewItemFeedCountEnhance){
+    console.log('bkurl='+bkurl);
     if(document.URL.indexOf(bkurl) == 0){
       if(expTitleEnchance){
-        injectTitleEnhanceScript();
+        try{
+          injectTitleEnhanceScript();
+        }catch(e){
+          console.log(e);
+        }
       }
       if(faviconNewItemFeedCountEnhance){
-        injectItemFeedCountFaviconScript();
+        try{
+          injectItemFeedCountFaviconScript();
+        }catch(e){
+          console.log(e);
+        }
       }
+      //injectArchiveButton(bkurl);
     }
   });
 

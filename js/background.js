@@ -6,24 +6,51 @@ var snoozeNotifTimeoutId = null;
 function init(){
 	chrome.runtime.onInstalled.addListener(function(details){
 		var thisVersion = chrome.runtime.getManifest().version;
+    var chromeVersion = parseInt(window.navigator.appVersion.match(/Chrome\/(\d+)\./)[1], 10);
+    console.log('chromeVersion='+chromeVersion);
 		if(details.reason == "install"){
-			_gaq.push(['_trackEvent', 'ext', 'install', thisVersion]);
+			_gaq.push(['_trackEvent', 'ext', 'install', thisVersion + ';' + chromeVersion]);
 		}else if(details.reason == "update"){
-			_gaq.push(['_trackEvent', 'ext', 'update', thisVersion]);
-			console.log("Updated from " + details.previousVersion + " to " + thisVersion +" + !");
+			_gaq.push(['_trackEvent', 'ext', 'update', thisVersion + ';' + chromeVersion]);
+			console.log("Updated from " + details.previousVersion + " to " + thisVersion + " !");
       
-      var notif = webkitNotifications.createNotification(
-        'img/icon128.png',
-        'blueKiwi Notifier is Updated!',
-        'Updated from ' + details.previousVersion + ' to ' + thisVersion + '.'
-        + '\n' + 'Click here to view the change log.'
-			);
-      notif.onclick = function(){
-        chrome.tabs.create({ url: 'changelog.html' });
-        notif.cancel();
-      };
-      notif.show();
-      setTimeout(function(){notif.cancel()},10 * 1000);
+      var updateNotificationTitle = 'blueKiwi Notifier is Updated!';
+      var updateNotificationMsg = 'Updated from ' + details.previousVersion + ' to ' + thisVersion + '.';
+      if(chromeVersion >= 28){
+        var opt = {
+          type: "basic",
+          title: updateNotificationTitle,
+          message: updateNotificationMsg,
+          iconUrl: "img/icon128.png"
+        };
+        var notifId = 'ext_updated';
+        chrome.notifications.create(notifId, opt, function(id){console.log('notification id='+id);});
+        chrome.notifications.onClicked.addListener(function(notificationId){
+          if(notificationId == notifId){
+            chrome.tabs.create({ url: 'changelog.html' });
+            /*
+            chrome.notifications.clear(notifId, function(wasCleared){
+              console.log('wasCleared=' + wasCleared + ';' + notificationId);
+            });
+            */
+          }
+        });
+      }else{
+        var notif = webkitNotifications.createNotification(
+          'img/icon128.png',
+          updateNotificationTitle,
+          updateNotificationMsg
+          + '\n' + 'Click here to view the change log.'
+        );
+          notif.onclick = function(){
+          chrome.tabs.create({ url: 'changelog.html' });
+          notif.cancel();
+        };
+        notif.show();
+        setTimeout(function(){notif.cancel()},10 * 1000);
+      }
+      
+      
 		}
 		//check if bkurl is set
 		chrome.storage.sync.get('bkurl', function(items){
@@ -145,6 +172,8 @@ function checkNotification(bkurl){
         }
       });
     }else{
+      /*
+      //old API
       var binding = data.data.binding;
       $.each( binding, function(idx, val){
         if(idx == "/instance"){
@@ -164,6 +193,20 @@ function checkNotification(bkurl){
           chrome.browserAction.setBadgeText( { text: badgeText} );
         }
       });
+      */
+      var notificationData = data.data;
+      if(notificationData.json){
+        var count = notificationData.json.count;
+        console.log("# of notification: " + count);
+        var badgeText = "";
+        if(count > 0){
+          badgeText = "" + count;
+          createNotification(count, bkurl);
+        }else{
+          clearNotification();
+        }
+        chrome.browserAction.setBadgeText( { text: badgeText} );
+      }
     }
   })
   .fail(function(jqXHR, textStatus, errorThrown){
