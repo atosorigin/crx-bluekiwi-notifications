@@ -51,7 +51,8 @@ function save_options() {
     'notifDisabled': $("#noti-disable").prop('checked'),
     'loginReminderDisabled': $("#login-reminder-disable").prop('checked'),
     'expTitleEnchance': $('#title-enhance').prop('checked'),
-    'faviconNewItemFeedCountEnhance': $('#favicon-newItemFeedCount').prop('checked')
+    'faviconNewItemFeedCountEnhance': $('#favicon-newItemFeedCount').prop('checked'),
+    'popupDefaultPage': $("input:radio[name='popup-default-page']:checked").val()
   };
     
   chrome.storage.sync.set(options, function(){
@@ -61,12 +62,14 @@ function save_options() {
 }
 
 function restore_options() {
-  chrome.storage.sync.get(['bkurl','notifFetchInterval','notifDisabled','expTitleEnchance','faviconNewItemFeedCountEnhance'], function(items){
+  chrome.storage.sync.get(['bkurl','notifFetchInterval','notifDisabled','expTitleEnchance',
+    'faviconNewItemFeedCountEnhance', 'popupDefaultPage'], function(items){
 	var bkurl = items.bkurl;
 	var fetchIntvl = items.notifFetchInterval;
 	var notifDisabled = items.notifDisabled;
   var expTitleEnchance = items.expTitleEnchance;
   var faviconNewItemFeedCountEnhance = items.faviconNewItemFeedCountEnhance;
+  var popupDefaultPage = items.popupDefaultPage;
   
 	console.log('bkurl got ' + bkurl);
 	if (bkurl) {
@@ -88,6 +91,12 @@ function restore_options() {
   $('#favicon-newItemFeedCount').prop('checked',faviconNewItemFeedCountEnhance);
   
 	$("#noti-time").val(fetchIntvl);
+  
+  if(popupDefaultPage){
+    $("input:radio[name='popup-default-page'][value='" +popupDefaultPage + "']").prop('checked', true);
+  }else{
+    $("input:radio[name='popup-default-page'][value='notifications']").prop('checked', true);
+  }
   });
 }
 document.addEventListener('DOMContentLoaded', function(){

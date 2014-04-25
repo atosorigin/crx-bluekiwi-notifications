@@ -92,6 +92,12 @@ function init(){
     if(notificationId == NOTIF_ID){
       chrome.notifications.clear(notificationId, function(wasCleared){
         console.log('notificationId=%s, wasCleared=%s', notificationId, wasCleared);
+        chrome.storage.sync.get('bkurl', function(items){
+          if(items.bkurl){
+            console.log('create bk tab');
+            chrome.tabs.create({ url: items.bkurl });
+          }
+        });
       });
     }
   });
