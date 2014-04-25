@@ -95,7 +95,7 @@ function restore_options() {
   if(popupDefaultPage){
     $("input:radio[name='popup-default-page'][value='" +popupDefaultPage + "']").prop('checked', true);
   }else{
-    $("input:radio[name='popup-default-page'][value='notification']").prop('checked', true);
+    $("input:radio[name='popup-default-page'][value='notifications']").prop('checked', true);
   }
   });
 }
