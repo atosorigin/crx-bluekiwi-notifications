@@ -23,7 +23,7 @@
       "19": "img/icon48.png",          
       "38": "img/icon48.png"          
     },
-	"default_popup": "popup.html",
+	"default_popup": "popup_default.html",
 	"default_title": "blueKiwi Notifier"
   },
   "permissions": [
