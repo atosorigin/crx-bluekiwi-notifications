@@ -21,7 +21,7 @@ function requestNotifications(bkurl, offset){
 				media.appendTo(notiflist);
 				media.click((function(feed) {
 					return function() {
-						_gaq.push(['_trackEvent', 'popup-feed', 'clicked']);
+						ga('send', 'event', 'popup-feed', 'clicked');
 						var itemurl = feed.rel;
 						if(itemurl.indexOf('http') != 0){
 							itemurl = bkurl + itemurl;
@@ -34,7 +34,7 @@ function requestNotifications(bkurl, offset){
 				avatarContainer.appendTo(media);
 				var avatar = $('<img class="avatar"/>');
 				avatar.appendTo(avatarContainer);
-				avatar.attr('src',feed.picture);
+				avatar.attr('src',feed.avatar);
 				
 				var content = $('<div class="media-body"/>');
 				content.appendTo(media);
@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	chrome.extension.getBackgroundPage().clearNotification();
 	
 	$('#btnHome').click(function(){
-		_gaq.push(['_trackEvent', 'popup-home-btn', 'clicked']);
+    ga('send', 'event', 'popup-home-btn', 'clicked');
 	});
   
   //$(".collapse").collapse();

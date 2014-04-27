@@ -3,15 +3,17 @@ var loginNotification = null;
 var checkUpdateTimeoutId = null;
 var snoozeNotifTimeoutId = null;
 
+var evtNotifSrc = 'bg-notif';
+
 function init(){
 	chrome.runtime.onInstalled.addListener(function(details){
 		var thisVersion = chrome.runtime.getManifest().version;
     var chromeVersion = parseInt(window.navigator.appVersion.match(/Chrome\/(\d+)\./)[1], 10);
     console.log('chromeVersion='+chromeVersion);
 		if(details.reason == "install"){
-			_gaq.push(['_trackEvent', 'ext', 'install', thisVersion + ';' + chromeVersion]);
+			ga('send', 'event', 'ext', 'install', thisVersion + ';' + chromeVersion);
 		}else if(details.reason == "update"){
-			_gaq.push(['_trackEvent', 'ext', 'update', thisVersion + ';' + chromeVersion]);
+			ga('send', 'event', 'ext', 'update', thisVersion + ';' + chromeVersion);
 			console.log("Updated from " + details.previousVersion + " to " + thisVersion + " !");
       
       var updateNotificationTitle = 'blueKiwi Notifier is Updated!';
@@ -92,6 +94,12 @@ function init(){
     if(notificationId == NOTIF_ID){
       chrome.notifications.clear(notificationId, function(wasCleared){
         console.log('notificationId=%s, wasCleared=%s', notificationId, wasCleared);
+        chrome.storage.sync.get('bkurl', function(items){
+          if(items.bkurl){
+            ga('send', 'event', evtNotifSrc, 'open bk site');
+            chrome.tabs.create({ url: items.bkurl });
+          }
+        });
       });
     }
   });
@@ -100,6 +108,7 @@ function init(){
       console.log("onButtonClicked, " + notificationId + ";" + buttonIndex);
       if(buttonIndex == 0){
         console.log("snooze notification button clicked");
+        ga('send', 'event', evtNotifSrc, 'snooze-notif');
         enableNotification(false);
         snoozeNotifTimeoutId = setTimeout(function(){enableNotification(true);}, 60 * 60 * 1000);
         clearNotification();
@@ -107,14 +116,12 @@ function init(){
     }
   });
 }
-var evtNotifSrc = 'bg-notif';
 
 function clearNotification(){
 	if(notification != null){
 		console.log('canceling notification');
 		notification.cancel();
 		notification = null;
-		//_gaq.push(['_trackEvent', evtNotifSrc, 'canceled']);
 	}else{
 		console.log('notification is null');
 	}
@@ -144,7 +151,7 @@ function checkNotification(bkurl){
   console.log('check notification with ' + notifurl);
   $.get(notifurl, function(data){
     if(typeof data.data === 'undefined'){
-      _gaq.push(['_trackEvent', evtNotifReqSrc , 'fail' , 'invalid resp data']);
+      ga('send', 'event', evtNotifReqSrc , 'fail' , 'invalid resp data');
       chrome.browserAction.setBadgeText( { text: "ERR"} );
       chrome.storage.sync.get('loginReminderDisabled', function(items){
         var loginReminderDisabled = items.loginReminderDisabled;
@@ -156,7 +163,7 @@ function checkNotification(bkurl){
                   'If you see this notification frequently. Check "Keep me logged in" on login page.'
                 );
           loginNotification.onclick = function(){
-                _gaq.push(['_trackEvent', evtNotifSrc, 'clicked']);
+                ga('send', 'event', evtNotifSrc, 'clicked');
                 chrome.tabs.create({ url: bkurl });
                 loginNotification.cancel();
                 loginNotification = null;
@@ -201,7 +208,8 @@ function checkNotification(bkurl){
         var badgeText = "";
         if(count > 0){
           badgeText = "" + count;
-          createNotification(count, bkurl);
+          //createNotification(count, bkurl);
+          createNotificationWithHeadline(count, bkurl);
         }else{
           clearNotification();
         }
@@ -211,7 +219,7 @@ function checkNotification(bkurl){
   })
   .fail(function(jqXHR, textStatus, errorThrown){
     console.log("failed to fetch notification data");
-    _gaq.push(['_trackEvent', evtNotifReqSrc , 'fail' , textStatus + '-' + errorThrown]);
+    ga('send', 'event', evtNotifReqSrc , 'fail' , textStatus + '-' + errorThrown);
   })
   .always(function(){
     //check update
@@ -224,6 +232,35 @@ function checkNotification(bkurl){
       checkUpdateTimeoutId = setTimeout(checkUpdate, fetchIntvl * 60 * 1000);
     });
   });
+}
+
+function createNotificationWithHeadline(count, bkurl){
+  var feedurl = bkurl + NOTIF_FEED_URL;
+	console.log('Fetch notification feed from ' + feedurl);
+	$.get(feedurl, function(data){
+			var feeds = $.parseJSON(data).feeds;
+      
+      var items = [];
+      for (var i = 0; i < feeds.length; i++) {
+				var feed = feeds[i];
+        if(!feed.isread) continue;
+				items.push({title: $(feed.content).text()
+          .replace(/\s+/gm,' ').trim(), message: ''});
+			}
+      
+      var opt = {
+        type: 'list',
+        title: 'You have ' + count + ' notification' + (count > 1?'s':'')+ '!',
+        message: '',
+        iconUrl: "img/icon128.png",
+        items: items,
+        buttons: [
+          {title: "Snooze notification for an hour"}
+        ]
+      };
+      console.log('create notification with headline');
+      chrome.notifications.create(NOTIF_ID, opt, function(id){console.log('notification id='+id);});
+  },'text');
 }
 
 function createNotification(cnt, bkurl){
@@ -271,7 +308,7 @@ function createWebkitNotification(cnt, bkurl){
         var feeds = $.parseJSON(data).feeds;
         if(feeds.length >= 1){
           notif.onclick = function(){
-            _gaq.push(['_trackEvent', evtNotifSrc, 'clicked', 'itemurl']);
+            ga('send', 'event', evtNotifSrc, 'clicked', 'itemurl');
             var feed = feeds[0];
             var itemurl = feed.rel;
 						if(itemurl.indexOf('http') != 0){
@@ -286,12 +323,12 @@ function createWebkitNotification(cnt, bkurl){
         }
         showNotification();
       }catch(err){
-        _gaq.push(['_trackEvent', evtNotifSrc, 'error', err]);
+        ga('send', 'event', evtNotifSrc, 'error', err);
       }
     });
   }else{
     notif.onclick = function(){
-      _gaq.push(['_trackEvent', evtNotifSrc, 'clicked', 'bkurl']);
+      ga('send', 'event', evtNotifSrc, 'clicked', 'bkurl');
       chrome.tabs.create({ url: bkurl });
       clearNotification();
     };

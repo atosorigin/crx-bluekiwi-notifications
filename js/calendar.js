@@ -32,7 +32,7 @@ function loadCalendar(bkurl){
 	    $('#loading').hide();
 		var errorMsg = document.getElementById("status");
 		errorMsg.innerHTML = "<div class='alert enter-url'>You need to enter a blueKiwi URL in the <a href='options.html' target='_blank'>Options</a> page before you can begin</div>";
-	    _gaq.push(['_trackEvent', 'calendar-event-list' , 'fail' , textStatus + '-' + errorThrown]);
+	    ga('send', 'event', 'calendar-event-list' , 'fail' , textStatus + '-' + errorThrown);
 	});	
 }
 
@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function () {
     renderEvents(items.bkCalendarCache);
 	});
 	$('#btnHome').click(function(){
-    _gaq.push(['_trackEvent', 'popup-home-btn', 'clicked']);
+    ga('send', 'event', 'popup-home-btn', 'clicked');
 		chrome.storage.sync.get('bkurl', function(items){
 			chrome.tabs.create({ url: items.bkurl });
 		});
