@@ -243,7 +243,7 @@ function createNotificationWithHeadline(count, bkurl){
       var items = [];
       for (var i = 0; i < feeds.length; i++) {
 				var feed = feeds[i];
-        if(!feed.isread) continue;
+        if(!feed.unread) continue;
 				items.push({title: $(feed.content).text()
           .replace(/\s+/gm,' ').trim(), message: ''});
 			}
