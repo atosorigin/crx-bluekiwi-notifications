@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	chrome.extension.getBackgroundPage().clearNotification();
 	
 	$('#btnHome').click(function(){
-		_gaq.push(['_trackEvent', 'popup-home-btn', 'clicked']);
+    _gaq.push(['_trackEvent', 'popup-home-btn', 'clicked']);
 	});
   
   //$(".collapse").collapse();

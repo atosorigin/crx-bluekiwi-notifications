@@ -3,6 +3,8 @@ var loginNotification = null;
 var checkUpdateTimeoutId = null;
 var snoozeNotifTimeoutId = null;
 
+var evtNotifSrc = 'bg-notif';
+
 function init(){
 	chrome.runtime.onInstalled.addListener(function(details){
 		var thisVersion = chrome.runtime.getManifest().version;
@@ -94,7 +96,7 @@ function init(){
         console.log('notificationId=%s, wasCleared=%s', notificationId, wasCleared);
         chrome.storage.sync.get('bkurl', function(items){
           if(items.bkurl){
-            console.log('create bk tab');
+            _gaq.push(['_trackEvent', evtNotifSrc, 'open bk site']);
             chrome.tabs.create({ url: items.bkurl });
           }
         });
@@ -106,6 +108,7 @@ function init(){
       console.log("onButtonClicked, " + notificationId + ";" + buttonIndex);
       if(buttonIndex == 0){
         console.log("snooze notification button clicked");
+        _gaq.push(['_trackEvent', evtNotifSrc, 'snooze-notif']);
         enableNotification(false);
         snoozeNotifTimeoutId = setTimeout(function(){enableNotification(true);}, 60 * 60 * 1000);
         clearNotification();
@@ -113,14 +116,12 @@ function init(){
     }
   });
 }
-var evtNotifSrc = 'bg-notif';
 
 function clearNotification(){
 	if(notification != null){
 		console.log('canceling notification');
 		notification.cancel();
 		notification = null;
-		//_gaq.push(['_trackEvent', evtNotifSrc, 'canceled']);
 	}else{
 		console.log('notification is null');
 	}
@@ -207,7 +208,8 @@ function checkNotification(bkurl){
         var badgeText = "";
         if(count > 0){
           badgeText = "" + count;
-          createNotification(count, bkurl);
+          //createNotification(count, bkurl);
+          createNotificationWithHeadline(count, bkurl);
         }else{
           clearNotification();
         }
@@ -230,6 +232,35 @@ function checkNotification(bkurl){
       checkUpdateTimeoutId = setTimeout(checkUpdate, fetchIntvl * 60 * 1000);
     });
   });
+}
+
+function createNotificationWithHeadline(count, bkurl){
+  var feedurl = bkurl + NOTIF_FEED_URL;
+	console.log('Fetch notification feed from ' + feedurl);
+	$.get(feedurl, function(data){
+			var feeds = $.parseJSON(data).feeds;
+      
+      var items = [];
+      for (var i = 0; i < feeds.length; i++) {
+				var feed = feeds[i];
+        if(!feed.unread) continue;
+				items.push({title: $(feed.content).text()
+          .replace(/\s+/gm,' ').trim(), message: ''});
+			}
+      
+      var opt = {
+        type: 'list',
+        title: 'You have ' + count + ' notification' + (count > 1?'s':'')+ '!',
+        message: '',
+        iconUrl: "img/icon128.png",
+        items: items,
+        buttons: [
+          {title: "Snooze notification for an hour"}
+        ]
+      };
+      console.log('create notification with headline');
+      chrome.notifications.create(NOTIF_ID, opt, function(id){console.log('notification id='+id);});
+  },'text');
 }
 
 function createNotification(cnt, bkurl){
