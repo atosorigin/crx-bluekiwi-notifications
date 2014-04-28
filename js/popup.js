@@ -21,7 +21,7 @@ function requestNotifications(bkurl, offset){
 				media.appendTo(notiflist);
 				media.click((function(feed) {
 					return function() {
-						ga('send', 'event', 'popup-feed', 'clicked');
+						_gaq.push(['_trackEvent', 'popup-feed', 'clicked']);
 						var itemurl = feed.rel;
 						if(itemurl.indexOf('http') != 0){
 							itemurl = bkurl + itemurl;
@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	chrome.extension.getBackgroundPage().clearNotification();
 	
 	$('#btnHome').click(function(){
-    ga('send', 'event', 'popup-home-btn', 'clicked');
+    _gaq.push(['_trackEvent', 'popup-home-btn', 'clicked']);
 	});
   
   //$(".collapse").collapse();

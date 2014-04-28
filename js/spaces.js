@@ -37,7 +37,7 @@ function loadSpaces(bkurl){
 	    $('#loading').hide();
 		var errorMsg = document.getElementById("status");
 		errorMsg.innerHTML = "<div class='alert enter-url'>You need to enter a blueKiwi URL in the <a href='options.html' target='_blank'>Options</a> page before you can begin</div>";
-	    ga('send', 'event', 'space-list' , 'fail' , textStatus + '-' + errorThrown);
+	    _gaq.push(['_trackEvent', 'space-list' , 'fail' , textStatus + '-' + errorThrown]);
 	});	
 }
 
@@ -147,7 +147,7 @@ document.addEventListener('DOMContentLoaded', function () {
     renderSpaces(items.bkSpacesCache);
 	});
 	$('#btnHome').click(function(){
-    ga('send', 'event', 'popup-home-btn', 'clicked');
+    _gaq.push(['_trackEvent', 'popup-home-btn', 'clicked']);
 		chrome.storage.sync.get('bkurl', function(items){
       chrome.tabs.create({ url: items.bkurl });
 		});
