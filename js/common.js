@@ -8,8 +8,7 @@ var DEBUG_MODE = function(){
 	if(prodextid === extid){
 		return false;
 	}else{
-		//return true;
-    return false;
+		return true;
 	}
 }();
 
