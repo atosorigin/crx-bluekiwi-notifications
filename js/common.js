@@ -30,4 +30,5 @@ var DEFAULT_FETCH_INTERVAL = 5; //in minutes
 var ALARM_NAME = "notification_checker";
 
 var NOTIF_ID = 'bknotif';
+var NOTIF_SINGLE_ID = 'bknotif_single';
 
