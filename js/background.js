@@ -141,6 +141,9 @@ function clearNotification(){
     chrome.notifications.clear(NOTIF_ID, function(wasCleared){
       console.log('notificationId=%s, wasCleared=%s', NOTIF_ID, wasCleared);
     });
+    chrome.notifications.clear(NOTIF_SINGLE_ID, function(wasCleared){
+      console.log('notificationId=%s, wasCleared=%s', NOTIF_ID, wasCleared);
+    });
   }
 }
 
