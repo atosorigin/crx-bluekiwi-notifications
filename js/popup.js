@@ -89,19 +89,6 @@ document.addEventListener('DOMContentLoaded', function () {
 			chrome.tabs.create({ url: items.bkurl });
 		});
 	});
-	/*
-	//for testing
-	var notification = webkitNotifications.createNotification(
-						  'bluekiwi.ico',  // icon url - can be relative
-						  'test',  // notification title
-						  'test'  // notification body text
-						);
-	notification.show();
-	*/
-	chrome.extension.getViews({type:"notification"}).forEach(function(win) {
-	  //FIXME cannot fetch any notification
-		console.log('notification ' + win);
-	});
 	
 	chrome.extension.getBackgroundPage().clearNotification();
 	
