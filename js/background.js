@@ -267,7 +267,7 @@ function createNotificationWithHeadline(count, bkurl){
           type: 'basic',
           title: 'blueKiwi Notification',
           message: items[0].title,
-          iconUrl: feeds[0].avatar,
+          iconUrl: bkurl + feeds[0].avatar,
           buttons: [
             {title: "Snooze notification for an hour"}
           ]
