@@ -192,6 +192,7 @@ function checkNotification(bkurl){
         }
       });
     }else{
+      _gaq.push(['_trackEvent', evtNotifReqSrc, 'success']);
       /*
       //old API
       var binding = data.data.binding;
