@@ -109,8 +109,12 @@ function init(){
       chrome.notifications.clear(notificationId, function(wasCleared){
         console.log('notificationId=%s, wasCleared=%s', notificationId, wasCleared);
         if(notifSignleRel){
-          chrome.tabs.create({ url: notifSignleRel });
-          notifSignleRel = null;
+          chrome.storage.sync.get('bkurl', function(items){
+            if(items.bkurl){
+              chrome.tabs.create({ url: items.bkurl + notifSignleRel });
+              notifSignleRel = null;
+            }
+          });
         }
       });
     }
