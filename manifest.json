@@ -9,6 +9,7 @@
     "scripts": [
 		"js/common.js",
 		"js/jquery.js",
+    "js/moment.min.js",
 		"js/background.js",
 		"js/bootstrap.js"
 	]

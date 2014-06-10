@@ -8,6 +8,8 @@ var evtNotifSrc = 'bg-notif';
 var notifSignleRel;
 
 function init(){
+  moment.lang('en');
+  
 	chrome.runtime.onInstalled.addListener(function(details){
 		var thisVersion = chrome.runtime.getManifest().version;
     var chromeVersion = parseInt(window.navigator.appVersion.match(/Chrome\/(\d+)\./)[1], 10);
@@ -259,7 +261,9 @@ function createNotificationWithHeadline(count, bkurl){
 				var feed = feeds[i];
         if(!feed.unread) continue;
 				items.push({title: $(feed.content).text()
-          .replace(/\s+/gm,' ').trim(), message: ''});
+          .replace(/\s+/gm,' ').trim() + '\n'
+            + moment.unix(feed.date).fromNow()
+          , message: ''});
 			}
       
       console.log('create notification with headline');
