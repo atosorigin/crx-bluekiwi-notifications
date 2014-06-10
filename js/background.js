@@ -5,6 +5,8 @@ var snoozeNotifTimeoutId = null;
 
 var evtNotifSrc = 'bg-notif';
 
+var notifSignleRel;
+
 function init(){
 	chrome.runtime.onInstalled.addListener(function(details){
 		var thisVersion = chrome.runtime.getManifest().version;
@@ -91,7 +93,7 @@ function init(){
 	});
 	*/
   chrome.notifications.onClicked.addListener(function(notificationId){
-    if(notificationId == NOTIF_ID){
+    if(notificationId === NOTIF_ID){
       chrome.notifications.clear(notificationId, function(wasCleared){
         console.log('notificationId=%s, wasCleared=%s', notificationId, wasCleared);
         chrome.storage.sync.get('bkurl', function(items){
@@ -101,10 +103,18 @@ function init(){
           }
         });
       });
+    }else if(notificationId === NOTIF_SINGLE_ID){
+      chrome.notifications.clear(notificationId, function(wasCleared){
+        console.log('notificationId=%s, wasCleared=%s', notificationId, wasCleared);
+        if(notifSignleRel){
+          chrome.tabs.create({ url: notifSignleRel });
+          notifSignleRel = null;
+        }
+      });
     }
   });
   chrome.notifications.onButtonClicked.addListener(function(notificationId, buttonIndex){
-    if(notificationId == NOTIF_ID){
+    if(notificationId === NOTIF_ID || notificationId === NOTIF_SINGLE_ID){
       console.log("onButtonClicked, " + notificationId + ";" + buttonIndex);
       if(buttonIndex == 0){
         console.log("snooze notification button clicked");
@@ -129,6 +139,9 @@ function clearNotification(){
   console.log('chromeVersion='+chromeVersion);
   if(chromeVersion >= 28){
     chrome.notifications.clear(NOTIF_ID, function(wasCleared){
+      console.log('notificationId=%s, wasCleared=%s', NOTIF_ID, wasCleared);
+    });
+    chrome.notifications.clear(NOTIF_SINGLE_ID, function(wasCleared){
       console.log('notificationId=%s, wasCleared=%s', NOTIF_ID, wasCleared);
     });
   }
@@ -179,6 +192,7 @@ function checkNotification(bkurl){
         }
       });
     }else{
+      _gaq.push(['_trackEvent', evtNotifReqSrc, 'success']);
       /*
       //old API
       var binding = data.data.binding;
@@ -248,18 +262,32 @@ function createNotificationWithHeadline(count, bkurl){
           .replace(/\s+/gm,' ').trim(), message: ''});
 			}
       
-      var opt = {
-        type: 'list',
-        title: 'You have ' + count + ' notification' + (count > 1?'s':'')+ '!',
-        message: '',
-        iconUrl: "img/icon128.png",
-        items: items,
-        buttons: [
-          {title: "Snooze notification for an hour"}
-        ]
-      };
       console.log('create notification with headline');
-      chrome.notifications.create(NOTIF_ID, opt, function(id){console.log('notification id='+id);});
+      if(count === 1 && items.length === 1){
+        var opt = {
+          type: 'basic',
+          title: 'blueKiwi Notification',
+          message: items[0].title,
+          iconUrl: bkurl + feeds[0].avatar,
+          buttons: [
+            {title: "Snooze notification for an hour"}
+          ]
+        };
+        notifSignleRel = feeds[0].rel;
+        chrome.notifications.create(NOTIF_SINGLE_ID, opt, function(id){console.log('notification id='+id);});
+      }else{
+        var opt = {
+          type: 'list',
+          title: 'You have ' + count + ' notification' + (count > 1?'s':'')+ '!',
+          message: '',
+          iconUrl: "img/icon128.png",
+          items: items,
+          buttons: [
+            {title: "Snooze notification for an hour"}
+          ]
+        };
+        chrome.notifications.create(NOTIF_ID, opt, function(id){console.log('notification id='+id);});
+      }
   },'text');
 }
 
