@@ -18,7 +18,7 @@ function init(){
 			_gaq.push(['_trackEvent', 'ext', 'update', thisVersion + ';' + chromeVersion]);
 			console.log("Updated from " + details.previousVersion + " to " + thisVersion + " !");
       
-      var updateNotificationTitle = 'blueKiwi Notifier is Updated!';
+      var updateNotificationTitle = 'blueKiwi Notifier has been Updated!';
       var updateNotificationMsg = 'Updated from ' + details.previousVersion + ' to ' + thisVersion + '.';
       if(chromeVersion >= 28){
         var opt = {
