@@ -1,3 +1,5 @@
+moment.lang('en');
+
 function requestNotifications(bkurl, offset){
 	$('#loading').show();
 	var feedurl = bkurl + NOTIF_FEED_URL;
@@ -38,7 +40,14 @@ function requestNotifications(bkurl, offset){
 				
 				var content = $('<div class="media-body"/>');
 				content.appendTo(media);
-				content.html(feed.content);
+        
+        var msg = $('<div/>');
+				msg.html(feed.content);
+        msg.appendTo(content);
+        
+        var time = $('<div/>');
+        time.html(moment.unix(feed.date).fromNow());
+        time.appendTo(content);
 			}
 			
 			var btnSeeMore = $('<button class="btn" style="width: 100%;" type="button" id="save">See More</button>');
