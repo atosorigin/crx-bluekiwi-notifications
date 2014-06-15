@@ -23,11 +23,11 @@ function save_options() {
   status.html("<div class='alert alert-info'><img src='img/ajax-loader.gif'/><strong>Validating URL...</strong></div>");
   $.get(notifurl, function(data){
     if(typeof data.data === 'undefined'){
-      ga('send', 'event', evtOptionSrc, 'bkurl' , 'invalid');
+      _gaq.push(['_trackEvent', evtOptionSrc, 'bkurl' , 'invalid']);
       $("#status").html(errorhtml);
     }else{
       chrome.storage.sync.set({'bkurl': bkurl},function(){
-        ga('send', 'event', evtOptionSrc, 'bkurl' , 'valid');
+        _gaq.push(['_trackEvent', evtOptionSrc, 'bkurl' , 'valid']);
         console.log('bkurl saved with ' + bkurl);
         _bkurl = bkurl;
         status.html("<div class='alert alert-success'><strong>Confirmed!</strong> Settings Saved!</div>");
@@ -43,7 +43,7 @@ function save_options() {
     $('#url').prop('disabled',false);
     $('#save').prop('disabled',false);
     console.error('unable to get notifiation data from %s. Error Message: %s', bkurl, textStatus);
-    ga('send', 'event', evtOptionSrc, 'bkurl' , 'error-' + textStatus);
+    _gaq.push(['_trackEvent', evtOptionSrc, 'bkurl' , 'error-' + textStatus]);
   });
     
   var options = {

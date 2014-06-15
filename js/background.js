@@ -11,9 +11,9 @@ function init(){
     var chromeVersion = parseInt(window.navigator.appVersion.match(/Chrome\/(\d+)\./)[1], 10);
     console.log('chromeVersion='+chromeVersion);
 		if(details.reason == "install"){
-			ga('send', 'event', 'ext', 'install', thisVersion + ';' + chromeVersion);
+			_gaq.push(['_trackEvent', 'ext', 'install', thisVersion + ';' + chromeVersion]);
 		}else if(details.reason == "update"){
-			ga('send', 'event', 'ext', 'update', thisVersion + ';' + chromeVersion);
+			_gaq.push(['_trackEvent', 'ext', 'update', thisVersion + ';' + chromeVersion]);
 			console.log("Updated from " + details.previousVersion + " to " + thisVersion + " !");
       
       var updateNotificationTitle = 'blueKiwi Notifier is Updated!';
@@ -96,7 +96,7 @@ function init(){
         console.log('notificationId=%s, wasCleared=%s', notificationId, wasCleared);
         chrome.storage.sync.get('bkurl', function(items){
           if(items.bkurl){
-            ga('send', 'event', evtNotifSrc, 'open bk site');
+            _gaq.push(['_trackEvent', evtNotifSrc, 'open bk site']);
             chrome.tabs.create({ url: items.bkurl });
           }
         });
@@ -108,7 +108,7 @@ function init(){
       console.log("onButtonClicked, " + notificationId + ";" + buttonIndex);
       if(buttonIndex == 0){
         console.log("snooze notification button clicked");
-        ga('send', 'event', evtNotifSrc, 'snooze-notif');
+        _gaq.push(['_trackEvent', evtNotifSrc, 'snooze-notif']);
         enableNotification(false);
         snoozeNotifTimeoutId = setTimeout(function(){enableNotification(true);}, 60 * 60 * 1000);
         clearNotification();
@@ -151,7 +151,7 @@ function checkNotification(bkurl){
   console.log('check notification with ' + notifurl);
   $.get(notifurl, function(data){
     if(typeof data.data === 'undefined'){
-      ga('send', 'event', evtNotifReqSrc , 'fail' , 'invalid resp data');
+      _gaq.push(['_trackEvent', evtNotifReqSrc , 'fail' , 'invalid resp data']);
       chrome.browserAction.setBadgeText( { text: "ERR"} );
       chrome.storage.sync.get('loginReminderDisabled', function(items){
         var loginReminderDisabled = items.loginReminderDisabled;
@@ -163,7 +163,7 @@ function checkNotification(bkurl){
                   'If you see this notification frequently. Check "Keep me logged in" on login page.'
                 );
           loginNotification.onclick = function(){
-                ga('send', 'event', evtNotifSrc, 'clicked');
+                _gaq.push(['_trackEvent', evtNotifSrc, 'clicked']);
                 chrome.tabs.create({ url: bkurl });
                 loginNotification.cancel();
                 loginNotification = null;
@@ -219,7 +219,7 @@ function checkNotification(bkurl){
   })
   .fail(function(jqXHR, textStatus, errorThrown){
     console.log("failed to fetch notification data");
-    ga('send', 'event', evtNotifReqSrc , 'fail' , textStatus + '-' + errorThrown);
+    _gaq.push(['_trackEvent', evtNotifReqSrc , 'fail' , textStatus + '-' + errorThrown]);
   })
   .always(function(){
     //check update
@@ -243,7 +243,7 @@ function createNotificationWithHeadline(count, bkurl){
       var items = [];
       for (var i = 0; i < feeds.length; i++) {
 				var feed = feeds[i];
-        if(!feed.isread) continue;
+        if(!feed.unread) continue;
 				items.push({title: $(feed.content).text()
           .replace(/\s+/gm,' ').trim(), message: ''});
 			}
@@ -308,7 +308,7 @@ function createWebkitNotification(cnt, bkurl){
         var feeds = $.parseJSON(data).feeds;
         if(feeds.length >= 1){
           notif.onclick = function(){
-            ga('send', 'event', evtNotifSrc, 'clicked', 'itemurl');
+            _gaq.push(['_trackEvent', evtNotifSrc, 'clicked', 'itemurl']);
             var feed = feeds[0];
             var itemurl = feed.rel;
 						if(itemurl.indexOf('http') != 0){
@@ -323,12 +323,12 @@ function createWebkitNotification(cnt, bkurl){
         }
         showNotification();
       }catch(err){
-        ga('send', 'event', evtNotifSrc, 'error', err);
+        _gaq.push(['_trackEvent', evtNotifSrc, 'error', err]);
       }
     });
   }else{
     notif.onclick = function(){
-      ga('send', 'event', evtNotifSrc, 'clicked', 'bkurl');
+      _gaq.push(['_trackEvent', evtNotifSrc, 'clicked', 'bkurl']);
       chrome.tabs.create({ url: bkurl });
       clearNotification();
     };
