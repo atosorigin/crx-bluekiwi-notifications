@@ -63,13 +63,14 @@ function save_options() {
 
 function restore_options() {
   chrome.storage.sync.get(['bkurl','notifFetchInterval','notifDisabled','expTitleEnchance',
-    'faviconNewItemFeedCountEnhance', 'popupDefaultPage'], function(items){
+    'faviconNewItemFeedCountEnhance', 'popupDefaultPage', 'loginReminderDisabled'], function(items){
 	var bkurl = items.bkurl;
 	var fetchIntvl = items.notifFetchInterval;
 	var notifDisabled = items.notifDisabled;
   var expTitleEnchance = items.expTitleEnchance;
   var faviconNewItemFeedCountEnhance = items.faviconNewItemFeedCountEnhance;
   var popupDefaultPage = items.popupDefaultPage;
+  var loginReminderDisabled = items.loginReminderDisabled;
   
 	console.log('bkurl got ' + bkurl);
 	if (bkurl) {
@@ -97,6 +98,8 @@ function restore_options() {
   }else{
     $("input:radio[name='popup-default-page'][value='notifications']").prop('checked', true);
   }
+  
+  $('#login-reminder-disable').prop('checked', loginReminderDisabled);
   });
 }
 document.addEventListener('DOMContentLoaded', function(){
