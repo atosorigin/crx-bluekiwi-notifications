@@ -117,6 +117,15 @@ function init(){
           });
         }
       });
+    }else if(notificationId === NOTIF_LOGIN_ID){
+      chrome.notifications.clear(notificationId, function(wasCleared){
+        console.log('notificationId=%s, wasCleared=%s', notificationId, wasCleared);
+        chrome.storage.sync.get('bkurl', function(items){
+          if(items.bkurl){
+            chrome.tabs.create({ url: items.bkurl });
+          }
+        });
+      });
     }
   });
   chrome.notifications.onButtonClicked.addListener(function(notificationId, buttonIndex){
@@ -129,6 +138,11 @@ function init(){
         snoozeNotifTimeoutId = setTimeout(function(){enableNotification(true);}, 60 * 60 * 1000);
         clearNotification();
       }
+    }else if(notificationId === NOTIF_LOGIN_ID){
+      chrome.storage.sync.set({loginReminderDisabled: true}, 
+        function(){
+          console.log('loginReminderDisabled is set to true');
+        });
     }
   });
 }
@@ -176,6 +190,7 @@ function checkNotification(bkurl){
         var loginReminderDisabled = items.loginReminderDisabled;
         if(!loginReminderDisabled){
           if(loginNotification == null){
+          /*
           loginNotification = webkitNotifications.createNotification(
                   'img/icon128.png',
                   'Please login blueKiwi in order to receive notifications.',
@@ -194,6 +209,17 @@ function checkNotification(bkurl){
               loginNotification = null;
             }
           },30 * 1000);
+          */
+          var opt = {
+            type: "basic",
+            title: 'Please login blueKiwi in order to receive notifications.',
+            message: 'If you see this notification frequently. Check "Keep me logged in" on login page.',
+            iconUrl: "img/icon128.png",
+            buttons: [
+              {title: "Disable Login Reminder"}
+            ]
+          };
+          chrome.notifications.create(NOTIF_LOGIN_ID, opt, function(id){console.log('notification id='+id);});
           }
         }
       });

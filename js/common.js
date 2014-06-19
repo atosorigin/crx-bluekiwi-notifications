@@ -31,4 +31,4 @@ var ALARM_NAME = "notification_checker";
 
 var NOTIF_ID = 'bknotif';
 var NOTIF_SINGLE_ID = 'bknotif_single';
-
+var NOTIF_LOGIN_ID = 'bknotif_login';
